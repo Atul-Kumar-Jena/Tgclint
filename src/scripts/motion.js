@@ -1,0 +1,59 @@
+/* motion: reveal-on-enter (IntersectionObserver) + per-frame parallax & scrub */
+(function () {
+  const FG = window.FG; if (!FG) return;
+
+  function initReveal() {
+    const all = Array.prototype.slice.call(document.querySelectorAll('.reveal, [data-split], [data-fade], .clip-reveal'));
+    if (FG.reduce || !('IntersectionObserver' in window)) {
+      all.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+    // hero elements are revealed by the loader once it clears (so they aren't hidden behind it)
+    const observed = all.filter((el) => !el.closest('.hero'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+    observed.forEach((el) => io.observe(el));
+  }
+  function revealHero() {
+    document.querySelectorAll('.hero .reveal, .hero [data-split], .hero [data-fade], .hero .clip-reveal')
+      .forEach((el) => el.classList.add('is-in'));
+  }
+
+  const parallax = [];
+  const scrubs = [];
+
+  function collect() {
+    parallax.length = 0;
+    if (FG.reduce) return;
+    document.querySelectorAll('[data-parallax]').forEach((el) => {
+      const amt = parseFloat(el.dataset.parallax) || (window.innerWidth < 768 ? 4 : 8);
+      parallax.push({ el, wrap: el.parentElement, amt });
+    });
+  }
+  function registerScrub(el, fn) { if (el && !FG.reduce) scrubs.push({ el, fn }); }
+
+  function tick() {
+    if (FG.reduce) return;
+    const vh = window.innerHeight;
+    for (let i = 0; i < parallax.length; i++) {
+      const p = parallax[i];
+      const r = p.wrap.getBoundingClientRect();
+      if (r.bottom < -240 || r.top > vh + 240) continue;
+      const center = r.top + r.height / 2;
+      const prog = (center - vh / 2) / (vh / 2 + r.height / 2); // -1 .. 1
+      p.el.style.transform = 'translate3d(0,' + (-prog * p.amt).toFixed(3) + '%,0)';
+    }
+    for (let i = 0; i < scrubs.length; i++) {
+      const s = scrubs[i];
+      const r = s.el.getBoundingClientRect();
+      const prog = FG.clamp((vh - r.top) / (r.height + vh), 0, 1);
+      s.fn(prog, r);
+    }
+  }
+
+  FG.onTick(tick);
+  FG.motion = { initReveal, revealHero, collect, registerScrub, refresh: collect };
+})();
