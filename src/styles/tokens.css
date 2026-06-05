@@ -61,10 +61,10 @@
   --t-fast: .55s;
   --t-med: 1.1s;
   --t-slow: 1.5s;
-  --t-rev: 1.5s;          /* reveal duration */
-  --t-cinema: 1.8s;       /* hero / large media */
-  --stagger: .09s;        /* between sibling reveals */
-  --stagger-line: .11s;   /* between masked lines */
+  --t-rev: 1.6s;          /* reveal duration */
+  --t-cinema: 2s;         /* hero / large media */
+  --stagger: .1s;         /* between sibling reveals */
+  --stagger-line: .12s;   /* between masked lines */
 
   /* chrome */
   --pill-h: 58px;
@@ -84,6 +84,8 @@
   --local-muted: var(--muted-inv);
   --local-line: var(--line-inv);
   --on-dark: 1;
+  background: var(--bg);
+  color: var(--fg);
 }
 [data-theme="light"] {
   --bg: var(--bg-warm);
@@ -92,4 +94,6 @@
   --local-muted: var(--muted);
   --local-line: var(--line);
   --on-dark: 0;
+  background: var(--bg);
+  color: var(--fg);
 }

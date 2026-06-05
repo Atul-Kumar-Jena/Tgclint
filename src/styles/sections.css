@@ -92,23 +92,28 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .story[data-prev] { opacity: 0; transform: translateY(-50px); filter: blur(6px); }
 
 /* ================================================================= cta */
-.cta { background: var(--bg-warm); text-align: center; overflow: hidden; padding-bottom: 0; position: relative; }
-.cta > * { position: relative; z-index: 1; }
+.cta { background: var(--bg-warm); text-align: center; padding-bottom: 0; position: relative; }
+.cta > .container { position: relative; z-index: 1; }
 /* subtle environmental motion — the closing "destination" glows quietly */
 .cta::before {
-  content: ""; position: absolute; inset: -15% -10% 25% -10%; z-index: 0; pointer-events: none;
+  content: ""; position: absolute; inset: 0 5% 60% 5%; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(46% 40% at 28% 18%, rgba(120, 150, 160, .20), transparent 70%),
-    radial-gradient(40% 34% at 76% 8%, rgba(185, 160, 140, .15), transparent 72%);
-  filter: blur(32px); opacity: .75; animation: ctaDrift 22s var(--ease-inout) infinite alternate;
+    radial-gradient(46% 50% at 28% 30%, rgba(120, 150, 160, .20), transparent 70%),
+    radial-gradient(40% 44% at 76% 16%, rgba(185, 160, 140, .15), transparent 72%);
+  filter: blur(28px); opacity: .7; animation: ctaDrift 22s var(--ease-inout) infinite alternate;
 }
 @keyframes ctaDrift { from { transform: translate3d(-1%, 0, 0) scale(1); } to { transform: translate3d(2%, -1.5%, 0) scale(1.06); } }
 .cta__title { font-size: var(--fs-h1); font-weight: 500; line-height: 1.04; letter-spacing: -.03em; max-width: 16ch; margin-inline: auto; text-wrap: balance; }
 .cta__buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: clamp(1.8rem, 3vw, 2.6rem); }
-.cta__pavilion { position: relative; margin-top: clamp(2rem, 5vh, 4rem); width: 100%; }
-.pavilion { display: block; width: 100%; height: auto; transform-origin: 50% 100%; will-change: transform; }
+
+/* "Where vision meets execution": long pinned reveal — sketch holds, render comes forward */
+.cta__reveal { position: relative; z-index: 1; height: 220vh; margin-top: clamp(2rem, 5vh, 4rem); }
+.cta__pin { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.pavilion { display: block; width: min(116%, 1500px); height: auto; transform-origin: 50% 74%; will-change: transform; }
 .pavilion__line * { fill: none; stroke: #1c1d1f; stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .pavilion__line .pv-foliage path { stroke: #2a2b2d; }
+@media (max-width: 1024px) { .cta__reveal { height: 180vh; } .pavilion { width: 132%; } }
+@media (prefers-reduced-motion: reduce) { .cta__reveal { height: auto; } .cta__pin { position: relative; height: auto; padding-block: clamp(2rem, 6vh, 5rem); } }
 
 /* =============================================================== approach steps */
 .step { background: var(--bg-dark); color: var(--ink-inv); display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); align-items: center; padding-block: clamp(4rem, 9vh, 9rem); }

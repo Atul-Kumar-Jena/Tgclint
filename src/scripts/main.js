@@ -12,7 +12,8 @@
     FG.enter = function () {
       if (entered) return; entered = true;
       document.body.classList.add('is-entered');
-      setTimeout(() => document.body.classList.add('is-page-settled'), 2200);
+      // clear the transient card-clip/will-change right after the entrance completes
+      setTimeout(() => document.body.classList.add('is-page-settled'), 1700);
     };
 
     safe(() => FG.split && FG.split.init());
@@ -32,18 +33,22 @@
     safe(() => FG.cursor && FG.cursor.init());
     safe(() => FG.cookie && FG.cookie.init());
 
-    // pavilion sketch -> colour reveal: fills early, gentle zoom settle, culled when offscreen
+    // "Where vision meets execution": pinned reveal — sketch holds, then the render rises + comes forward
     safe(() => {
       const pav = document.querySelector('[data-pavilion]');
       if (!pav || FG.reduce || !FG.motion) return;
       const svg = pav.querySelector('.pavilion');
-      const rect = pav.querySelector('#pvclip rect') || pav.querySelector('clipPath rect');
+      const line = pav.querySelector('.pavilion__line');
+      const clipRect = pav.querySelector('#pvclip rect') || pav.querySelector('clipPath rect');
       const H = 640;
-      if (rect) { rect.setAttribute('y', H); rect.setAttribute('height', 0); }
-      FG.motion.registerScrub(pav, (prog) => {
-        const p = FG.clamp((prog - 0.02) / 0.42, 0, 1);
-        if (rect) { rect.setAttribute('y', ((1 - p) * H).toFixed(1)); rect.setAttribute('height', (p * H).toFixed(1)); }
-        if (svg) svg.style.transform = 'scale(' + (1.05 - p * 0.05).toFixed(4) + ')';
+      if (clipRect) { clipRect.setAttribute('y', H); clipRect.setAttribute('height', 0); }
+      FG.motion.registerScrub(pav, (prog, rect) => {
+        const vh = window.innerHeight;
+        const p = FG.clamp(-rect.top / ((rect.height - vh) || 1), 0, 1); // pinned progress
+        const fill = FG.clamp((p - 0.28) / 0.5, 0, 1);                   // hold the sketch, then fill
+        if (clipRect) { clipRect.setAttribute('y', ((1 - fill) * H).toFixed(1)); clipRect.setAttribute('height', (fill * H).toFixed(1)); }
+        if (svg) svg.style.transform = 'scale(' + (1 + fill * 0.07).toFixed(4) + ')'; // colour comes forward
+        if (line) line.style.opacity = (1 - fill * 0.22).toFixed(3);
       });
     });
 

@@ -10,7 +10,7 @@
   let locked = false;
   let expected = -1;             // last position we wrote, to distinguish our writes from user input
   let velocity = 0;              // smoothed px/frame, for velocity-driven depth
-  const EASE = 0.075;            // lower = more glide / longer follow-through
+  const EASE = 0.07;             // lower = more glide / longer follow-through
 
   const maxScroll = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
   function refresh() { max = maxScroll(); target = FG.clamp(target, 0, max); }
