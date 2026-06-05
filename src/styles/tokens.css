@@ -30,9 +30,9 @@
   /* layout */
   --maxw: 1560px;
   --maxw-text: 64ch;
-  --pad-x: clamp(1.25rem, 5vw, 5.5rem);
-  --pad-y: clamp(5rem, 11vh, 12rem);
-  --gap: clamp(1.25rem, 2.4vw, 2.4rem);
+  --pad-x: clamp(1.25rem, 5vw, 5.75rem);
+  --pad-y: clamp(6rem, 13vh, 15rem);
+  --gap: clamp(1.5rem, 2.6vw, 2.75rem);
   --radius: 14px;
   --radius-lg: 22px;
   --radius-pill: 100px;
@@ -43,22 +43,28 @@
   --fs-body: clamp(1rem, .55rem + .55vw, 1.18rem);
   --fs-lead: clamp(1.2rem, .9rem + .9vw, 1.6rem);
   --fs-h3: clamp(1.35rem, 1rem + 1.4vw, 2.1rem);
-  --fs-h2: clamp(2rem, 1.1rem + 3.6vw, 4.4rem);
-  --fs-h1: clamp(2.6rem, 1rem + 7.4vw, 7.6rem);
-  --fs-display: clamp(3rem, 1rem + 9vw, 9rem);
-  --lh-tight: 1.02;
-  --lh-snug: 1.12;
-  --lh-body: 1.6;
-  --track-tight: -.02em;
-  --track-wide: .14em;
+  --fs-h2: clamp(2rem, 1.1rem + 3.6vw, 4.5rem);
+  --fs-h1: clamp(2.6rem, 1rem + 7.6vw, 7.9rem);
+  --fs-display: clamp(3rem, 1rem + 9vw, 9.2rem);
+  --lh-tight: 1.0;
+  --lh-snug: 1.1;
+  --lh-body: 1.62;
+  --track-tight: -.025em;
+  --track-wide: .16em;
 
   /* motion */
-  --ease: cubic-bezier(.16, 1, .3, 1);
-  --ease-out: cubic-bezier(.22, .61, .36, 1);
-  --ease-inout: cubic-bezier(.65, .05, .36, 1);
-  --t-fast: .4s;
-  --t-med: .8s;
-  --t-slow: 1.1s;
+  --ease: cubic-bezier(.16, 1, .3, 1);            /* expo.out — primary */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);       /* smooth out */
+  --ease-power3: cubic-bezier(.215, .61, .355, 1);
+  --ease-power4: cubic-bezier(.165, .84, .44, 1);
+  --ease-inout: cubic-bezier(.76, 0, .24, 1);     /* cinematic in-out */
+  --t-fast: .55s;
+  --t-med: 1.1s;
+  --t-slow: 1.5s;
+  --t-rev: 1.5s;          /* reveal duration */
+  --t-cinema: 1.8s;       /* hero / large media */
+  --stagger: .09s;        /* between sibling reveals */
+  --stagger-line: .11s;   /* between masked lines */
 
   /* chrome */
   --pill-h: 58px;

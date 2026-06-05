@@ -23,11 +23,11 @@
       FG.scroll && FG.scroll.unlock();
       setTimeout(() => { FG.scroll && FG.scroll.refresh(); }, 700);
     }
-    function arm() { setTimeout(done, 650); }
+    function arm() { setTimeout(done, 850); }
 
     if (document.readyState === 'complete') arm();
     else window.addEventListener('load', arm, { once: true });
-    setTimeout(done, 2400); // hard fallback
+    setTimeout(done, 2600); // hard fallback
   }
 
   FG.loader = { init };

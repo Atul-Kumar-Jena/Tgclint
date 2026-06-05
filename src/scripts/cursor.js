@@ -14,7 +14,7 @@
     document.addEventListener('mouseout', (e) => { if (e.target.closest('a, button, [data-hover], .chip, label')) dot.classList.remove('is-hover'); });
 
     FG.onTick(() => {
-      x = FG.lerp(x, tx, 0.2); y = FG.lerp(y, ty, 0.2);
+      x = FG.lerp(x, tx, 0.14); y = FG.lerp(y, ty, 0.14);
       dot.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
     });
   }

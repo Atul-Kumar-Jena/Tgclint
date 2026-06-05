@@ -14,7 +14,7 @@
         bx: Math.random(), by: Math.random(),
         r: 0.26 + Math.random() * 0.34,
         ph: Math.random() * Math.PI * 2,
-        sp: 0.00022 + Math.random() * 0.00035,
+        sp: 0.00013 + Math.random() * 0.0002,
         ax: 0.05 + Math.random() * 0.05, ay: 0.05 + Math.random() * 0.05,
         c: palette[i % palette.length]
       });

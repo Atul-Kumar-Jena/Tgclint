@@ -40,7 +40,7 @@
       if (url.pathname === location.pathname && url.hash) return;
       e.preventDefault();
       document.body.classList.add('is-leaving');
-      setTimeout(() => { location.href = a.href; }, 430);
+      setTimeout(() => { location.href = a.href; }, 540);
     });
 
     // restore cover state if navigated back via bfcache

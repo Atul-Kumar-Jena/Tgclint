@@ -9,7 +9,8 @@
   let max = 0;
   let locked = false;
   let expected = -1;             // last position we wrote, to distinguish our writes from user input
-  const EASE = 0.1;
+  let velocity = 0;              // smoothed px/frame, for velocity-driven depth
+  const EASE = 0.075;            // lower = more glide / longer follow-through
 
   const maxScroll = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
   function refresh() { max = maxScroll(); target = FG.clamp(target, 0, max); }
@@ -34,9 +35,11 @@
     current = target = y;                 // external input (keyboard, scrollbar, find-in-page, anchor)
   }
   function tick() {
-    if (!enabled || locked) return;
+    if (!enabled || locked) { velocity *= 0.8; return; }
+    const prev = current;
     current = FG.lerp(current, target, EASE);
-    if (Math.abs(target - current) < 0.08) current = target;
+    if (Math.abs(target - current) < 0.06) current = target;
+    velocity = FG.lerp(velocity, current - prev, 0.25);  // smoothed
     expected = Math.round(current);
     window.scrollTo(0, current);
   }
@@ -56,5 +59,9 @@
   if ('ResizeObserver' in window) new ResizeObserver(refresh).observe(document.body);
 
   FG.onTick(tick);
-  FG.scroll = { scrollTo, lock, unlock, refresh, enabled, get y() { return enabled ? current : window.scrollY; } };
+  FG.scroll = {
+    scrollTo, lock, unlock, refresh, enabled,
+    get y() { return enabled ? current : window.scrollY; },
+    get velocity() { return enabled ? velocity : 0; }
+  };
 })();

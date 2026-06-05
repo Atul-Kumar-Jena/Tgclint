@@ -1,7 +1,7 @@
 /* ==================================================================== reset */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; -webkit-tap-highlight-color: transparent; }
 html.lenis, html.lenis body { height: auto; }
 body {
   font-family: var(--font);
@@ -15,12 +15,16 @@ body {
   overflow-x: hidden;
 }
 img, svg, video, canvas { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 input, textarea, select { font: inherit; color: inherit; }
 ul { list-style: none; padding: 0; }
+/* no blue flash on click: suppress the default focus ring on pointer, keep it for keyboard */
+:focus { outline: none; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 3px; }
-::selection { background: rgba(93, 128, 137, .28); }
+.btn, .pill, .pill__menu, .pill__logo, .menu__close, .quote__close, .chip, .card, .news-item,
+.cookie__actions button, .hero__scroll, .topbar__brand, .logo { -webkit-user-select: none; user-select: none; }
+::selection { background: rgba(93, 128, 137, .25); }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -77,30 +81,36 @@ main { display: block; }
 .page-cover {
   position: fixed; inset: 0; z-index: var(--z-loader); pointer-events: none;
   background: var(--bg-warm); transform: scaleY(0); transform-origin: bottom;
-  transition: transform .6s var(--ease-inout);
+  transition: transform .75s var(--ease-inout);
 }
 body.is-leaving .page-cover { transform: scaleY(1); transform-origin: bottom; }
 
 /* ============================================================ reveal motion */
-.reveal { opacity: 0; transform: translateY(30px); will-change: transform, opacity; }
+.reveal { opacity: 0; transform: translateY(44px); will-change: transform, opacity; }
 .reveal.is-in {
   opacity: 1; transform: none;
-  transition: opacity 1s var(--ease), transform 1s var(--ease);
-  transition-delay: calc(var(--i, 0) * .07s);
+  transition: opacity 1.4s var(--ease-power4), transform 1.5s var(--ease-power4);
+  transition-delay: calc(var(--i, 0) * var(--stagger, .09s));
 }
-[data-split] .line { display: block; overflow: hidden; padding-block: .02em; }
-[data-split] .line > span { display: block; transform: translateY(112%); will-change: transform; }
+/* let the GPU rest once a reveal has played */
+.reveal.is-settled, [data-split].is-settled .line > span { will-change: auto; }
+
+[data-split] .line { display: block; overflow: hidden; padding-block: .03em; }
+[data-split] .line > span { display: block; transform: translateY(116%); will-change: transform; }
 [data-split].is-in .line > span {
   transform: none;
-  transition: transform 1.05s var(--ease);
-  transition-delay: calc(var(--i, 0) * .08s + var(--li, 0) * .08s);
+  transition: transform 1.3s var(--ease);
+  transition-delay: calc(var(--i, 0) * var(--stagger, .09s) + var(--li, 0) * var(--stagger-line, .11s));
 }
 [data-fade] { opacity: 0; }
-[data-fade].is-in { opacity: 1; transition: opacity 1.2s var(--ease); transition-delay: calc(var(--i, 0) * .08s); }
+[data-fade].is-in { opacity: 1; transition: opacity 1.6s var(--ease); transition-delay: calc(var(--i, 0) * var(--stagger, .09s)); }
 
-/* clip reveal for media */
-.clip-reveal { clip-path: inset(0 0 100% 0); }
-.clip-reveal.is-in { clip-path: inset(0 0 0% 0); transition: clip-path 1.2s var(--ease); }
+/* clip reveal for media — softer with a blur settle */
+.clip-reveal { clip-path: inset(0 0 100% 0); filter: blur(10px); }
+.clip-reveal.is-in {
+  clip-path: inset(0 0 0% 0); filter: blur(0);
+  transition: clip-path 1.6s var(--ease), filter 1.6s var(--ease);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, [data-split] .line > span, [data-fade], .clip-reveal {
