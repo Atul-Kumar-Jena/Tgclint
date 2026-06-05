@@ -202,6 +202,12 @@ function navLinksSecondary(base, active) {
     `<a class="menu__sub" href="${a(n.href, base)}"${n.key === active ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
   ).join('\n');
 }
+function pillNav(base, active) {
+  const links = site.nav.map((n, i) =>
+    `<a href="${a(n.href, base)}" style="--i:${i}"${n.key === active ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
+  ).join('');
+  return links + `<button class="pill__cta" type="button" data-quote-open style="--i:${site.nav.length}">Get a quote</button>`;
+}
 function footerNav(base, active) {
   return [...site.nav, ...site.navSecondary].map((n) =>
     `<li><a href="${a(n.href, base)}"${n.key === active ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`
@@ -259,6 +265,28 @@ function productSections() {
         <ul class="svc__points" style="margin-top:1.5rem">${(PRODUCT_POINTS[p.tint] || []).map((pt) => `<li>${esc(pt)}</li>`).join('')}</ul>
       </div>
     </div>`).join('\n');
+}
+function hscrollPanels(base) {
+  const cards = site.projects.map((p, i) => `
+    <article class="hscroll__panel">
+      <a href="${a('projects/' + p.slug + '.html', base)}" data-hover>
+        <div class="hscroll__media"><div class="hscroll__layer" data-hpara>${house(p.scene)}</div></div>
+        <div class="hscroll__meta">
+          <div class="hscroll__row"><span class="hscroll__idx">0${i + 1}</span><span class="hscroll__loc">${esc(p.location)}</span></div>
+          <h3 class="hscroll__name">${esc(p.name)}</h3>
+          <div class="card__tags">${p.tags.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
+        </div>
+      </a>
+    </article>`).join('');
+  const end = `
+    <article class="hscroll__panel hscroll__panel--end">
+      <div class="hscroll__end">
+        <p class="eyebrow">The full collection</p>
+        <h3 class="hscroll__name">Explore every<br>project.</h3>
+        ${button('All projects', 'projects.html', base, { variant: 'dark' })}
+      </div>
+    </article>`;
+  return cards + end;
 }
 function testimonialSlides() {
   return site.testimonials.map((t, i) => `
@@ -335,12 +363,14 @@ function context(base, meta) {
     ratingCount: site.ratingCount,
     year: new Date().getFullYear(),
     storiesTotal: ('0' + site.testimonials.length).slice(-2),
+    projectsTotal: ('0' + site.projects.length).slice(-2),
     navLabel: esc(meta.navLabel),
     bodyClass: meta.bodyClass || '',
     address: site.address.map(esc).join('<br>'),
     // fragments
     menuPrimary: navLinksBig(base, meta.active),
     menuSecondary: navLinksSecondary(base, meta.active),
+    pillNav: pillNav(base, meta.active),
     footerNav: footerNav(base, meta.active),
     socials: socialLinks(),
     quoteBtn: quoteButton('Get a quote', base, { variant: 'ghost' }),
@@ -371,6 +401,7 @@ function pageTokens(base) {
     SERVICES_LIST: servicesList(),
     APPROACH_STEPS: approachSteps(base),
     PRODUCT_SECTIONS: productSections(),
+    HSCROLL_PANELS: hscrollPanels(base),
     PAVILION: pavilion(),
     BTN_WHO: button('Who we are', 'about.html', base, { variant: 'dark' }),
     BTN_COLLECTION: button('Product overview', 'collection.html', base, { variant: 'ghost' }),
@@ -452,7 +483,7 @@ function build() {
 
   // concatenated styles + scripts
   const cssOrder = ['tokens.css', 'base.css', 'layout.css', 'nav.css', 'components.css', 'sections.css', 'pages.css', 'responsive.css'];
-  const jsOrder = ['core.js', 'smooth-scroll.js', 'motion.js', 'split.js', 'hero.js', 'loader.js', 'nav.js', 'menu.js', 'quote.js', 'stories.js', 'cursor.js', 'cookie.js', 'main.js'];
+  const jsOrder = ['core.js', 'smooth-scroll.js', 'motion.js', 'split.js', 'hero.js', 'loader.js', 'nav.js', 'menu.js', 'quote.js', 'stories.js', 'hscroll.js', 'pill-expand.js', 'cursor.js', 'cookie.js', 'main.js'];
   writeFileSync(join(DIST, 'app.css'), concat('styles', cssOrder));
   writeFileSync(join(DIST, 'app.js'), concat('scripts', jsOrder));
 

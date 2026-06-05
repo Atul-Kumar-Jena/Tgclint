@@ -4,7 +4,12 @@
 
   function init() {
     const loader = document.querySelector('[data-loader]');
-    if (!loader) { document.body.classList.add('is-loaded'); FG.motion && FG.motion.revealHero(); return; }
+    if (!loader) {
+      document.body.classList.add('is-loaded');
+      FG.enter && FG.enter();
+      FG.motion && FG.motion.revealHero();
+      return;
+    }
 
     FG.scroll && FG.scroll.lock();
     requestAnimationFrame(() => loader.classList.add('is-ready'));
@@ -19,6 +24,7 @@
     function done() {
       if (finished) return; finished = true;
       document.body.classList.add('is-loaded');
+      FG.enter && FG.enter();
       FG.motion && FG.motion.revealHero();
       FG.scroll && FG.scroll.unlock();
       setTimeout(() => { FG.scroll && FG.scroll.refresh(); }, 700);

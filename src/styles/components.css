@@ -51,7 +51,7 @@
 /* ============================================================== scenes */
 .scene { width: 100%; height: 100%; display: block; }
 [data-parallax-wrap] { position: relative; overflow: hidden; }
-[data-parallax] { position: absolute; left: 0; right: 0; top: -12%; height: 124%; will-change: transform; }
+[data-parallax] { position: absolute; left: 0; right: 0; top: -16%; height: 132%; will-change: transform; }
 [data-parallax] .scene { width: 100%; height: 100%; }
 
 /* =============================================================== cards */
@@ -167,13 +167,28 @@ body.is-loaded .loader { opacity: 0; visibility: hidden; pointer-events: none; }
 
 /* ============================================================ custom cursor */
 .cursor {
-  position: fixed; top: 0; left: 0; z-index: 150; width: 11px; height: 11px; border-radius: 50%;
-  background: #fff; mix-blend-mode: difference; pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width .5s var(--ease), height .5s var(--ease), opacity .4s var(--ease);
-  opacity: 0;
+  position: fixed; top: 0; left: 0; z-index: 150; pointer-events: none;
+  width: 16px; height: 16px; border-radius: 100px;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .1);
+  -webkit-backdrop-filter: blur(4px) saturate(150%); backdrop-filter: blur(4px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, .42);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .2), inset 0 1px 1px rgba(255, 255, 255, .55);
+  opacity: 0; transform: translate(-50%, -50%);
+  transition: width .55s var(--ease), height .55s var(--ease), opacity .4s var(--ease),
+    background .5s var(--ease), border-color .5s var(--ease);
 }
 .cursor.is-active { opacity: 1; }
-.cursor.is-hover { width: 52px; height: 52px; }
-.cursor__label { position: fixed; z-index: 150; color: #fff; mix-blend-mode: difference; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; transform: translate(-50%, -50%); pointer-events: none; opacity: 0; transition: opacity .3s; }
-@media (hover: none), (pointer: coarse) { .cursor, .cursor__label { display: none !important; } }
+.cursor.is-hover { width: 46px; height: 46px; background: rgba(255, 255, 255, .14); }
+.cursor.is-explore { width: 118px; height: 48px; background: rgba(17, 18, 21, .46); border-color: rgba(255, 255, 255, .34); }
+.cursor__label {
+  font-size: .62rem; letter-spacing: .24em; text-transform: uppercase; color: #fff; white-space: nowrap;
+  opacity: 0; transform: translateY(5px); transition: opacity .45s var(--ease), transform .55s var(--ease);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .45);
+}
+.cursor.is-explore .cursor__label { opacity: 1; transform: none; }
+/* hide native cursor only over explore targets, only when the glass cursor is live */
+.has-glass-cursor [data-cursor="explore"], .has-glass-cursor .card, .has-glass-cursor .gallery__item,
+.has-glass-cursor .project-media, .has-glass-cursor .project-next, .has-glass-cursor .feature__frame,
+.has-glass-cursor .showroom__media, .has-glass-cursor .hscroll__panel, .has-glass-cursor .cta__pavilion { cursor: none; }
+@media (hover: none), (pointer: coarse) { .cursor { display: none !important; } }

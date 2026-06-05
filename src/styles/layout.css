@@ -1,10 +1,5 @@
 /* ================================================================ footer */
-.footer {
-  padding-block: clamp(4.5rem, 9vh, 8rem) clamp(1.6rem, 3vh, 2.6rem);
-  /* lazy render: skip layout/paint until the footer is approached, then remember its size */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 640px;
-}
+.footer { padding-block: clamp(4.5rem, 9vh, 8rem) clamp(1.6rem, 3vh, 2.6rem); position: relative; z-index: 1; }
 .footer__top {
   display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap;
   padding-bottom: clamp(2.5rem, 6vh, 5rem); border-bottom: 1px solid var(--local-line, var(--line));

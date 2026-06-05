@@ -33,34 +33,30 @@
     parallax.length = 0;
     if (FG.reduce) return;
     document.querySelectorAll('[data-parallax]').forEach((el) => {
-      const amt = parseFloat(el.dataset.parallax) || (window.innerWidth < 768 ? 5 : 9);
+      const amt = parseFloat(el.dataset.parallax) || (window.innerWidth < 768 ? 6 : 11);
       parallax.push({ el, wrap: el.parentElement, amt, cur: 0, seen: false });
     });
   }
   function registerScrub(el, fn) { if (el && !FG.reduce) scrubs.push({ el, fn }); }
 
-  let speedScale = 0;
   function tick() {
     if (FG.reduce) return;
     const vh = window.innerHeight;
-    // depth from scroll velocity: media breathes a hair when the page glides fast
-    const vel = FG.scroll ? Math.abs(FG.scroll.velocity) : 0;
-    speedScale = FG.lerp(speedScale, Math.min(vel * 0.0009, 0.035), 0.1);
     for (let i = 0; i < parallax.length; i++) {
       const p = parallax[i];
       const r = p.wrap.getBoundingClientRect();
-      if (r.bottom < -240 || r.top > vh + 240) continue;
+      if (r.bottom < -120 || r.top > vh + 120) continue;       // cull offscreen
       const center = r.top + r.height / 2;
       const prog = (center - vh / 2) / (vh / 2 + r.height / 2); // -1 .. 1
       const targetY = -prog * p.amt;
-      // ease the offset itself for a softer, less mechanical drift
-      p.cur += (targetY - p.cur) * (p.seen ? 0.12 : 1);
+      p.cur += (targetY - p.cur) * (p.seen ? 0.18 : 1);        // light smoothing, responsive
       p.seen = true;
-      p.el.style.transform = 'translate3d(0,' + p.cur.toFixed(3) + '%,0) scale(' + (1 + speedScale).toFixed(4) + ')';
+      p.el.style.transform = 'translate3d(0,' + p.cur.toFixed(3) + '%,0)';
     }
     for (let i = 0; i < scrubs.length; i++) {
       const s = scrubs[i];
       const r = s.el.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) continue;          // cull offscreen scrubs (perf)
       const prog = FG.clamp((vh - r.top) / (r.height + vh), 0, 1);
       s.fn(prog, r);
     }

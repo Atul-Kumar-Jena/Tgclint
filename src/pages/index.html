@@ -85,17 +85,18 @@
     </div>
   </section>
 
-  <section class="section" data-theme="light">
-    <div class="container">
-      <div class="projects__head">
+  <section class="hscroll" data-hscroll data-theme="light">
+    <div class="hscroll__sticky">
+      <div class="container hscroll__head">
         <div>
           <p class="eyebrow">Featured projects</p>
           <h2 class="h2" data-split style="margin-top:1rem">Built with vision.</h2>
         </div>
-        <p class="collection__intro reveal">A selection of recent work — barns, cottages, cliff-edge homes and houses set into the moor. Each one a study in light.</p>
+        <p class="hscroll__count"><span data-hscroll-count>01 / {{projectsTotal}}</span></p>
       </div>
-      <div class="projects__grid"><!-- @PROJECT_CARDS_3 --></div>
-      <div style="margin-top:clamp(2rem,4vw,3rem)" class="reveal"><!-- @BTN_PROJECTS --></div>
+      <div class="hscroll__viewport">
+        <div class="hscroll__track" data-hscroll-track><!-- @HSCROLL_PANELS --></div>
+      </div>
     </div>
   </section>
 

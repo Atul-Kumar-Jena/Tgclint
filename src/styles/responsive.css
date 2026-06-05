@@ -59,7 +59,7 @@
 
 /* reduce parallax amplitude on small screens (handled by JS via matchMedia too) */
 @media (max-width: 768px) {
-  [data-parallax] { top: -8%; height: 116%; }
+  [data-parallax] { top: -10%; height: 120%; }
 }
 
 /* very large screens: cap gutters already via maxw + clamp */

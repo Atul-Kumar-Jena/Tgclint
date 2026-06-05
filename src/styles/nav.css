@@ -35,22 +35,51 @@
 .pill__logo .logo-mark { width: 23px; height: 23px; }
 .pill__label {
   font-size: .8rem; letter-spacing: .18em; text-transform: uppercase;
-  font-weight: 500; text-align: center; min-width: 7ch; color: var(--ink-inv-soft);
+  font-weight: 500; text-align: center; min-width: 7ch; max-width: 22ch; color: var(--ink-inv-soft);
+  overflow: hidden; transition: opacity .5s var(--ease), max-width .7s var(--ease), min-width .7s var(--ease);
 }
+
+/* end-of-page expansion: the compact pill becomes a navigation story-ending */
+.pill__nav {
+  display: flex; align-items: center; gap: clamp(8px, 1.1vw, 18px);
+  max-width: 0; overflow: hidden; opacity: 0;
+  transition: max-width 1s var(--ease), opacity .7s var(--ease), margin .9s var(--ease);
+}
+.pill__nav a, .pill__cta {
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-inv-soft);
+  white-space: nowrap; position: relative; opacity: 0; transform: translateY(8px);
+  transition: opacity .55s var(--ease), transform .6s var(--ease), color .4s var(--ease);
+}
+.pill__nav a:hover, .pill__cta:hover { color: var(--ink-inv); }
+.pill__cta { padding: .5rem .95rem; border: 1px solid var(--glass-edge); border-radius: 100px; }
+.pill__cta:hover { background: rgba(255, 255, 255, .1); }
+.pill.is-expanded .pill__label { min-width: 0; max-width: 0; opacity: 0; }
+.pill.is-expanded .pill__nav { max-width: 74vw; opacity: 1; margin: 0 4px; }
+.pill.is-expanded .pill__nav a, .pill.is-expanded .pill__cta {
+  opacity: 1; transform: none; transition-delay: calc(.15s + var(--i) * .06s);
+}
+@media (max-width: 1024px) { .pill__nav { display: none; } }
 .pill__menu {
   position: relative; width: 42px; height: 42px; border-radius: 50%;
   display: grid; place-items: center; transition: background .3s;
 }
 .pill__menu:hover { background: rgba(255, 255, 255, .12); }
 .pill__bars { display: block; width: 18px; }
-.pill__bars i { display: block; height: 1.6px; background: currentColor; border-radius: 2px; margin: 4px 0; transition: transform .4s var(--ease), opacity .3s; }
+.pill__bars i {
+  display: block; height: 1.6px; width: 100%; background: currentColor; border-radius: 2px; margin: 4px 0;
+  transition: transform .55s var(--ease), width .55s var(--ease), opacity .35s var(--ease);
+}
+/* living hamburger: lines respond independently on hover */
+.pill__menu:hover .pill__bars i:first-child { width: 62%; margin-left: auto; }
+.pill__menu:hover .pill__bars i:last-child { width: 100%; transform: translateX(0); }
+.pill:hover .pill__bars i { opacity: .92; }
 
 /* ================================================================= menu */
 .menu { position: fixed; inset: 0; z-index: var(--z-menu); display: grid; place-items: center; pointer-events: none; visibility: hidden; transition: visibility .5s; }
 .menu[aria-hidden="false"] { pointer-events: auto; visibility: visible; transition: visibility 0s; }
 .menu__scrim {
-  position: absolute; inset: 0; background: rgba(8, 8, 9, .5);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  position: absolute; inset: 0; background: rgba(9, 9, 11, .38);
+  -webkit-backdrop-filter: blur(16px) saturate(115%); backdrop-filter: blur(16px) saturate(115%);
   opacity: 0; transition: opacity .8s var(--ease);
 }
 .menu[aria-hidden="false"] .menu__scrim { opacity: 1; }
@@ -163,11 +192,20 @@
 .chip { position: relative; display: inline-flex; }
 .chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
 .chip span {
-  display: inline-block; padding: .75rem 1.3rem; border: 1px solid var(--line);
-  border-radius: 10px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--ink-soft); transition: all .3s var(--ease);
+  display: inline-flex; align-items: center; gap: .6em;
+  padding: .8rem 1.35rem; border: 1px solid var(--line);
+  border-radius: 12px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: background .55s var(--ease), color .55s var(--ease), border-color .5s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);
 }
+.chip span::before {
+  content: "\25C7"; /* ◇ diamond outline */ font-size: .92em; line-height: 1; display: inline-block;
+  transition: transform .55s var(--ease), opacity .4s var(--ease);
+}
+.chip:hover span { transform: translateY(-2px); border-color: var(--ink); box-shadow: 0 12px 26px rgba(0, 0, 0, .08); }
+.chip:hover span::before { transform: rotate(180deg) scale(1.08); }
 .chip input:checked + span { background: var(--ink); color: var(--bg-warm); border-color: var(--ink); }
+.chip input:checked + span::before { content: "\25C6"; /* ◆ filled */ }
 .chip input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
 .quote__submit { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; border: none; }
 .quote__note { color: var(--muted); font-size: .9rem; }
