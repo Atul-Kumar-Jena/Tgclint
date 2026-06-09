@@ -85,24 +85,28 @@
 }
 .card:hover .card__cursor { opacity: 1; transform: translate(-50%, -2px); }
 
-/* ============================================================ loader */
+/* ============================================================ loader
+   First-load curtain. SSR-rendered and shown from the very first paint
+   (gated on html.js, set by an inline head script), so content is never
+   seen before its entrance. Lifts upward like a sheet of glass. */
 .loader {
   position: fixed; inset: 0; z-index: var(--z-loader); display: grid; place-items: center;
-  background: var(--bg-warm); transition: opacity .7s var(--ease), visibility .7s;
+  background: #0e0f11; color: var(--ink-inv); will-change: transform;
 }
+html:not(.js) .loader { display: none; }
 .loader__brand {
-  display: flex; align-items: center; gap: .6rem; font-size: clamp(1.2rem, 2vw, 1.6rem);
-  font-weight: 500; color: var(--ink); opacity: 0; transform: translateY(10px);
+  display: flex; align-items: center; gap: .6rem; font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 500; letter-spacing: -.01em;
+  animation: loaderBrand 1s var(--ease-out) .12s both;
 }
-.loader__brand .logo-mark { width: 30px; height: 30px; }
-.loader.is-ready .loader__brand { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+@keyframes loaderBrand { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.loader__brand .logo-mark { width: 28px; height: 28px; }
 .loader__bar {
-  position: absolute; bottom: 16%; left: 50%; transform: translateX(-50%);
-  width: min(46vw, 220px); height: 2px; background: var(--line); overflow: hidden; border-radius: 2px;
+  position: absolute; bottom: 14%; left: 50%; transform: translateX(-50%);
+  width: min(42vw, 200px); height: 1px; background: rgba(255, 255, 255, .16); overflow: hidden;
 }
-.loader__bar span { display: block; height: 100%; width: 100%; background: var(--ink); transform: scaleX(0); transform-origin: left; }
-body.has-loader:not(.is-loaded) { overflow: hidden; }
-body.is-loaded .loader { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader__bar span { display: block; height: 100%; width: 100%; background: var(--ink-inv); transform: scaleX(0); transform-origin: left; }
+body.is-booting { overflow: hidden; }
 
 /* =========================================================== top hero bar */
 .topbar {

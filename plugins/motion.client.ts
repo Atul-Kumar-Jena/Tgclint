@@ -17,13 +17,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     gsap.ticker.lagSmoothing(0)
   }
 
-  // after each route renders: jump to top, recalc triggers
-  nuxtApp.hook('page:finish', () => {
-    if (lenis) lenis.scrollTo(0, { immediate: true })
-    else window.scrollTo(0, 0)
-    requestAnimationFrame(() => ScrollTrigger.refresh())
-  })
-
+  // scroll reset + refresh are handled by the page transition hooks in app.vue,
+  // under the cover of the incoming card — never visibly.
   window.addEventListener('load', () => ScrollTrigger.refresh())
 
   return { provide: { gsap, ScrollTrigger, lenis } }

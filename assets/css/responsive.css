@@ -39,16 +39,17 @@
   .collection__grid { grid-template-columns: 1fr 1fr; }
   .quote__grid { grid-template-columns: 1fr; }
   .stories__track { height: 320vh; }
-  .menu__foot { flex-direction: column; }
-  .menu__contact { text-align: left; }
+  .dock__foot { flex-direction: column; }
+  .dock__contact { text-align: left; }
 }
 
 /* =============================================================== ≤560px */
 @media (max-width: 560px) {
   .collection__grid { grid-template-columns: 1fr; }
   .about-stat, .values { grid-template-columns: 1fr; }
-  .pill { gap: 10px; padding: 0 6px 0 12px; }
-  .pill__label { letter-spacing: .12em; min-width: 5ch; font-size: .72rem; }
+  .dock { width: 226px; }
+  .dock__bar { gap: 8px; padding: 0 6px 0 8px; }
+  .dock__label { letter-spacing: .12em; font-size: .7rem; }
   .hero__inner { padding-bottom: clamp(7rem, 22vh, 11rem); }
   .footer__grid { grid-template-columns: 1fr; }
   .quote__sidebar { display: none; }

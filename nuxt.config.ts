@@ -6,10 +6,15 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/Tgclint/',
     buildAssetsDir: '/_nuxt/',
-    pageTransition: { name: 'page', mode: 'out-in' },
+    // page transition is wired with JS hooks on <NuxtPage> in app.vue (stacked-card cover)
     head: {
       htmlAttrs: { lang: 'en' },
       title: 'Fluid Glass — Exceptional glazing for those who build with vision.',
+      script: [{
+        // runs before first paint: gates the loader + pre-reveal hidden states on JS being
+        // available, and force-reveals everything if the app never boots (chunk failure etc).
+        innerHTML: "document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('gsap'))d.classList.add('js-fallback')},6000)"
+      }],
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },

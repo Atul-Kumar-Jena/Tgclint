@@ -3,6 +3,7 @@
 export function usePageMotion() {
   const { $gsap, $ScrollTrigger } = useNuxtApp() as any
   let ctx: any
+  let disposed = false
 
   onMounted(() => {
     const gsap = $gsap
@@ -10,7 +11,8 @@ export function usePageMotion() {
     if (!gsap) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    // split [data-split] headings into masked lines (split on <br>)
+    // split [data-split] headings into masked lines (split on <br>) — done at mount,
+    // pre-paint, so the html.js hidden state applies before anything is visible
     document.querySelectorAll<HTMLElement>('[data-split]').forEach((el) => {
       if (el.dataset.splitDone) return
       const parts = el.innerHTML.split(/<br\s*\/?>/i)
@@ -19,21 +21,31 @@ export function usePageMotion() {
     })
     if (reduce) return
 
+    // wait until the page is fully on stage (curtain lifted / card settled):
+    // triggers then measure the real layout and above-the-fold reveals play in sync
+    const hold = usePageHold()
+    if (!hold.value) boot(gsap, ST)
+    else {
+      const un = watch(hold, (v) => { if (!v) { un(); if (!disposed) boot(gsap, ST) } })
+    }
+  })
+
+  function boot(gsap: any, ST: any) {
     ctx = gsap.context(() => {
       gsap.utils.toArray('.reveal:not(.card)').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'power4.out',
+        gsap.fromTo(el, { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: 'power4.out',
           scrollTrigger: { trigger: el, start: 'top 88%' } })
       })
       gsap.utils.toArray('.card.reveal').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 28, scale: 0.985 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out',
+        gsap.fromTo(el, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 92%' } })
       })
       gsap.utils.toArray('[data-split]').forEach((el: any) => {
-        gsap.fromTo(el.querySelectorAll('.line > span'), { yPercent: 118 }, { yPercent: 0, duration: 1.3, ease: 'expo.out', stagger: 0.12,
+        gsap.fromTo(el.querySelectorAll('.line > span'), { yPercent: 118 }, { yPercent: 0, duration: 1.25, ease: 'expo.out', stagger: 0.1,
           scrollTrigger: { trigger: el, start: 'top 88%' } })
       })
       gsap.utils.toArray('[data-fade]').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.6, ease: 'power2.out',
+        gsap.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2, ease: 'power2.out',
           scrollTrigger: { trigger: el, start: 'top 90%' } })
       })
       // media clip reveal via class toggle (CSS transitions clip-path reliably)
@@ -80,7 +92,7 @@ export function usePageMotion() {
     })
 
     ST.refresh()
-  })
+  }
 
-  onBeforeUnmount(() => { if (ctx) ctx.revert() })
+  onBeforeUnmount(() => { disposed = true; if (ctx) ctx.revert() })
 }
