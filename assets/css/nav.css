@@ -34,6 +34,7 @@
 .dock {
   pointer-events: auto;
   display: flex; flex-direction: column; overflow: hidden;
+  max-height: calc(100svh - clamp(18px, 3vh, 32px) - 14px);
   width: 258px; border-radius: calc(var(--pill-h) / 2);
   color: var(--ink-inv);
   background: linear-gradient(180deg, rgba(30, 31, 35, .66), rgba(15, 16, 19, .74));
@@ -57,10 +58,12 @@
 .dockzone[data-state="menu"] .dock__drawer,
 .dockzone[data-state="end"] .dock__drawer { grid-template-rows: 1fr; }
 .dock__body {
-  min-height: 0; overflow: hidden;
+  min-height: 0; overflow-y: auto; overflow-x: hidden;
+  scrollbar-width: none;
   padding: 0 clamp(1.4rem, 2.4vw, 1.9rem);
   visibility: hidden;
 }
+.dock__body::-webkit-scrollbar { display: none; }
 .dockzone[data-state="menu"] .dock__body,
 .dockzone[data-state="end"] .dock__body { visibility: visible; transition: visibility 0s; }
 .dock__eyebrow { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted-inv); margin: 1.5rem 0 1.1rem; }
