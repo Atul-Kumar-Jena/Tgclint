@@ -91,3 +91,10 @@ html.lenis, html.lenis body { height: auto; }
 
 /* scene wrapper is layout-transparent so the inner <svg class="scene"> fills its container */
 .scene-wrap { display: contents; }
+
+/* real-photo scene layer: photo fades in over the SVG art (blur-up / lazy) */
+.scene--photo { position: absolute; inset: 0; overflow: hidden; }
+.scene--photo .scene__svg { position: absolute; inset: 0; }
+.scene--photo .scene__svg .scene { width: 100%; height: 100%; }
+.scene__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 1.2s var(--ease), transform 1.6s var(--ease); }
+.scene__img.is-loaded { opacity: 1; transform: scale(1); }

@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/Tgclint/',
     buildAssetsDir: '/_nuxt/',
-    pageTransition: { name: 'page', mode: 'default' },
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
       title: 'Fluid Glass — Exceptional glazing for those who build with vision.',
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/svg+xml', href: '/Tgclint/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap' }
       ]
     }
   },

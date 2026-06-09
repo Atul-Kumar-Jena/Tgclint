@@ -7,7 +7,7 @@
 
     <section class="hero" data-theme="dark">
       <div class="hero__media">
-        <HeroCanvas />
+        <Scene type="house" variant="moor" uid="hero" />
         <div class="hero__veil" />
         <svg class="hero__silhouette" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
           <path d="M0 180 Q 120 150 240 168 T 480 160 T 720 172 T 960 156 T 1200 170 T 1440 158 L1440 220 L0 220Z" fill="#0a0b0d" opacity=".8" />
