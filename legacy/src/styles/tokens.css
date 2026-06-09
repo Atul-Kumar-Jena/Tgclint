@@ -1,0 +1,99 @@
+/* ============================================================ design tokens */
+:root {
+  /* palette */
+  --bg-warm: #f1efe9;
+  --bg-warm-2: #e8e5dc;
+  --bg-dark: #0f1012;
+  --bg-dark-2: #16181b;
+  --ink: #15171a;
+  --ink-soft: #3c3e42;
+  --ink-inv: #ecebe4;
+  --ink-inv-soft: #c8c8c1;
+  --muted: #8a8a82;
+  --muted-inv: #93948d;
+  --line: rgba(18, 18, 20, .14);
+  --line-inv: rgba(255, 255, 255, .15);
+  --accent: #5d8089;
+  --accent-warm: #b9805a;
+
+  /* glass surfaces */
+  --glass-dark: rgba(20, 21, 24, .62);
+  --glass-tint: rgba(255, 255, 255, .06);
+  --glass-edge: rgba(255, 255, 255, .14);
+  --glass-blur: 18px;
+
+  /* depth */
+  --shadow-soft: 0 26px 70px rgba(0, 0, 0, .16);
+  --shadow-card: 0 18px 50px rgba(0, 0, 0, .14);
+  --shadow-pill: 0 14px 36px rgba(0, 0, 0, .3);
+
+  /* layout */
+  --maxw: 1560px;
+  --maxw-text: 64ch;
+  --pad-x: clamp(1.5rem, 6.5vw, 8.5rem);
+  --pad-y: clamp(6rem, 14vh, 16rem);
+  --gap: clamp(1.5rem, 2.6vw, 2.75rem);
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 100px;
+
+  /* type */
+  --font: "Hanken Grotesk", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --fs-eyebrow: clamp(.72rem, .82vw, .82rem);
+  --fs-body: clamp(1rem, .55rem + .55vw, 1.18rem);
+  --fs-lead: clamp(1.2rem, .9rem + .9vw, 1.6rem);
+  --fs-h3: clamp(1.35rem, 1rem + 1.4vw, 2.1rem);
+  --fs-h2: clamp(2rem, 1.1rem + 3.6vw, 4.5rem);
+  --fs-h1: clamp(2.6rem, 1rem + 7.6vw, 7.9rem);
+  --fs-display: clamp(3rem, 1rem + 9vw, 9.2rem);
+  --lh-tight: 1.0;
+  --lh-snug: 1.1;
+  --lh-body: 1.62;
+  --track-tight: -.025em;
+  --track-wide: .16em;
+
+  /* motion */
+  --ease: cubic-bezier(.16, 1, .3, 1);            /* expo.out — primary */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);       /* smooth out */
+  --ease-power3: cubic-bezier(.215, .61, .355, 1);
+  --ease-power4: cubic-bezier(.165, .84, .44, 1);
+  --ease-inout: cubic-bezier(.76, 0, .24, 1);     /* cinematic in-out */
+  --t-fast: .55s;
+  --t-med: 1.1s;
+  --t-slow: 1.5s;
+  --t-rev: 1.6s;          /* reveal duration */
+  --t-cinema: 2s;         /* hero / large media */
+  --stagger: .1s;         /* between sibling reveals */
+  --stagger-line: .12s;   /* between masked lines */
+
+  /* chrome */
+  --pill-h: 58px;
+  --z-pill: 60;
+  --z-menu: 80;
+  --z-quote: 90;
+  --z-loader: 120;
+  --z-cookie: 70;
+  --z-grain: 200;
+}
+
+/* per-section theme contexts */
+[data-theme="dark"] {
+  --bg: var(--bg-dark);
+  --fg: var(--ink-inv);
+  --fg-soft: var(--ink-inv-soft);
+  --local-muted: var(--muted-inv);
+  --local-line: var(--line-inv);
+  --on-dark: 1;
+  background: var(--bg);
+  color: var(--fg);
+}
+[data-theme="light"] {
+  --bg: var(--bg-warm);
+  --fg: var(--ink);
+  --fg-soft: var(--ink-soft);
+  --local-muted: var(--muted);
+  --local-line: var(--line);
+  --on-dark: 0;
+  background: var(--bg);
+  color: var(--fg);
+}

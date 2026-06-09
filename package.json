@@ -1,13 +1,21 @@
 {
   "name": "fluid-glass",
-  "version": "1.0.0",
-  "description": "Fluid Glass — editorial-luxury marketing site for architectural glazing. Self-contained static build (custom smooth-scroll + motion engine, canvas fluid-glass hero, SVG art direction).",
+  "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.mjs",
-    "serve": "node build.mjs && python3 -m http.server 8080 --directory dist",
-    "check": "node build.mjs && node tools/smoke.mjs"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
-  "license": "MIT",
-  "private": true
+  "dependencies": {
+    "gsap": "3.13.0",
+    "lenis": "1.1.20"
+  },
+  "devDependencies": {
+    "nuxt": "3.14.1592",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  }
 }
