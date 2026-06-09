@@ -2,7 +2,7 @@
 (function () {
   const FG = window.FG; if (!FG || FG.isTouch) return;
 
-  const EXPLORE = '[data-cursor="explore"], .card, .gallery__item, .project-media, .project-next, .feature__frame, .showroom__media, .hscroll__panel, .cta__pavilion, .page-hero__media, .project-hero__media';
+  const EXPLORE = '[data-cursor="explore"]';
   const HOVER = 'a, button, .chip, label, [data-hover]';
 
   function init() {

@@ -63,15 +63,25 @@
     }
 
     let running = true;
+    let io = null;
     resize();
     window.addEventListener('resize', resize);
     window.addEventListener('load', resize);
 
-    if (FG.reduce) { running = true; draw(0, 0); running = false; return; }
+    if (FG.reduce) { running = true; draw(0, 0); running = false; return function () {}; }
     FG.onTick(draw);
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver((es) => { running = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
+      io = new IntersectionObserver((es) => { running = es[0].isIntersecting; }, { threshold: 0 });
+      io.observe(canvas);
     }
+    // teardown for SPA navigation away from the hero
+    return function destroy() {
+      running = false;
+      FG.offTick(draw);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('load', resize);
+      if (io) io.disconnect();
+    };
   }
 
   FG.hero = { init };

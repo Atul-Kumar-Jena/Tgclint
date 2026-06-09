@@ -202,11 +202,10 @@ function navLinksSecondary(base, active) {
     `<a class="menu__sub" href="${a(n.href, base)}"${n.key === active ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
   ).join('\n');
 }
-function pillNav(base, active) {
-  const links = site.nav.map((n, i) =>
-    `<a href="${a(n.href, base)}" style="--i:${i}"${n.key === active ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
+function endnavLinks(base, active) {
+  return site.nav.map((n) =>
+    `<a href="${a(n.href, base)}"${n.key === active ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
   ).join('');
-  return links + `<button class="pill__cta" type="button" data-quote-open style="--i:${site.nav.length}">Get a quote</button>`;
 }
 function footerNav(base, active) {
   return [...site.nav, ...site.navSecondary].map((n) =>
@@ -232,7 +231,7 @@ function quoteButton(label, base, { variant = 'dark' } = {}) {
 }
 function productCards(base) {
   return site.products.map((p, i) => `
-    <a class="card card--product reveal" href="${a('collection.html#' + p.key, base)}" data-hover style="--i:${i}">
+    <a class="card card--product reveal" href="${a('collection.html#' + p.key, base)}" data-hover data-cursor="explore" style="--i:${i}">
       <div class="card__media" data-parallax-wrap><div data-parallax>${product(p.tint)}</div></div>
       <div class="card__row"><h3 class="card__title">${esc(p.name)}</h3><span class="card__index">0${i + 1}</span></div>
       <p class="card__summary">${esc(p.summary)}</p>
@@ -241,7 +240,7 @@ function productCards(base) {
 function projectCards(base, limit) {
   const list = limit ? site.projects.slice(0, limit) : site.projects;
   return list.map((p, i) => `
-    <a class="card card--project reveal" href="${a('projects/' + p.slug + '.html', base)}" data-hover style="--i:${i}">
+    <a class="card card--project reveal" href="${a('project-' + p.slug + '.html', base)}" data-hover data-cursor="explore" style="--i:${i}">
       <div class="card__media card__media--tall" data-parallax-wrap><div data-parallax>${house(p.scene)}</div>
         <span class="card__cursor" aria-hidden="true">View project</span></div>
       <div class="card__row"><h3 class="card__title">${esc(p.name)}</h3><span class="card__index">${esc(p.year)}</span></div>
@@ -269,7 +268,7 @@ function productSections() {
 function hscrollPanels(base) {
   const cards = site.projects.map((p, i) => `
     <article class="hscroll__panel">
-      <a href="${a('projects/' + p.slug + '.html', base)}" data-hover>
+      <a href="${a('project-' + p.slug + '.html', base)}" data-hover data-cursor="explore">
         <div class="hscroll__media"><div class="hscroll__layer" data-hpara>${house(p.scene)}</div></div>
         <div class="hscroll__meta">
           <div class="hscroll__row"><span class="hscroll__idx">0${i + 1}</span><span class="hscroll__loc">${esc(p.location)}</span></div>
@@ -370,7 +369,7 @@ function context(base, meta) {
     // fragments
     menuPrimary: navLinksBig(base, meta.active),
     menuSecondary: navLinksSecondary(base, meta.active),
-    pillNav: pillNav(base, meta.active),
+    endnavLinks: endnavLinks(base, meta.active),
     footerNav: footerNav(base, meta.active),
     socials: socialLinks(),
     quoteBtn: quoteButton('Get a quote', base, { variant: 'ghost' }),
@@ -445,11 +444,11 @@ function build() {
     writeFileSync(join(DIST, file), render(file, meta, ''));
   }
 
-  // project detail pages (dynamic [slug])
-  mkdirSync(join(DIST, 'projects'), { recursive: true });
+  // project detail pages (flattened to the root: project-<slug>.html -> one relative base,
+  // so client-side routing keeps every page at the same depth)
   const tpl = read(join(SRC, 'pages', '_project.html'));
   for (const pr of site.projects) {
-    const base = '../';
+    const base = '';
     const meta = { active: 'projects', navLabel: 'Projects', title: pr.name + ' — ' + site.brand, description: pr.summary, theme: 'dark' };
     const factRows = pr.facts.map(([k, v]) => `<div class="fact"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
     const storyP = pr.story.map((s) => `<p>${esc(s)}</p>`).join('');
@@ -467,7 +466,7 @@ function build() {
       .replace(/<!--\s*@PROJECT_HERO\s*-->/g, house(pr.scene, { ratio: '16 / 9' }))
       .replace(/<!--\s*@PROJECT_INT\s*-->/g, interior(pr.scene === 'moor' ? 'moor' : 'day'))
       .replace(/<!--\s*@PROJECT_DETAIL\s*-->/g, detail(pr.scene))
-      .replace(/<!--\s*@NEXT_HREF\s*-->/g, base + 'projects/' + next.slug + '.html')
+      .replace(/<!--\s*@NEXT_HREF\s*-->/g, 'project-' + next.slug + '.html')
       .replace(/<!--\s*@NEXT_NAME\s*-->/g, esc(next.name))
       .replace(/<!--\s*@NEXT_SCENE\s*-->/g, house(next.scene, { ratio: '21 / 9' }));
     html = applyTokens(html, pageTokens(base));
@@ -475,7 +474,7 @@ function build() {
     html = applyVars(html, context(base, meta));
     const leftover = html.match(/\{\{[^}]+\}\}|<!--\s*@[A-Z0-9_]+\s*-->/);
     if (leftover) throw new Error(`Unresolved token in project ${pr.slug}: ${leftover[0]}`);
-    writeFileSync(join(DIST, 'projects', pr.slug + '.html'), html);
+    writeFileSync(join(DIST, 'project-' + pr.slug + '.html'), html);
   }
 
   // assets
@@ -483,7 +482,7 @@ function build() {
 
   // concatenated styles + scripts
   const cssOrder = ['tokens.css', 'base.css', 'layout.css', 'nav.css', 'components.css', 'sections.css', 'pages.css', 'responsive.css'];
-  const jsOrder = ['core.js', 'smooth-scroll.js', 'motion.js', 'split.js', 'hero.js', 'loader.js', 'nav.js', 'menu.js', 'quote.js', 'stories.js', 'hscroll.js', 'pill-expand.js', 'cursor.js', 'cookie.js', 'main.js'];
+  const jsOrder = ['core.js', 'smooth-scroll.js', 'motion.js', 'split.js', 'hero.js', 'loader.js', 'nav.js', 'router.js', 'menu.js', 'quote.js', 'stories.js', 'hscroll.js', 'pill-expand.js', 'cursor.js', 'cookie.js', 'main.js'];
   writeFileSync(join(DIST, 'app.css'), concat('styles', cssOrder));
   writeFileSync(join(DIST, 'app.js'), concat('scripts', jsOrder));
 
@@ -491,7 +490,7 @@ function build() {
   writeFileSync(join(DIST, '.nojekyll'), '');
   writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${site.url}sitemap.xml\n`);
   const urls = [...Object.keys(PAGES).map((f) => f === 'index.html' ? '' : f),
-    ...site.projects.map((p) => 'projects/' + p.slug + '.html')];
+    ...site.projects.map((p) => 'project-' + p.slug + '.html')];
   writeFileSync(join(DIST, 'sitemap.xml'),
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     urls.map((u) => `  <url><loc>${site.url}${u}</loc></url>`).join('\n') + `\n</urlset>\n`);

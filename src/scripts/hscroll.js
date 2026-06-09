@@ -17,6 +17,7 @@
       if (panels) panels.forEach((p) => {
         const l = p.querySelector('[data-hpara]'); if (l) l.style.transform = '';
         const m = p.querySelector('.hscroll__meta'); if (m) { m.style.opacity = ''; m.style.transform = ''; }
+        const md = p.querySelector('.hscroll__media'); if (md) md.style.clipPath = '';
       });
       distance = 0;
       return;
@@ -38,7 +39,6 @@
     projectCount = panels.filter((p) => !p.classList.contains('hscroll__panel--end')).length || panels.length;
 
     layout();
-    window.addEventListener('resize', layout);
 
     if (!FG.motion) return;
     const vw = () => window.innerWidth;
@@ -52,14 +52,17 @@
       for (let i = 0; i < panels.length; i++) {
         const r = panels[i].getBoundingClientRect();
         const c = (r.left + r.width / 2 - w / 2) / w; // -1..1 distance from centre
+        const k = Math.min(Math.abs(c), 1);
         const layer = panels[i].querySelector('[data-hpara]');
         if (layer) layer.style.transform = 'translate3d(' + (c * 5).toFixed(2) + '%,0,0) scale(1.12)';
-        // content reveals at the story moment — clearest when the panel is centred
+        // images unfold open as each panel arrives at centre
+        const media = panels[i].querySelector('.hscroll__media');
+        if (media) media.style.clipPath = 'inset(0 ' + Math.min(k * 22, 46).toFixed(1) + '% round 14px)';
+        // content stays quiet, clears as the panel reaches its story moment
         const meta = panels[i].querySelector('.hscroll__meta');
         if (meta) {
-          const k = Math.min(Math.abs(c) * 1.5, 1);
-          meta.style.opacity = (1 - k * 0.85).toFixed(3);
-          meta.style.transform = 'translateY(' + (k * 18).toFixed(1) + 'px)';
+          meta.style.opacity = (1 - k * 0.9).toFixed(3);
+          meta.style.transform = 'translateY(' + (k * 16).toFixed(1) + 'px)';
         }
       }
       if (count) {

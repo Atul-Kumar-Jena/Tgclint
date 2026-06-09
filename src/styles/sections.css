@@ -109,10 +109,10 @@ body.is-loaded .hero__scroll { opacity: 1; }
 /* "Where vision meets execution": long pinned reveal — sketch holds, render comes forward */
 .cta__reveal { position: relative; z-index: 1; height: 220vh; margin-top: clamp(2rem, 5vh, 4rem); }
 .cta__pin { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.pavilion { display: block; width: min(116%, 1500px); height: auto; transform-origin: 50% 74%; will-change: transform; }
+.pavilion { display: block; width: min(86%, 1120px); height: auto; transform-origin: 50% 78%; will-change: transform; }
 .pavilion__line * { fill: none; stroke: #1c1d1f; stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .pavilion__line .pv-foliage path { stroke: #2a2b2d; }
-@media (max-width: 1024px) { .cta__reveal { height: 180vh; } .pavilion { width: 132%; } }
+@media (max-width: 1024px) { .cta__reveal { height: 170vh; } .pavilion { width: 94%; } }
 @media (prefers-reduced-motion: reduce) { .cta__reveal { height: auto; } .cta__pin { position: relative; height: auto; padding-block: clamp(2rem, 6vh, 5rem); } }
 
 /* =============================================================== approach steps */
@@ -171,8 +171,9 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .hscroll__panel .scene { transition: transform 1.6s var(--ease); }
 .hscroll__panel:hover .hscroll__media .scene { transform: scale(1.05); }
 .hscroll__meta { margin-top: 1.3rem; }
-.hscroll__row { display: flex; justify-content: space-between; color: var(--local-muted, var(--muted)); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
-.hscroll__name { font-size: var(--fs-h3); font-weight: 500; margin: .6rem 0 .8rem; }
+.hscroll__row { display: flex; justify-content: space-between; color: var(--local-muted, var(--muted)); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; }
+.hscroll__name { font-size: clamp(1.3rem, 1.7vw, 1.7rem); font-weight: 400; letter-spacing: -.01em; color: var(--fg-soft, var(--ink-soft)); margin: .7rem 0 .9rem; }
+.hscroll__meta { transition: opacity .4s var(--ease); }
 .hscroll__panel--end { display: flex; align-items: center; width: min(44vw, 460px); }
 .hscroll__end { padding: 2rem 0; }
 .hscroll__end .eyebrow { margin-bottom: 1.2rem; }

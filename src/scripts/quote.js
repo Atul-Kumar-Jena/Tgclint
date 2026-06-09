@@ -5,7 +5,6 @@
   function init() {
     const quote = document.getElementById('quote'); if (!quote) return;
     const panel = quote.querySelector('.quote__panel');
-    const openers = document.querySelectorAll('[data-quote-open]');
     const closers = quote.querySelectorAll('[data-quote-close]');
     const pill = document.querySelector('[data-pill]');
     const form = quote.querySelector('[data-quote-form]');
@@ -30,7 +29,11 @@
       lastFocus && lastFocus.focus && lastFocus.focus();
     }
 
-    openers.forEach((o) => o.addEventListener('click', open));
+    // delegate openers so buttons inside swapped-in pages keep working
+    document.addEventListener('click', (e) => {
+      const o = e.target.closest && e.target.closest('[data-quote-open]');
+      if (o) { e.preventDefault(); open(); }
+    });
     closers.forEach((c) => c.addEventListener('click', close));
     quote.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 

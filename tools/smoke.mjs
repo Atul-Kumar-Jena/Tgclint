@@ -55,7 +55,7 @@ need('index.html', 'data-menu-open', 'menu opener');
 need('index.html', 'data-quote-open', 'quote opener');
 need('approach.html', 'class="step"', 'approach steps');
 need('collection.html', 'class="product-section"', 'product sections');
-need('projects/ashmead-barn.html', 'project-hero', 'project hero');
+need('project-ashmead-barn.html', 'project-hero', 'project hero');
 
 // every page must load the chrome + scripts
 for (const file of files) {

@@ -4,12 +4,7 @@
 
   function init() {
     const loader = document.querySelector('[data-loader]');
-    if (!loader) {
-      document.body.classList.add('is-loaded');
-      FG.enter && FG.enter();
-      FG.motion && FG.motion.revealHero();
-      return;
-    }
+    if (!loader) { document.body.classList.add('is-loaded'); return; }
 
     FG.scroll && FG.scroll.lock();
     requestAnimationFrame(() => loader.classList.add('is-ready'));

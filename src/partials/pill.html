@@ -1,23 +1,8 @@
 <nav class="pill glass" aria-label="Primary" data-pill>
-  <div class="pill__panel" data-pill-panel aria-hidden="true">
-    <div class="pill__panel-inner">
-      <p class="pill__panel-label">Navigate</p>
-      <div class="pill__links">{{pillNav}}</div>
-      <div class="pill__panel-foot">
-        <div class="pill__contact">
-          <a href="{{phoneHref}}" data-hover>{{phone}}</a>
-          <a href="{{emailHref}}" data-hover>{{email}}</a>
-        </div>
-        <div class="pill__socials">{{socials}}</div>
-      </div>
-    </div>
-  </div>
-  <div class="pill__bar">
-    <a class="pill__logo" href="{{base}}index.html" aria-label="{{brand}} — home" data-hover>{{> logo }}</a>
-    <span class="pill__label" data-pill-label>{{navLabel}}</span>
-    <button class="pill__menu" type="button" data-menu-open aria-expanded="false" aria-controls="menu">
-      <span class="pill__bars" aria-hidden="true"><i></i><i></i></span>
-      <span class="sr-only">Open menu</span>
-    </button>
-  </div>
+  <a class="pill__logo" href="{{base}}index.html" aria-label="{{brand}} — home" data-hover>{{> logo }}</a>
+  <span class="pill__label" data-pill-label>{{navLabel}}</span>
+  <button class="pill__menu" type="button" data-menu-open aria-expanded="false" aria-controls="menu">
+    <span class="pill__bars" aria-hidden="true"><i></i><i></i></span>
+    <span class="sr-only">Open menu</span>
+  </button>
 </nav>
