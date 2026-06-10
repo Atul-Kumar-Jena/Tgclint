@@ -1,5 +1,10 @@
 /* ================================================================ footer */
-.footer { padding-block: clamp(4.5rem, 9vh, 8rem) clamp(1.6rem, 3vh, 2.6rem); position: relative; z-index: 1; }
+.footer {
+  padding-block: clamp(4.5rem, 9vh, 8rem) clamp(1.6rem, 3vh, 2.6rem); position: relative; z-index: 1;
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0; margin-top: calc(-1 * var(--sheet-r));
+  box-shadow: 0 -28px 70px rgba(10, 14, 10, .25);
+}
+.footer__wa { color: var(--accent-warm); }
 .footer__top {
   display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap;
   padding-bottom: clamp(2.5rem, 6vh, 5rem); border-bottom: 1px solid var(--local-line, var(--line));

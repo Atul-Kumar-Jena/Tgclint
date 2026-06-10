@@ -11,6 +11,7 @@
       <div class="cta__pin"><Scene type="pavilion" uid="pav" /></div>
     </div>
   </section>
+  <SiteFooter />
 </template>
 
 <script setup lang="ts">

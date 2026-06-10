@@ -38,7 +38,7 @@ export default defineNuxtConfig({
       failOnError: false,
       routes: [
         '/', '/about', '/collection', '/projects', '/approach', '/contact', '/news', '/showroom',
-        '/projects/laxmi-narayan-vihar', '/projects/paradeep-phase-two', '/projects/jagatsinghpur-enclave', '/projects/kujang-corridor',
+        '/projects/laxmi-narayan-vihar', '/projects/mne-jagatsinghpur', '/projects/iit-bhubaneswar',
         '/news/sasta-ru-hinasta-trap', '/news/hidden-health-cost', '/news/land-into-landmark'
       ]
     }

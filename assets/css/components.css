@@ -31,6 +31,7 @@
 .btn--light { background: var(--ink-inv); color: var(--ink); --btn-fill: #ffffff; }
 .btn--ghost { background: transparent; border-color: var(--local-line, var(--line)); color: var(--fg, var(--ink)); --btn-fill: color-mix(in srgb, currentColor 12%, transparent); }
 .btn--mini { padding: .55rem 1rem; font-size: .68rem; letter-spacing: .1em; }
+.btn--wa { background: #0d3b32; color: #f2f0ea; border-color: var(--accent); --btn-fill: rgba(240, 104, 30, .25); }
 
 /* ============================================================ text links */
 .link-wipe { position: relative; }

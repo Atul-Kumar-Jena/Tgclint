@@ -22,6 +22,20 @@
       </div>
     </section>
 
+    <section id="interior-solutions" class="section" data-theme="dark">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:clamp(2rem,4vw,3rem)">Interior design services</p>
+        <div class="values">
+          <div v-for="(s, i) in site.interiorSolutions" :key="s.title" class="value reveal" :style="`--i:${i}`">
+            <p class="value__num">0{{ i + 1 }}</p>
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.copy }}</p>
+          </div>
+        </div>
+        <div class="reveal" style="margin-top:clamp(2rem,4vw,3rem)"><Btn label="Start your interior project" variant="light" quote /></div>
+      </div>
+    </section>
+
     <FgCta label="All projects" to="/projects" />
   </div>
 </template>

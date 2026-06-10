@@ -9,11 +9,14 @@ const site = {
   brand: 'Saansud Infra',
   tagline: 'Land you can build a life on.',
   description: 'Saansud Infra develops approved residential plots, gated communities and quality construction across Odisha — with transparency, trust and care at every step, from site selection to registry and beyond.',
-  phone: '+91 99999 00000',
-  phoneHref: 'tel:+919999900000',
-  email: 'hello@saansud.com',
-  emailHref: 'mailto:hello@saansud.com',
-  address: ['Saansud Infra Pvt. Ltd.', 'Bhubaneswar, Odisha', 'CIN U41000OD2024PTC045712'],
+  phone: '+91 92373 84023',
+  phoneHref: 'tel:+919237384023',
+  whatsapp: 'https://wa.me/919237384023',
+  email: 'info@saansud.com',
+  emailHref: 'mailto:info@saansud.com',
+  address: ['Saansud Infra Private Limited', 'OU-305, Esplanade One, Rasulgarh', 'Bhubaneswar 751010, Odisha, India'],
+  copyright: '© 2025 Official Website of Saansud Infra Private Limited. | All Rights Reserved.',
+  termsHref: 'https://saansud.com/terms-and-conditions.html',
   rating: '4.9',
   ratingCount: '180+',
   nav: [
@@ -41,10 +44,14 @@ const site = {
   ],
   projects: [
     { slug: 'laxmi-narayan-vihar', name: 'Laxmi Narayan Vihar', location: 'Paradeep–Kujang Road, Odisha', year: 'Registrations open', scene: 'barn', tags: ['Residential plots', 'Gated community'], summary: 'Our flagship gated community — 59 planned plots over 1.30 lakh sq ft on the Paradeep–Kujang Road, with roads, lighting and amenities built first.', intro: 'Laxmi Narayan Vihar is planned the way we believe every plot project should be: infrastructure first. Concrete roads, boundary wall, street lighting and drainage go in before a single registry is signed.', facts: [['Plots', '59 planned plots'], ['Extent', '1.30 lakh sq ft'], ['Location', 'Paradeep–Kujang Road'], ['Status', 'Registrations open']], story: ['The site sits on a corridor that is growing quickly — near schools, hospitals, banks and the port economy of Paradeep. We chose it for what it will feel like to live there in ten years, not just what it costs today.', 'Inside the wall: tree-lined avenues, walkways, stormwater drainage, a community hall, a kids’ play area, round-the-clock security and a temple at the heart of the layout. Buy a plot, and the neighbourhood is already on its way.'] },
-    { slug: 'paradeep-phase-two', name: 'Paradeep — Phase II', location: 'Paradeep, Odisha', year: 'In planning', scene: 'coast', tags: ['Residential plots'], summary: 'The next phase of our Paradeep story — land identified, layout under design. Details to be announced.', intro: 'Following Laxmi Narayan Vihar, Phase II extends the same infrastructure-first promise along the coastal corridor. Layout and approvals are in progress.', facts: [['Stage', 'Layout design'], ['Corridor', 'Paradeep coastal belt'], ['Approach', 'Infrastructure first'], ['Status', 'Announcing soon']], story: ['Every Saansud project begins long before launch — soil, access, drainage and title work are settled first, so what we announce is already real.', 'Register your interest and our team will share the layout, pricing and timelines the moment they are ready.'] },
-    { slug: 'jagatsinghpur-enclave', name: 'Jagatsinghpur Enclave', location: 'Jagatsinghpur, Odisha', year: 'Land assembly', scene: 'cottage', tags: ['Gated community'], summary: 'A planned enclave in Jagatsinghpur district — land assembly underway, designed around shade, water and walkable streets.', intro: 'Jagatsinghpur is where many of our buyers grew up. This enclave is being assembled plot by plot, with the masterplan drawn around existing trees and natural drainage.', facts: [['Stage', 'Land assembly'], ['District', 'Jagatsinghpur'], ['Masterplan', 'In design'], ['Status', 'Announcing soon']], story: ['We assemble land slowly and openly — every parcel verified, every seller settled fairly. It takes longer. It is the only way we work.', 'The masterplan keeps the big trees, follows the natural fall of the land for drainage, and reserves the best corner for the community, not the showroom.'] },
-    { slug: 'kujang-corridor', name: 'Kujang Corridor Sites', location: 'Kujang, Odisha', year: 'Survey', scene: 'moor', tags: ['Residential plots', 'Investment'], summary: 'Select road-facing sites along the Kujang corridor, under survey for future phases and early-interest registration.', intro: 'The Kujang corridor connects daily life to the port economy. We are surveying select road-facing parcels here for future phases.', facts: [['Stage', 'Survey & diligence'], ['Corridor', 'Kujang'], ['Use', 'Residential / investment'], ['Status', 'Early interest open']], story: ['Corridors reward patience: the right parcel at the right junction, bought clean, held with proper papers, served by real roads.', 'Early-interest buyers see our diligence file before they see a brochure — survey notes, title chain, access and utilities, in plain language.'] }
+    { slug: 'mne-jagatsinghpur', name: 'MNE — Jagatsinghpur', location: 'Jagatsinghpur, Odisha', year: 'Active', scene: 'cottage', tags: ['Development'], summary: 'An active Saansud Infra development in Jagatsinghpur district. Layout, pricing and registration details are available from the team.', intro: 'MNE carries the same promise as every Saansud site: verified land, planned infrastructure and paperwork you can read before you commit.', facts: [['Project', 'MNE'], ['District', 'Jagatsinghpur'], ['Status', 'Active'], ['Details', 'On request']], story: ['Jagatsinghpur is home ground for many of our buyers — and for us. We develop here the way we would for our own families: infrastructure first, documents open.', 'Call the team or book a weekend visit, and walk the site with the people who are building it.'] },
+    { slug: 'iit-bhubaneswar', name: 'IIT — Bhubaneswar', location: 'Bhubaneswar, Odisha', year: 'Active', scene: 'moor', tags: ['Development'], summary: 'A Saansud Infra project in Bhubaneswar — details, drawings and timelines available on request from our Rasulgarh office.', intro: 'In the capital, the brief is precision: tight sites, exact approvals, careful neighbours. IIT is run from our corporate office a short drive away.', facts: [['Project', 'IIT'], ['City', 'Bhubaneswar'], ['Status', 'Active'], ['Details', 'On request']], story: ['City projects are won on coordination — approvals, utilities, access and sequencing managed daily by a dedicated engineer.', 'Visit our Esplanade One office and the team will take you through the drawings, the schedule and the site itself.'] }
   ] as Project[],
+  interiorSolutions: [
+    { title: 'Space Planning', copy: 'Modern workspace layouts designed to improve productivity and aesthetics.' },
+    { title: 'Interior Designing', copy: 'Elegant and functional interior concepts tailored to your lifestyle.' },
+    { title: 'Home Decoration', copy: 'Decor elements and styling that enhance beauty and comfort.' }
+  ],
   testimonials: [
     { quote: 'Every document was on the table before we paid a rupee. The plot, the papers, the road outside — all exactly as promised.', name: 'Pratap Mohanty', role: 'Plot owner, Laxmi Narayan Vihar', initials: 'PM' },
     { quote: 'We visited on a Sunday, walked the boundary, saw the drainage being laid. That honesty is why we registered the same month.', name: 'Sasmita Behera', role: 'Homebuyer, Paradeep', initials: 'SB' },
