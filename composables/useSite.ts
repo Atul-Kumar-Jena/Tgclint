@@ -64,10 +64,12 @@ const site = {
     { index: '3', label: 'Handover & warranty', title: ['Handover is', 'a promise, kept.'], body: 'You move into a finished, documented home — approved plans, certificates and clearances in hand — backed by a workmanship warranty and aftercare that actually answers the phone.', scene: 'install' }
   ],
   news: [
-    { slug: 'lnv-registrations-open', title: 'Registrations open at Laxmi Narayan Vihar, Paradeep', date: '2026-04-18', category: 'Projects', excerpt: '59 planned plots over 1.30 lakh sq ft on the Paradeep–Kujang Road — gated, lit, drained and tree-lined. Site visits every weekend.' },
-    { slug: 'plot-buyers-checklist', title: 'The plot buyer’s checklist for Odisha', date: '2026-03-02', category: 'Guides', excerpt: 'Title chain, conversion, approvals, access and drainage — the five questions to ask before you fall in love with a piece of land.' },
-    { slug: 'construction-packages', title: 'Standard, Premium or Luxury — choosing your build package', date: '2026-01-21', category: 'Guides', excerpt: 'Three finish categories, one promise. What changes between packages — materials, fittings, warranty — and what never does.' },
-    { slug: 'development-standards', title: 'Inside our development standards', date: '2025-11-09', category: 'Craft', excerpt: 'What "infrastructure first" actually means at a Saansud site: road sections, wall specs, lighting spacing and drainage falls.' }
+    { slug: 'lnv-walkthrough', or: 'ଲକ୍ଷ୍ମୀନାରାୟଣ ବିହାର ବୁଲି ଦେଖନ୍ତୁ', title: 'A walk through Laxmi Narayan Vihar', date: '2026-05-12', category: 'Vlog', excerpt: 'Concrete roads, the boundary wall, the temple plot and the first homes — a slow walk through our flagship community in Paradeep.' },
+    { slug: 'lnv-registrations-open', or: 'ପାରାଦୀପରେ ପଞ୍ଜୀକରଣ ଆରମ୍ଭ', title: 'Registrations open at Laxmi Narayan Vihar', date: '2026-04-18', category: 'Projects', excerpt: '59 planned plots over 1.30 lakh sq ft on the Paradeep–Kujang Road — gated, lit, drained and tree-lined. Site visits every weekend.' },
+    { slug: 'plot-buyers-checklist', or: 'ଜମି କିଣିବା ପୂର୍ବରୁ — ଆପଣଙ୍କ ଚେକ୍‌ଲିଷ୍ଟ', title: 'The plot buyer’s checklist for Odisha', date: '2026-03-02', category: 'Guides', excerpt: 'Title chain, conversion, approvals, access and drainage — the five questions to ask before you fall in love with a piece of land.' },
+    { slug: 'monsoon-foundations', or: 'ସାଇଟ୍ ଡାଏରୀ: ବର୍ଷା ପାଇଁ ମୂଳଦୁଆ ପ୍ରସ୍ତୁତି', title: 'Site diary — monsoon-proofing the foundations', date: '2026-02-14', category: 'Vlog', excerpt: 'Soil reports, curing under cover and why we pour nothing the rain can ruin. Four minutes from a wet week on site.' },
+    { slug: 'construction-packages', or: 'ଷ୍ଟାଣ୍ଡାର୍ଡ, ପ୍ରିମିୟମ୍ ନା ଲକ୍ସରି?', title: 'Standard, Premium or Luxury — choosing your build package', date: '2026-01-21', category: 'Guides', excerpt: 'Three finish categories, one promise. What changes between packages — materials, fittings, warranty — and what never does.' },
+    { slug: 'development-standards', or: 'ଆମ ନିର୍ମାଣ ମାନର ଭିତର କଥା', title: 'Inside our development standards', date: '2025-11-09', category: 'Craft', excerpt: 'What "infrastructure first" actually means at a Saansud site: road sections, wall specs, lighting spacing and drainage falls.' }
   ]
 }
 

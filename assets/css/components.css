@@ -145,8 +145,15 @@ body.is-booting { overflow: hidden; }
   transition: opacity .5s var(--ease), transform .6s var(--ease);
 }
 .news-item:hover::after { opacity: 1; transform: translate(0, -50%); }
-.news-item__cat { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--local-muted, var(--muted)); }
-.news-item__title { font-size: var(--fs-h3); font-weight: 500; margin-top: .8rem; max-width: 30ch; transition: transform .7s var(--ease-power3); }
+.news-item__cat { display: inline-flex; align-items: center; gap: .55em; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--local-muted, var(--muted)); }
+.news-item__play { width: 0; height: 0; border-left: 7px solid var(--accent); border-block: 4.5px solid transparent; display: inline-block; }
+.news-item__or {
+  font-family: "Noto Sans Oriya", var(--font-display); font-weight: 600; letter-spacing: 0;
+  font-size: clamp(1.5rem, 1.1rem + 1.7vw, 2.5rem); line-height: 1.35; margin-top: .9rem; max-width: 26ch;
+  transition: transform .7s var(--ease-power3);
+}
+.news-item:hover .news-item__or { transform: translateX(12px); }
+.news-item__title { font-size: clamp(1rem, .9rem + .5vw, 1.3rem); font-weight: 500; color: var(--ink-soft); margin-top: .35rem; max-width: 44ch; transition: transform .7s var(--ease-power3) .04s; }
 .news-item:hover .news-item__title { transform: translateX(12px); }
 .news-item__cat, .news-item__excerpt, .news-item__date { transition: color .5s var(--ease); }
 .news-item__excerpt { margin-top: .7rem; color: var(--local-muted, var(--muted)); max-width: 55ch; }

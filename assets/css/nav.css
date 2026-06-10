@@ -18,7 +18,8 @@
    unfolds upward into the menu (click) or the end-of-page nav (scroll) —
    a single morph of width, height and radius. Nothing pops in. */
 .dockzone {
-  position: fixed; left: 0; right: 0; bottom: clamp(18px, 3vh, 32px);
+  position: fixed; left: 0; right: 0;
+  bottom: calc(clamp(16px, 2.8vh, 30px) + env(safe-area-inset-bottom, 0px));
   z-index: var(--z-pill); display: flex; justify-content: center;
   pointer-events: none;
 }

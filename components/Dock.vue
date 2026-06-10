@@ -69,8 +69,9 @@ onMounted(() => {
     const remaining = scrollable - window.scrollY
     if (remaining > window.innerHeight * 1.4) suppressEnd.value = false
     if (suppressEnd.value) return
-    if (!endShown.value && remaining < window.innerHeight * 0.85) endShown.value = true
-    else if (endShown.value && remaining > window.innerHeight * 1.35) endShown.value = false
+    const openAt = window.innerWidth <= 768 ? 0.55 : 0.85
+    if (!endShown.value && remaining < window.innerHeight * openAt) endShown.value = true
+    else if (endShown.value && remaining > window.innerHeight * (openAt + 0.5)) endShown.value = false
   }
   window.addEventListener('scroll', onScroll, { passive: true })
 })

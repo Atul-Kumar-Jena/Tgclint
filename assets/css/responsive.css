@@ -33,7 +33,13 @@
 
 /* =============================================================== ≤768px */
 @media (max-width: 768px) {
-  :root { --pad-y: clamp(4rem, 9vh, 7rem); }
+  :root { --pad-y: clamp(4rem, 9vh, 7rem); --sheet-r: 22px; }
+  /* lighter compositing for small GPUs: drop grain, ease the blurs */
+  .grain { display: none; }
+  .dock { -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%); }
+  .dock-scrim { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .hscroll__head { padding-top: clamp(3rem, 8vh, 5rem); }
+  .news-item__or { max-width: 100%; }
   .projects__grid { grid-template-columns: 1fr; }
   .projects__grid .card:nth-child(even) { margin-top: 0; }
   .collection__grid { grid-template-columns: 1fr 1fr; }
