@@ -17,7 +17,7 @@
   background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease);
 }
 .footer a[data-hover]:hover::after, .footer a[data-hover]:focus-visible::after { transform: scaleX(1); }
-.footer__nav a[aria-current="page"] { color: #9fc0c8; }
+.footer__nav a[aria-current="page"] { color: var(--gold); }
 .footer__socials { display: flex; gap: .55rem; flex-wrap: wrap; }
 .footer__socials a {
   width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--local-line, var(--line));

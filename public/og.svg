@@ -1,15 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101113"/><stop offset="1" stop-color="#1b1d20"/></linearGradient>
-    <radialGradient id="glow" cx=".7" cy=".25" r=".7"><stop offset="0" stop-color="#7fa6b5" stop-opacity=".5"/><stop offset="1" stop-color="#7fa6b5" stop-opacity="0"/></radialGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d2342"/><stop offset="1" stop-color="#10131f"/>
+    </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="1200" height="630" fill="url(#glow)"/>
-  <g transform="translate(90,250)" fill="#f1efe9">
-    <g transform="translate(0,-58) scale(2.1)"><path d="M16 5.4 25.6 11 25.6 21 16 26.6 6.4 21 6.4 11Z" fill="none" stroke="#f1efe9" stroke-width="1.5" stroke-linejoin="round"/><path d="M16 9.6 21.2 12.6 21.2 19.4 16 22.4 16 9.6Z" fill="#f1efe9" opacity=".9"/><path d="M16 9.6 10.8 12.6 10.8 19.4 16 22.4 16 9.6Z" fill="#f1efe9" opacity=".4"/></g>
-    <text x="92" y="-12" font-family="Hanken Grotesk, Helvetica, Arial, sans-serif" font-size="40" font-weight="600" letter-spacing="-1">Fluid Glass</text>
-    <text x="0" y="70" font-family="Hanken Grotesk, Helvetica, Arial, sans-serif" font-size="78" font-weight="500" letter-spacing="-2" fill="#f1efe9">Exceptional glazing for</text>
-    <text x="0" y="158" font-family="Hanken Grotesk, Helvetica, Arial, sans-serif" font-size="78" font-weight="500" letter-spacing="-2" fill="#f1efe9">those who build with vision.</text>
-    <text x="0" y="250" font-family="Hanken Grotesk, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#9a9a93" letter-spacing="3">STRUCTURAL &amp; ARCHITECTURAL GLAZING</text>
+  <g transform="translate(96 88) scale(3.4)">
+    <path d="M14 5.6 C10 9.2 7 13.4 7 17.8 a9 9 0 0 0 18 0 c0 -3 -1.4 -5.8 -3.2 -8.2 C19.8 6.8 17 4.6 14 5.6 Z" fill="#f0681e"/>
+    <path d="M19.6 3.4 c1.3 -.8 2.6 -.5 3.2 .3 l2.3 -.2 -1.7 1.1 c.1 1 -.7 1.9 -1.9 2.3 l-3 .9 c-.3 -1.8 -.3 -3.2 1.1 -4.4 Z" fill="#f0681e"/>
+    <path d="M19.3 11.6 c-1 -1.3 -3.1 -1.6 -4.5 -.7 -1.5 .9 -1.7 2.6 -.6 3.6 .9 .9 2.5 1 3.7 1.8 1.4 .8 1.7 2.3 .7 3.4 -1.2 1.2 -3.5 1 -4.7 -.4" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/>
+    <path d="M20.2 8.9 L11.9 24.1" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
   </g>
+  <text x="96" y="330" font-family="Helvetica, Arial, sans-serif" font-size="92" font-weight="800" fill="#f0681e">Saansud</text>
+  <text x="100" y="384" font-family="Helvetica, Arial, sans-serif" font-size="34" letter-spacing="22" fill="#f2f0ea">INFRA</text>
+  <text x="96" y="496" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#c9c9cf">Land you can build a life on.</text>
+  <text x="96" y="556" font-family="Helvetica, Arial, sans-serif" font-size="20" letter-spacing="6" fill="#8e93ab">CONSTRUCTION · PLOTS · INTERIORS · ODISHA</text>
 </svg>

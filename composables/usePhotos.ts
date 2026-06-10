@@ -3,12 +3,12 @@
 // if a photo ever fails — so the site is photo-driven but never shows a broken image.
 // Swap any id for your own licensed shots later.
 const PHOTO: Record<string, string> = {
-  // house exteriors / projects
+  // developments / land / homes
   barn: '1600585154340-be6161a56a0c',
   cottage: '1512917774080-9991f1c4c750',
   coast: '1499793983690-e29da59ef1c2',
-  moor: '1416331108676-a22ccb276e35',
-  hero: '1600566753086-00f18fb6b3ea',
+  moor: '1564013799919-ab600027ffc6',
+  hero: '1500382017468-9049fed747ef',
   // glazing products
   doors: '1600210492493-0946911123ea',
   windows: '1503387762-592deb58ef4e',

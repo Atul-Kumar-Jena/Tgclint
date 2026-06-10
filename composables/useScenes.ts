@@ -1,12 +1,12 @@
 // Self-contained SVG "scenes" (architectural glazing art). Deterministic ids per `u`
 // so server-rendered and client markup match (no hydration mismatch).
 const PAL: Record<string, any> = {
-  barn: { sky: ['#c9d2cb', '#a7b2a6', '#86927f'], ground: '#76856b', wall: '#26282455', glass: '#e7efe9', glassEdge: '#1d1f1c', sun: '#f3efe4', sunX: 660, sea: false },
-  cottage: { sky: ['#dde6ef', '#c4d2e0', '#a7b7c9'], ground: '#9aa886', wall: '#8a5a4455', glass: '#eef4f0', glassEdge: '#5e3b2c', sun: '#fff5e6', sunX: 180, sea: false },
-  coast: { sky: ['#d6e9f1', '#bfe1ea', '#a9d3df'], ground: '#5f93a0', wall: '#e6e4dd55', glass: '#e3f1f5', glassEdge: '#2b3a40', sun: '#fffaf0', sunX: 620, sea: true },
-  moor: { sky: ['#c0b9c6', '#9c95a8', '#766f86'], ground: '#6c675f', wall: '#7c4a3255', glass: '#dadfe4', glassEdge: '#3a2a20', sun: '#efe6df', sunX: 200, sea: false },
-  dusk: { sky: ['#f0d9c2', '#d7a98f', '#8c6f86'], ground: '#5b5560', wall: '#2a262e55', glass: '#f3e4d6', glassEdge: '#241f29', sun: '#ffe9cf', sunX: 600, sea: false },
-  day: { sky: ['#dfeaf2', '#cadbe9', '#b6ccdd'], ground: '#93a98e', wall: '#deded6aa', glass: '#e8f2f4', glassEdge: '#33414a', sun: '#fffdf6', sunX: 560, sea: false }
+  barn: { sky: ['#ecdfc2', '#d8c298', '#b5a071'], ground: '#7f9a58', wall: '#2c261d55', glass: '#f5ecd6', glassEdge: '#23311f', sun: '#ffe9c0', sunX: 640, sea: false },
+  cottage: { sky: ['#f1e5cf', '#dec9a6', '#bda884'], ground: '#94a763', wall: '#9c5c3855', glass: '#f7efdd', glassEdge: '#5e3a24', sun: '#fff1d2', sunX: 190, sea: false },
+  coast: { sky: ['#ddece2', '#bedccb', '#9bc4ad'], ground: '#5d9a86', wall: '#efe7d255', glass: '#e9f4e9', glassEdge: '#2b4034', sun: '#fffaee', sunX: 620, sea: true },
+  moor: { sky: ['#e6c8a6', '#c89c76', '#8d6a55'], ground: '#70634e', wall: '#80452855', glass: '#f1ddc2', glassEdge: '#3a2414', sun: '#ffddae', sunX: 210, sea: false },
+  dusk: { sky: ['#f3d8b8', '#dba682', '#8c6a5e'], ground: '#5d5747', wall: '#2c261e55', glass: '#f5e3cc', glassEdge: '#262017', sun: '#ffe8c4', sunX: 600, sea: false },
+  day: { sky: ['#eee9d6', '#d8d2b4', '#bcc09a'], ground: '#8aa46e', wall: '#e2dcc6aa', glass: '#f1efdc', glassEdge: '#374432', sun: '#fffdf2', sunX: 560, sea: false }
 }
 
 function house(palKey = 'day', u = 'h') {
@@ -73,10 +73,10 @@ function blueprint(u = 'b') {
 
 function product(key = 'doors', u = 'p') {
   const map: Record<string, any> = {
-    doors: { bg: ['#e7efe9', '#cdd9d2'], edge: '#23302b', sheen: '#fff' },
-    windows: { bg: ['#e3edf3', '#c6d6e2'], edge: '#26313a', sheen: '#fff' },
-    additional: { bg: ['#f0ece2', '#dcd3c2'], edge: '#3a3326', sheen: '#fff7e9' },
-    structural: { bg: ['#e9e9ec', '#cfd0d6'], edge: '#2c2d33', sheen: '#fff' }
+    doors: { bg: ['#eef0da', '#d3d8b4'], edge: '#2c3a24', sheen: '#fffbe9' },
+    windows: { bg: ['#f1e8d2', '#dbcaa6'], edge: '#3a3322', sheen: '#fff' },
+    additional: { bg: ['#f3e4d0', '#e0c5a4'], edge: '#46301c', sheen: '#fff5e4' },
+    structural: { bg: ['#ece7da', '#d2cab6'], edge: '#322e24', sheen: '#fff' }
   }
   const p = map[key] || map.doors
   let art = ''
@@ -99,8 +99,8 @@ function pavilion() {
     <g class="pv-foliage"><path d="M120 250 q60 -70 130 -64 q-30 -50 50 -70 q40 -40 110 -10 q60 -40 120 -2 q70 -34 140 4 q60 -30 120 6 q60 -16 80 30"/></g>`
   return `<svg class="pavilion" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Line drawing of a glass pavilion">
     <defs>
-      <linearGradient id="pvsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7e6ea"/><stop offset="1" stop-color="#eef0ec"/></linearGradient>
-      <linearGradient id="pvglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe2e0"/><stop offset=".5" stop-color="#b6cfca"/><stop offset="1" stop-color="#d8e7e2"/></linearGradient>
+      <linearGradient id="pvsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eadfc2"/><stop offset="1" stop-color="#f2eedd"/></linearGradient>
+      <linearGradient id="pvglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dde2c2"/><stop offset=".5" stop-color="#c2cda4"/><stop offset="1" stop-color="#e6e8cc"/></linearGradient>
       <clipPath id="pvclip"><rect x="0" y="0" width="1200" height="640"/></clipPath>
     </defs>
     <g class="pavilion__fill" clip-path="url(#pvclip)">

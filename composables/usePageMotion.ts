@@ -79,16 +79,75 @@ export function usePageMotion() {
         })
       }
 
-      // horizontal project narrative (pinned)
-      const hs = document.querySelector('[data-hscroll]') as HTMLElement | null
-      const track = hs && (hs.querySelector('[data-hscroll-track]') as HTMLElement | null)
-      if (hs && track && window.innerWidth > 1024) {
-        const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
-        gsap.to(track, {
-          x: () => -distance(), ease: 'none',
-          scrollTrigger: { trigger: hs, start: 'top top', end: () => '+=' + distance(), scrub: 1, pin: true, invalidateOnRefresh: true }
-        })
-      }
+      // scroll deck: as the next sheet slides over, the covered section recedes —
+      // its content drifts up slower and the sheet dims, revealing true layering.
+      // Sections with their own pinned/sticky internals are left untouched.
+      const sheets = gsap.utils.toArray('.page-shell section[data-theme]') as HTMLElement[]
+      sheets.forEach((sec, i) => {
+        const next = sheets[i + 1]
+        if (!next) return
+        if (sec.matches('.hero, .page-hero, .project-hero, [data-hscroll], .stories, .cta')) return
+        const inner = sec.querySelector(':scope > .container')
+        if (inner) {
+          gsap.fromTo(inner, { y: 0 }, { y: -56, ease: 'none',
+            scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } })
+        }
+        gsap.fromTo(sec, { opacity: 1 }, { opacity: 0.5, ease: 'none',
+          scrollTrigger: { trigger: next, start: 'top 45%', end: 'top top', scrub: true } })
+      })
+
+      // horizontal narratives (pinned scrub on desktop, native swipe on touch):
+      // live counter, hairline progress, in-frame parallax and soft entrances
+      gsap.utils.toArray('[data-hscroll]').forEach((hs: any) => {
+        const track = hs.querySelector('[data-hscroll-track]') as HTMLElement | null
+        if (!track) return
+        const counter = hs.querySelector('[data-hscroll-count]') as HTMLElement | null
+        const bar = hs.querySelector('[data-hscroll-progress] span') as HTMLElement | null
+        const panels = Array.from(track.querySelectorAll('.hscroll__panel')) as HTMLElement[]
+        const n = panels.length
+        const feed = (p: number) => {
+          if (bar) bar.style.transform = `scaleX(${Math.max(0, Math.min(1, p)).toFixed(4)})`
+          if (counter && n) {
+            const idx = Math.max(1, Math.min(n, Math.round(p * (n - 1)) + 1))
+            counter.textContent = `0${idx} / 0${n}`
+          }
+        }
+        if (window.innerWidth > 1024) {
+          const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
+          const tween = gsap.to(track, {
+            x: () => -distance(), ease: 'none',
+            scrollTrigger: {
+              trigger: hs, start: 'top top', end: () => '+=' + distance(), scrub: 1, pin: true,
+              invalidateOnRefresh: true, onUpdate: (self: any) => feed(self.progress)
+            }
+          })
+          panels.forEach((panel) => {
+            // media drifts inside its frame as the train passes — quiet depth
+            const layer = panel.querySelector('.hscroll__layer')
+            if (layer) {
+              gsap.fromTo(layer, { xPercent: -5 }, { xPercent: 5, ease: 'none',
+                scrollTrigger: { trigger: panel, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } })
+            }
+            // each panel settles in as it enters from the right edge
+            gsap.fromTo(panel, { y: 36, opacity: 0.25 }, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.8,
+              scrollTrigger: { trigger: panel, containerAnimation: tween, start: 'left 96%', end: 'left 62%', scrub: true } })
+          })
+        } else {
+          // native horizontal swipe: same counter + progress feedback on mobile
+          const vp = hs.querySelector('.hscroll__viewport') as HTMLElement | null
+          if (vp) {
+            let raf = 0
+            vp.addEventListener('scroll', () => {
+              if (raf) return
+              raf = requestAnimationFrame(() => {
+                raf = 0
+                const max = vp.scrollWidth - vp.clientWidth
+                if (max > 0) feed(vp.scrollLeft / max)
+              })
+            }, { passive: true })
+          }
+        }
+      })
     })
 
     ST.refresh()

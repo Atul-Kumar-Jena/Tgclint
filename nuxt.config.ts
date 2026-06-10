@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     // page transition is wired with JS hooks on <NuxtPage> in app.vue (stacked-card cover)
     head: {
       htmlAttrs: { lang: 'en' },
-      title: 'Fluid Glass — Exceptional glazing for those who build with vision.',
+      title: 'Saansud Infra — Land you can build a life on.',
       script: [{
         // runs before first paint: gates the loader + pre-reveal hidden states on JS being
         // available, and force-reveals everything if the app never boots (chunk failure etc).
@@ -18,15 +18,15 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'description', content: 'Fluid Glass designs, engineers and installs exceptional architectural glazing — structural glass, slimline doors, rooflights and bespoke facades for those who build with vision.' },
-        { name: 'theme-color', content: '#0f1012' },
+        { name: 'description', content: 'Saansud Infra develops approved residential plots, gated communities and quality construction across Odisha — with transparency, trust and care from site selection to registry and beyond.' },
+        { name: 'theme-color', content: '#171c33' },
         { name: 'color-scheme', content: 'light dark' }
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/Tgclint/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Archivo:wght@500..800&display=swap' }
       ]
     }
   },
@@ -38,7 +38,7 @@ export default defineNuxtConfig({
       failOnError: false,
       routes: [
         '/', '/about', '/collection', '/projects', '/approach', '/contact', '/news', '/showroom',
-        '/projects/ashmead-barn', '/projects/keepers-cottage', '/projects/sea-breeze', '/projects/rusty-house'
+        '/projects/laxmi-narayan-vihar', '/projects/paradeep-phase-two', '/projects/jagatsinghpur-enclave', '/projects/kujang-corridor'
       ]
     }
   }

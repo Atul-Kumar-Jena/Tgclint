@@ -13,7 +13,7 @@ onMounted(() => {
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const N = isTouch ? 5 : 7
-  const palette = [[126, 162, 182], [150, 182, 170], [108, 140, 168], [183, 162, 146], [120, 150, 160], [140, 170, 175], [100, 132, 150]]
+  const palette = [[240, 104, 30], [86, 102, 160], [246, 138, 74], [70, 84, 140], [232, 168, 110], [120, 96, 88], [98, 114, 170]]
   const blobs = [] as any[]
   for (let i = 0; i < N; i++) blobs.push({ bx: Math.random(), by: Math.random(), r: 0.26 + Math.random() * 0.34, ph: Math.random() * Math.PI * 2, sp: 0.00013 + Math.random() * 0.0002, ax: 0.05 + Math.random() * 0.05, ay: 0.05 + Math.random() * 0.05, c: palette[i % palette.length] })
   function resize() {
@@ -23,7 +23,7 @@ onMounted(() => {
     ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
   }
   function draw(now: number, dt: number) {
-    const g = ctx!.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#0c0d10'); g.addColorStop(0.6, '#101216'); g.addColorStop(1, '#16181c')
+    const g = ctx!.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#0d101f'); g.addColorStop(0.6, '#131830'); g.addColorStop(1, '#1b2140')
     ctx!.globalCompositeOperation = 'source-over'; ctx!.fillStyle = g; ctx!.fillRect(0, 0, w, h)
     ctx!.globalCompositeOperation = 'lighter'
     for (const b of blobs) {

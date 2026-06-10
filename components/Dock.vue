@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="dock__bar">
-        <NuxtLink class="dock__logo" to="/" aria-label="Fluid Glass — home" data-hover @click="closeAll"><Logo /></NuxtLink>
+        <NuxtLink class="dock__logo" to="/" aria-label="Saansud Infra — home" data-hover @click="closeAll"><Logo /></NuxtLink>
         <span class="dock__label">{{ state === 'pill' ? label : state === 'end' ? 'Navigate' : 'Close' }}</span>
         <button class="dock__toggle" type="button" :aria-expanded="state !== 'pill'" :aria-label="state === 'pill' ? 'Open menu' : 'Close menu'" @click="toggle">
           <span class="dock__bars" aria-hidden="true"><i /><i /></span>
@@ -48,7 +48,7 @@ const label = computed(() => {
   const found = [...site.nav, ...site.navSecondary].find((n) => p.startsWith(n.to))
   if (found) return found.label
   if (p.startsWith('/projects')) return 'Projects'
-  return 'Fluid Glass'
+  return 'Saansud'
 })
 
 function closeAll() { menuOpen.value = false; if (endShown.value) { endShown.value = false; suppressEnd.value = true } }
@@ -62,7 +62,7 @@ function toggle() {
 let onScroll: (() => void) | null = null
 onMounted(() => {
   onScroll = () => {
-    if (window.innerWidth <= 1024 || menuOpen.value || hold.value) return
+    if (menuOpen.value || hold.value) return
     const doc = document.documentElement
     const scrollable = doc.scrollHeight - window.innerHeight
     if (scrollable < window.innerHeight * 0.5) { endShown.value = false; return }

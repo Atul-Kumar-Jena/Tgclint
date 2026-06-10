@@ -3,10 +3,10 @@
     <section class="page-hero page-hero--dark" data-theme="dark">
       <div class="page-hero__media" data-parallax-wrap><div data-parallax><Scene type="interior" variant="coast" uid="shhero" /></div></div>
       <div class="page-hero__veil" />
-      <div class="page-hero__rail"><div class="container"><div class="hairline" /><p class="eyebrow">Showroom</p></div></div>
+      <div class="page-hero__rail"><div class="container"><div class="hairline" /><p class="eyebrow">Site visits</p></div></div>
       <div class="page-hero__inner container">
-        <h1 class="page-hero__title" data-split>Come and see<br>the glass.</h1>
-        <p class="page-hero__sub reveal">Touch the systems, study the junctions and talk through your project with the team — in a space built to show glass at its best.</p>
+        <h1 class="page-hero__title" data-split>Stand on the land.<br>Walk the site.</h1>
+        <p class="page-hero__sub reveal">See the roads, the boundary wall, the drainage and the homes under construction — and talk through your plans with the team, on the ground.</p>
       </div>
     </section>
 
@@ -15,9 +15,9 @@
         <div class="intro-2">
           <p class="eyebrow intro-2__eyebrow">Visit us</p>
           <div class="intro-2__body">
-            <h2 class="intro-2__title" data-split>Shoreditch studio,<br>by appointment.</h2>
-            <p class="intro-2__copy reveal">{{ site.address.join(', ') }}. Open Monday to Friday, with private appointments available on request.</p>
-            <div class="reveal" style="margin-top:2rem"><Btn label="Contact us" to="/contact" /></div>
+            <h2 class="intro-2__title" data-split>Every weekend,<br>by appointment.</h2>
+            <p class="intro-2__copy reveal">{{ site.address.join(', ') }}. Project site visits run every weekend, and ongoing construction can be visited with prior intimation — see the quality checks for yourself.</p>
+            <div class="reveal" style="margin-top:2rem"><Btn label="Book a visit" variant="dark" quote /></div>
           </div>
         </div>
       </div>
@@ -41,5 +41,5 @@
 <script setup lang="ts">
 const site = useSite()
 usePageMotion()
-useHead({ title: `Showroom — ${site.brand}` })
+useHead({ title: `Site visits — ${site.brand}` })
 </script>

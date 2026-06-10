@@ -1,31 +1,35 @@
-/* ============================================================ design tokens */
+/* ============================================================ design tokens
+   Saansud Infra brand system — vivid Saansud orange on deep indigo navy,
+   over clean warm-white. Bold geometric display sans (Archivo) + quiet grotesk. */
 :root {
   /* palette */
-  --bg-warm: #f1efe9;
-  --bg-warm-2: #e8e5dc;
-  --bg-dark: #0f1012;
-  --bg-dark-2: #16181b;
-  --ink: #15171a;
-  --ink-soft: #3c3e42;
-  --ink-inv: #ecebe4;
-  --ink-inv-soft: #c8c8c1;
-  --muted: #8a8a82;
-  --muted-inv: #93948d;
-  --line: rgba(18, 18, 20, .14);
-  --line-inv: rgba(255, 255, 255, .15);
-  --accent: #5d8089;
-  --accent-warm: #b9805a;
+  --bg-warm: #f4f2ee;
+  --bg-warm-2: #e9e6df;
+  --bg-dark: #171c33;
+  --bg-dark-2: #1f2540;
+  --ink: #181c2e;
+  --ink-soft: #3c4054;
+  --ink-inv: #f2f0ea;
+  --ink-inv-soft: #c9c9cf;
+  --muted: #87858f;
+  --muted-inv: #8e93ab;
+  --line: rgba(24, 26, 42, .14);
+  --line-inv: rgba(240, 242, 255, .15);
+  --accent: #f0681e;
+  --accent-warm: #f68a4a;
+  --gold: #f68a4a;
 
   /* glass surfaces */
-  --glass-dark: rgba(20, 21, 24, .62);
-  --glass-tint: rgba(255, 255, 255, .06);
-  --glass-edge: rgba(255, 255, 255, .14);
+  --glass-dark: rgba(20, 23, 40, .62);
+  --glass-tint: rgba(255, 252, 245, .06);
+  --glass-edge: rgba(244, 246, 255, .14);
   --glass-blur: 18px;
 
   /* depth */
-  --shadow-soft: 0 26px 70px rgba(0, 0, 0, .16);
-  --shadow-card: 0 18px 50px rgba(0, 0, 0, .14);
-  --shadow-pill: 0 14px 36px rgba(0, 0, 0, .3);
+  --shadow-soft: 0 26px 70px rgba(12, 14, 26, .18);
+  --shadow-card: 0 18px 50px rgba(12, 14, 26, .15);
+  --shadow-pill: 0 14px 36px rgba(8, 10, 20, .32);
+  --sheet-r: clamp(22px, 3.2vw, 36px);
 
   /* layout */
   --maxw: 1560px;
@@ -39,6 +43,7 @@
 
   /* type */
   --font: "Schibsted Grotesk", "Hanken Grotesk", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Archivo", "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
   --fs-eyebrow: clamp(.72rem, .82vw, .82rem);
   --fs-body: clamp(1rem, .55rem + .55vw, 1.18rem);
   --fs-lead: clamp(1.2rem, .9rem + .9vw, 1.6rem);
@@ -49,7 +54,7 @@
   --lh-tight: 1.0;
   --lh-snug: 1.1;
   --lh-body: 1.62;
-  --track-tight: -.025em;
+  --track-tight: -.015em;
   --track-wide: .16em;
 
   /* motion */
@@ -67,7 +72,7 @@
   --stagger-line: .12s;   /* between masked lines */
 
   /* chrome */
-  --pill-h: 58px;
+  --pill-h: 54px;
   --z-pill: 60;
   --z-menu: 80;
   --z-quote: 90;

@@ -47,7 +47,7 @@
 @media (max-width: 560px) {
   .collection__grid { grid-template-columns: 1fr; }
   .about-stat, .values { grid-template-columns: 1fr; }
-  .dock { width: 226px; }
+  .dock { width: 186px; }
   .dock__bar { gap: 8px; padding: 0 6px 0 8px; }
   .dock__label { letter-spacing: .12em; font-size: .7rem; }
   .hero__inner { padding-bottom: clamp(7rem, 22vh, 11rem); }

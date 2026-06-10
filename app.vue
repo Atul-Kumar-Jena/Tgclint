@@ -5,7 +5,7 @@
       <NuxtPage :transition="pageTransition" />
     </NuxtLayout>
     <div v-show="loaderOn" ref="loaderEl" class="loader" aria-hidden="true">
-      <div class="loader__brand"><Logo /><span>Fluid Glass</span></div>
+      <div class="loader__brand"><Logo /><span>Saansud <em>Infra</em></span></div>
       <div class="loader__bar"><span ref="loaderBar" /></div>
     </div>
     <div class="grain" aria-hidden="true"></div>
@@ -67,7 +67,7 @@ const pageTransition = {
     if (enterTl) enterTl.progress(1) // settle any in-flight enter first
     // slightly longer than the enter: the old page must stay in the document until
     // the cover is complete, so layout (and the scrollbar) never collapses mid-flight
-    leaveTween = gsap.to(el, { opacity: 0.45, duration: 1.25, ease: 'power2.inOut', onComplete: done })
+    leaveTween = gsap.to(el, { opacity: 0.32, duration: 1.25, ease: 'power2.inOut', onComplete: done })
   },
   onEnter: (el: Element, done: () => void) => {
     const gsap = nuxtApp.$gsap
@@ -75,7 +75,8 @@ const pageTransition = {
     const vh = window.innerHeight
     gsap.set(el, {
       position: 'fixed', top: 0, left: 0, width: '100%', height: vh, overflow: 'hidden',
-      zIndex: 6, y: vh, borderRadius: '30px 30px 0 0', boxShadow: '0 -30px 90px rgba(0,0,0,.5)'
+      zIndex: 6, y: vh, scale: 0.94, transformOrigin: '50% 0%',
+      borderRadius: '34px 34px 0 0', boxShadow: '0 -36px 110px rgba(6,10,7,.62)'
     })
     enterTl = gsap.timeline({
       onComplete: () => {
@@ -88,6 +89,7 @@ const pageTransition = {
       }
     })
       .to(el, { y: 0, duration: 1.1, ease: 'expo.inOut' }, 0)
+      .to(el, { scale: 1, duration: 0.95, ease: 'power3.inOut' }, 0.15)
       .to(el, { borderRadius: '0px 0px 0px 0px', duration: 0.4, ease: 'power2.out' }, 0.8)
   },
   onAfterEnter: () => {

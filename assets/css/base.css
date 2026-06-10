@@ -15,13 +15,16 @@ ul { list-style: none; padding: 0; }
 :focus { outline: none; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 3px; }
 .btn, .dock, .dock__toggle, .dock__logo, .quote__close, .chip, .card, .news-item, .hero__scroll, .topbar__brand, .logo { -webkit-user-select: none; user-select: none; }
-::selection { background: rgba(93, 128, 137, .25); }
+::selection { background: rgba(240, 104, 30, .3); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .skip { position: fixed; top: 12px; left: 12px; z-index: 999; background: #111; color: #fff; padding: .6rem 1rem; border-radius: 8px; transform: translateY(-160%); transition: transform .3s var(--ease); }
 .skip:focus { transform: none; }
 
 /* ============================================================== typography */
 h1, h2, h3, h4 { font-weight: 500; line-height: var(--lh-snug); letter-spacing: var(--track-tight); }
+h1, h2, h3, h4, .display, .h1, .h2, .h3, .about-stat__num, .loader__brand span, .footer__line {
+  font-family: var(--font-display); font-weight: 640; letter-spacing: -.02em;
+}
 strong { font-weight: 600; }
 .eyebrow { display: inline-flex; align-items: center; gap: .65em; font-size: var(--fs-eyebrow); font-weight: 500; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--local-muted, var(--muted)); }
 .eyebrow::before { content: ""; width: .5em; height: .5em; background: currentColor; transform: rotate(45deg); opacity: .85; flex: none; }
@@ -48,12 +51,25 @@ strong { font-weight: 600; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
-.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #202127, #0a0b0d 78%); }
+.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #232a4a, #0a0c16 78%); }
 
 /* the page surface sits above the stage; sections are opaque so the stage only shows in transitions.
    NOTE: no will-change/transform here — a transformed ancestor would break GSAP pinning. */
 .page-shell { position: relative; z-index: 1; background: var(--bg-warm); }
 main.shell { display: block; }
+
+/* ============================================================ scroll deck
+   Sections behave as stacked sheets: heroes pin behind, every following
+   section slides over the previous with a rounded lip and a lifted shadow.
+   The receding motion of the covered sheet is driven by GSAP (usePageMotion). */
+.hero, .page-hero, .project-hero { position: sticky; top: 0; z-index: 0; }
+.page-shell section[data-theme] { position: relative; z-index: 1; }
+.page-shell section[data-theme]:not(.hero):not(.page-hero):not(.project-hero) {
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+  margin-top: calc(-1 * var(--sheet-r));
+  box-shadow: 0 -28px 70px rgba(10, 14, 10, .25);
+}
+.page-shell > section:first-child { margin-top: 0; border-radius: 0; box-shadow: none; }
 
 /* ============================================================ reveal motion (GSAP-driven) */
 /* hidden states are gated on html.js, added by an inline head script BEFORE first paint —

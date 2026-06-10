@@ -5,8 +5,8 @@
       <div class="page-hero__veil" />
       <div class="page-hero__rail"><div class="container"><div class="hairline" /><p class="eyebrow">Our process</p></div></div>
       <div class="page-hero__inner container">
-        <h1 class="page-hero__title" data-split>Considered from<br>the first line.</h1>
-        <p class="page-hero__sub reveal">From the first conversation to the final pane, we hold the whole project in view — so the glazing arrives as one calm, deliberate gesture.</p>
+        <h1 class="page-hero__title" data-split>Planned on paper.<br>Proven on site.</h1>
+        <p class="page-hero__sub reveal">From the soil test to the final coat of paint, one accountable team holds the whole build in view — so your home arrives on schedule, on budget and beyond doubt.</p>
       </div>
     </section>
 
@@ -24,7 +24,7 @@
 
     <section class="section approach-intro" data-theme="light">
       <div class="container">
-        <h2 class="approach-intro__title" data-split>Our broad spectrum of services<br>allows us to oversee every step<br>with care — ensuring quality and a<br>deeper understanding of your project.</h2>
+        <h2 class="approach-intro__title" data-split>Because design, approvals, construction<br>and interiors live under one roof,<br>nothing is lost between teams — and<br>every promise has one owner.</h2>
       </div>
     </section>
 

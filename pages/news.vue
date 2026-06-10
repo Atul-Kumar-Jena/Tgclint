@@ -2,8 +2,8 @@
   <div class="page-shell">
     <section class="section lede" data-theme="light" style="padding-top:clamp(8rem,18vh,14rem)">
       <div class="container">
-        <p class="eyebrow">News &amp; journal</p>
-        <h1 class="lede__title" data-split>Notes from the studio —<br>craft, projects and glass.</h1>
+        <p class="eyebrow">Insights &amp; updates</p>
+        <h1 class="lede__title" data-split>Notes from our sites —<br>land, homes and honest building.</h1>
       </div>
     </section>
 
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 const site = useSite()
 usePageMotion()
-useHead({ title: `News — ${site.brand}` })
+useHead({ title: `Insights — ${site.brand}` })
 function fmt(d: string) {
   return new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }

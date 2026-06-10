@@ -1,72 +1,73 @@
-// Content model (CMS-like). Stand-in for Storyblok; swap this for @storyblok/nuxt later.
+// Saansud Infra content model (CMS-like). Stand-in for a headless CMS later.
+// Contact details and testimonials are placeholders — swap for official ones.
 export interface Project {
   slug: string; name: string; location: string; year: string; scene: string;
   tags: string[]; summary: string; intro: string; facts: [string, string][]; story: string[]
 }
 
 const site = {
-  brand: 'Fluid Glass',
-  tagline: 'Exceptional glazing for those who build with vision.',
-  description: 'Fluid Glass designs, engineers and installs exceptional architectural glazing — structural glass, slimline doors, rooflights and bespoke facades for those who build with vision.',
-  phone: '020 8156 7290',
-  phoneHref: 'tel:+442081567290',
-  email: 'sales@fluid.glass',
-  emailHref: 'mailto:sales@fluid.glass',
-  address: ['Fluid Glass Studio', '27 Curtain Road', 'Shoreditch, London EC2A 3LT'],
-  rating: '5.0',
-  ratingCount: '120+',
+  brand: 'Saansud Infra',
+  tagline: 'Land you can build a life on.',
+  description: 'Saansud Infra develops approved residential plots, gated communities and quality construction across Odisha — with transparency, trust and care at every step, from site selection to registry and beyond.',
+  phone: '+91 99999 00000',
+  phoneHref: 'tel:+919999900000',
+  email: 'hello@saansud.com',
+  emailHref: 'mailto:hello@saansud.com',
+  address: ['Saansud Infra Pvt. Ltd.', 'Bhubaneswar, Odisha', 'CIN U41000OD2024PTC045712'],
+  rating: '4.9',
+  ratingCount: '180+',
   nav: [
     { label: 'About', key: 'about', to: '/about' },
-    { label: 'Collection', key: 'collection', to: '/collection' },
+    { label: 'Services', key: 'collection', to: '/collection' },
     { label: 'Projects', key: 'projects', to: '/projects' },
     { label: 'Approach', key: 'approach', to: '/approach' },
     { label: 'Contact', key: 'contact', to: '/contact' }
   ],
   navSecondary: [
-    { label: 'News', key: 'news', to: '/news' },
-    { label: 'Showroom', key: 'showroom', to: '/showroom' }
+    { label: 'Insights', key: 'news', to: '/news' },
+    { label: 'Site visits', key: 'showroom', to: '/showroom' }
   ],
   socials: [
     { label: 'Instagram', short: 'IG', href: 'https://instagram.com' },
     { label: 'YouTube', short: 'YT', href: 'https://youtube.com' },
     { label: 'LinkedIn', short: 'LI', href: 'https://linkedin.com' },
-    { label: 'X', short: 'X', href: 'https://x.com' }
+    { label: 'Facebook', short: 'FB', href: 'https://facebook.com' }
   ],
   products: [
-    { name: 'Sliding doors', key: 'doors', summary: 'Minimal-frame sliding and pivot doors that dissolve the line between inside and out.', tint: 'doors', points: ['Slim 20mm sightlines', 'Panels up to 3m tall', 'Flush thresholds', 'Triple-glazed options'] },
-    { name: 'Windows', key: 'windows', summary: 'Slimline steel-look and aluminium windows engineered for light, silence and longevity.', tint: 'windows', points: ['Steel-look profiles', 'Concealed fixings', 'Acoustic glazing', 'Heritage-approved'] },
-    { name: 'Rooflights', key: 'additional', summary: 'Structural rooflights and lanterns that pour daylight into the heart of a home.', tint: 'additional', points: ['Structural rooflights', 'Walk-on options', 'Ventilated lanterns', 'Self-cleaning glass'] },
-    { name: 'Structural glass', key: 'structural', summary: 'Frameless walls, floors, balustrades and walk-on glass with invisible support.', tint: 'structural', points: ['Frameless walls', 'Glass balustrades', 'Walk-on floors', 'Invisible silicone joints'] }
+    { name: 'Home construction', key: 'doors', summary: 'Complete G+2 home construction — civil, plumbing, electrical, painting, marble and tile — delivered in 8–10 months on milestone-based payments.', tint: 'doors', points: ['G+2 in 8–10 months', 'Milestone-based payments', 'Trusted material brands', 'Workmanship warranty'] },
+    { name: 'Architecture & design', key: 'windows', summary: 'Empanelled architects turn your plot and vision into 2D plans, 3D walkthroughs and structural engineering that is safe, functional and beautiful.', tint: 'windows', points: ['2D plans & 3D visualisation', 'Structural engineering', 'Soil-test led foundations', 'Permits & approvals'] },
+    { name: 'Interiors & renovation', key: 'additional', summary: 'Full interior design and execution — space planning, modular kitchens, woodwork and lighting — plus complete home renovations.', tint: 'additional', points: ['Space planning & decor', 'Modular kitchens', 'Wardrobes & woodwork', 'Full renovations'] },
+    { name: 'Plots & communities', key: 'structural', summary: 'Approved residential plots in planned, gated communities — boundary walls, concrete roads, lighting and drainage built before registry.', tint: 'structural', points: ['Approved layouts', 'Clear, verified titles', 'Gated infrastructure', 'Registry assistance'] }
   ],
   projects: [
-    { slug: 'ashmead-barn', name: 'Ashmead Barn', location: 'Cotswolds, Gloucestershire', year: '2024', scene: 'barn', tags: ['Sliding doors', 'Structural glass'], summary: 'A working barn reimagined as a family home, wrapped in a frameless glazed gable that frames the valley beyond.', intro: 'Ashmead Barn pairs blackened timber with a fully glazed gable end. The challenge: hold an eight-metre span of glass with no visible structure, then make it disappear into the landscape.', facts: [['Discipline', 'Structural glazing'], ['Span', '8.2 m frameless gable'], ['Glass', 'Triple-laminated, low-iron'], ['Status', 'Completed 2024']], story: ['We began with a single question from the architect — could the gable read as one uninterrupted plane of glass? The answer became a hidden steel moment-frame, carrying the roof so the glazing carries nothing but light.', 'Every junction was prototyped at full scale in our Shoreditch workshop before a single pane reached site. The result is a barn that keeps its agricultural honesty while opening completely to the Cotswold valley.'] },
-    { slug: 'keepers-cottage', name: 'Keepers Cottage', location: 'South Downs, West Sussex', year: '2023', scene: 'cottage', tags: ['Windows', 'Rooflights'], summary: 'A heritage cottage extended with a slimline steel-look glazed link and a run of structural rooflights.', intro: 'Listed brick and flint meets a precise, modern glazed link. The brief asked for daylight without compromise to the protected fabric of the original keeper’s cottage.', facts: [['Discipline', 'Windows & rooflights'], ['Glazing', 'Slimline steel-look'], ['Rooflights', '5 structural lanterns'], ['Status', 'Completed 2023']], story: ['The new link had to touch the old cottage as lightly as possible. We detailed shadow-gap reveals so the glass appears to float a few millimetres clear of the historic flint.', 'Overhead, a sequence of structural rooflights tracks the sun across the kitchen, turning a once-dark plan into the brightest room in the house.'] },
-    { slug: 'sea-breeze', name: 'Sea Breeze', location: 'Salcombe, Devon', year: '2024', scene: 'coast', tags: ['Sliding doors', 'Windows'], summary: 'A cliff-edge house with corner-opening sliding walls engineered to take Atlantic weather without a visible frame.', intro: 'On an exposed Devon headland, the glazing has to survive salt and storm while feeling weightless on a calm summer evening. Sea Breeze balances both.', facts: [['Discipline', 'Sliding doors'], ['Corner', 'Frameless opening corner'], ['Rating', 'Marine-grade, PAS 24'], ['Status', 'Completed 2024']], story: ['The opening corner is the heart of the house — two sliding walls that meet with no post, so the living room steps straight onto the terrace and the sea.', 'Behind the scenes sit marine-grade gaskets, thermally broken profiles and laminated low-iron glass, all tuned to a coast that rarely sits still.'] },
-    { slug: 'rusty-house', name: 'Rusty House', location: 'Peak District, Derbyshire', year: '2022', scene: 'moor', tags: ['Structural glass', 'Rooflights'], summary: 'A weathering-steel house set into the moor, with a walk-on glass floor that lights the level below.', intro: 'Corten steel and structural glass, set against millstone grit. Rusty House is an exercise in letting daylight travel through the building, floor to floor.', facts: [['Discipline', 'Structural glass'], ['Feature', 'Walk-on glass floor'], ['Glass', 'Anti-slip laminated'], ['Status', 'Completed 2022']], story: ['A walk-on glass floor draws daylight from the upper terrace down into a lower studio cut into the hillside — an invisible skylight you can stand on.', 'The detailing disappears into the corten so the eye reads only steel, stone and a quiet sheet of glass underfoot.'] }
+    { slug: 'laxmi-narayan-vihar', name: 'Laxmi Narayan Vihar', location: 'Paradeep–Kujang Road, Odisha', year: 'Registrations open', scene: 'barn', tags: ['Residential plots', 'Gated community'], summary: 'Our flagship gated community — 59 planned plots over 1.30 lakh sq ft on the Paradeep–Kujang Road, with roads, lighting and amenities built first.', intro: 'Laxmi Narayan Vihar is planned the way we believe every plot project should be: infrastructure first. Concrete roads, boundary wall, street lighting and drainage go in before a single registry is signed.', facts: [['Plots', '59 planned plots'], ['Extent', '1.30 lakh sq ft'], ['Location', 'Paradeep–Kujang Road'], ['Status', 'Registrations open']], story: ['The site sits on a corridor that is growing quickly — near schools, hospitals, banks and the port economy of Paradeep. We chose it for what it will feel like to live there in ten years, not just what it costs today.', 'Inside the wall: tree-lined avenues, walkways, stormwater drainage, a community hall, a kids’ play area, round-the-clock security and a temple at the heart of the layout. Buy a plot, and the neighbourhood is already on its way.'] },
+    { slug: 'paradeep-phase-two', name: 'Paradeep — Phase II', location: 'Paradeep, Odisha', year: 'In planning', scene: 'coast', tags: ['Residential plots'], summary: 'The next phase of our Paradeep story — land identified, layout under design. Details to be announced.', intro: 'Following Laxmi Narayan Vihar, Phase II extends the same infrastructure-first promise along the coastal corridor. Layout and approvals are in progress.', facts: [['Stage', 'Layout design'], ['Corridor', 'Paradeep coastal belt'], ['Approach', 'Infrastructure first'], ['Status', 'Announcing soon']], story: ['Every Saansud project begins long before launch — soil, access, drainage and title work are settled first, so what we announce is already real.', 'Register your interest and our team will share the layout, pricing and timelines the moment they are ready.'] },
+    { slug: 'jagatsinghpur-enclave', name: 'Jagatsinghpur Enclave', location: 'Jagatsinghpur, Odisha', year: 'Land assembly', scene: 'cottage', tags: ['Gated community'], summary: 'A planned enclave in Jagatsinghpur district — land assembly underway, designed around shade, water and walkable streets.', intro: 'Jagatsinghpur is where many of our buyers grew up. This enclave is being assembled plot by plot, with the masterplan drawn around existing trees and natural drainage.', facts: [['Stage', 'Land assembly'], ['District', 'Jagatsinghpur'], ['Masterplan', 'In design'], ['Status', 'Announcing soon']], story: ['We assemble land slowly and openly — every parcel verified, every seller settled fairly. It takes longer. It is the only way we work.', 'The masterplan keeps the big trees, follows the natural fall of the land for drainage, and reserves the best corner for the community, not the showroom.'] },
+    { slug: 'kujang-corridor', name: 'Kujang Corridor Sites', location: 'Kujang, Odisha', year: 'Survey', scene: 'moor', tags: ['Residential plots', 'Investment'], summary: 'Select road-facing sites along the Kujang corridor, under survey for future phases and early-interest registration.', intro: 'The Kujang corridor connects daily life to the port economy. We are surveying select road-facing parcels here for future phases.', facts: [['Stage', 'Survey & diligence'], ['Corridor', 'Kujang'], ['Use', 'Residential / investment'], ['Status', 'Early interest open']], story: ['Corridors reward patience: the right parcel at the right junction, bought clean, held with proper papers, served by real roads.', 'Early-interest buyers see our diligence file before they see a brochure — survey notes, title chain, access and utilities, in plain language.'] }
   ] as Project[],
   testimonials: [
-    { quote: 'Fluid Glass made the impossible feel routine. The frameless gable is the first thing every visitor notices and the last thing they can explain.', name: 'Eleanor Hartley', role: 'Principal, Hartley Studio', initials: 'EH' },
-    { quote: 'Precision you can feel. Every junction was resolved before it reached site, and the install was the calmest week of the whole build.', name: 'Marcus Bell', role: 'Director, Bell & Co Architects', initials: 'MB' },
-    { quote: 'They treat glass like a structural material and a luxury finish at the same time. Rare to find both in one team.', name: 'Priya Anand', role: 'Architect, Anand Workshop', initials: 'PA' },
-    { quote: 'Our clients wanted light without limits. Fluid Glass delivered a corner that opens to the sea and shuts out the storm.', name: 'Tom Whitfield', role: 'Whitfield Residential', initials: 'TW' },
-    { quote: 'The most considered glazing partner we have worked with. Calm, exact, and genuinely invested in the architecture.', name: 'Sofia Reyes', role: 'Reyes + Partners', initials: 'SR' }
+    { quote: 'Every document was on the table before we paid a rupee. The plot, the papers, the road outside — all exactly as promised.', name: 'Pratap Mohanty', role: 'Plot owner, Laxmi Narayan Vihar', initials: 'PM' },
+    { quote: 'We visited on a Sunday, walked the boundary, saw the drainage being laid. That honesty is why we registered the same month.', name: 'Sasmita Behera', role: 'Homebuyer, Paradeep', initials: 'SB' },
+    { quote: 'I bought from Bangalore without a single worry. Video walkthroughs, clear titles, and the registry done on the promised date.', name: 'Debashis Rout', role: 'NRI investor', initials: 'DR' },
+    { quote: 'They built our home on the plot they sold us — one team, one promise, zero excuses. The handover was a festival day.', name: 'Anita Swain', role: 'Construction client, Kujang', initials: 'AS' },
+    { quote: 'A young company with old-fashioned values. Transparent pricing, patient answers, and streets you can actually walk on.', name: 'Rakesh Parida', role: 'Plot owner, Jagatsinghpur', initials: 'RP' }
   ],
   services: [
-    { title: 'Insights & strategy', body: 'We help you lay the foundation for your project by defining the right glazing approach from the very start. Together we explore your architectural goals, technical requirements and the potential to create truly exceptional spaces — aligning budget, design intent and function before moving forward.', points: ['Budget advice', 'Quotation preparation', 'Initial design advice', 'Project planning', 'Technical advice'] },
-    { title: 'Glazing design', body: 'We bring your vision to life by developing precise, detailed glazing designs — drawings, specifications and technical solutions tailored to your project. With on-site surveys and close collaboration, we ensure the design integrates seamlessly into your architecture, both aesthetically and structurally.', points: ['Detailed drawings', 'Structural calculations', 'On-site survey', 'Specification & glass selection'] },
-    { title: 'Manufacture & craft', body: 'Every system is prototyped and prepared in our own workshop. We test the hard junctions at full scale before anything reaches site, so the parts that look effortless are the ones we have already solved twice.', points: ['Full-scale prototyping', 'In-house fabrication', 'Quality control', 'Pre-assembly'] },
-    { title: 'Installation & aftercare', body: 'Our trained installation teams treat your site like our studio. After handover we stay close, with maintenance guidance and a responsive aftercare service that protects the investment for years to come.', points: ['Specialist installation', 'Handover & training', 'Maintenance plans', 'Responsive aftercare'] }
+    { title: 'Design & approvals', body: 'Empanelled architects translate your plot and budget into 2D plans, 3D visualisations and structural designs — and we walk the file through every permit and approval from local authorities, so construction starts clean.', points: ['Architectural design', '3D walkthroughs', 'Structural engineering', 'Permits & approvals', 'Soil testing'] },
+    { title: 'Construction', body: 'A dedicated engineer and supervisor run every site. Foundations follow the soil report; concrete is cube-tested; progress is inspected daily; payments follow milestones — foundation, structure, finishing — never the calendar.', points: ['Dedicated site engineer', 'Daily quality checks', 'Cube-tested concrete', 'Milestone billing', 'Standard / Premium / Luxury'] },
+    { title: 'Interiors & renovation', body: 'Full interior design and execution: space planning, colour schemes, modular kitchens, wardrobes, lighting and decor — plus structural, interior and exterior renovations for homes that deserve a second life.', points: ['Interior design & execution', 'Modular kitchens', 'Woodwork & wardrobes', 'Full renovations'] },
+    { title: 'Warranty & aftercare', body: 'Every home leaves with a workmanship warranty and our post-construction support. Seepage, cracks or finishing issues are root-caused and repaired properly — and we stay reachable long after handover.', points: ['Workmanship warranty', 'Post-construction support', 'Root-cause repairs', 'Maintenance guidance'] }
   ],
   approachSteps: [
-    { index: '1', label: 'Design phase', title: ['You imagine,', 'we make it real.'], body: 'Once the quotation is approved, we begin by listening to your vision and understanding the story you want to create. We study your drawings and explore the best solutions to bring that vision to life — balancing aesthetics, performance and precision.', scene: 'studio' },
-    { index: '2', label: 'Engineering', title: ['We solve it', 'before you see it.'], body: 'Our engineers resolve every load path, junction and tolerance in advance. Structural calculations, thermal modelling and full-scale prototyping turn an ambitious drawing into something that can actually be built — quietly, and on time.', scene: 'engineering' },
-    { index: '3', label: 'Installation', title: ['The hard part,', 'made to look easy.'], body: 'Specialist teams install with the same care we design with. We protect your site, sequence the lift, and set each pane to fractions of a millimetre — so the finished glazing reads as one calm, deliberate gesture.', scene: 'install' }
+    { index: '1', label: 'Design & approvals', title: ['Your plot, your vision,', 'drawn to the last beam.'], body: 'We begin with your land and your budget. Our architects develop 2D plans and 3D walkthroughs, engineers size the foundation from a proper soil test, and we secure every permit before a single brick moves.', scene: 'studio' },
+    { index: '2', label: 'Construction', title: ['Built by milestones,', 'checked every day.'], body: 'A dedicated engineer supervises daily. Trusted brands for cement, steel, paints and tiles; cube-tested concrete; payments tied to real progress — foundation, structure, finishing — with a schedule you can hold us to.', scene: 'engineering' },
+    { index: '3', label: 'Handover & warranty', title: ['Handover is', 'a promise, kept.'], body: 'You move into a finished, documented home — approved plans, certificates and clearances in hand — backed by a workmanship warranty and aftercare that actually answers the phone.', scene: 'install' }
   ],
   news: [
-    { slug: 'ashmead-barn-wins', title: 'Ashmead Barn shortlisted for the Structural Glass Award', date: '2024-11-12', category: 'Studio', excerpt: 'Our eight-metre frameless gable in the Cotswolds has been recognised among this year’s most ambitious glazing projects.' },
-    { slug: 'low-iron-glass', title: 'Why we specify low-iron glass as standard', date: '2024-09-30', category: 'Craft', excerpt: 'The faint green tint of ordinary float glass is invisible — until it isn’t. A short note on clarity, and why it matters at scale.' },
-    { slug: 'shoreditch-showroom', title: 'Our Shoreditch showroom is now open by appointment', date: '2024-07-18', category: 'Studio', excerpt: 'Touch the systems, see the junctions, and talk through your project with the team — in a space built to show glass at its best.' },
-    { slug: 'thermal-performance', title: 'Slimline frames and the thermal performance question', date: '2024-05-04', category: 'Technical', excerpt: 'Thin sightlines and warm rooms are not opposites. How thermally broken profiles let you have both.' }
+    { slug: 'lnv-registrations-open', title: 'Registrations open at Laxmi Narayan Vihar, Paradeep', date: '2026-04-18', category: 'Projects', excerpt: '59 planned plots over 1.30 lakh sq ft on the Paradeep–Kujang Road — gated, lit, drained and tree-lined. Site visits every weekend.' },
+    { slug: 'plot-buyers-checklist', title: 'The plot buyer’s checklist for Odisha', date: '2026-03-02', category: 'Guides', excerpt: 'Title chain, conversion, approvals, access and drainage — the five questions to ask before you fall in love with a piece of land.' },
+    { slug: 'construction-packages', title: 'Standard, Premium or Luxury — choosing your build package', date: '2026-01-21', category: 'Guides', excerpt: 'Three finish categories, one promise. What changes between packages — materials, fittings, warranty — and what never does.' },
+    { slug: 'development-standards', title: 'Inside our development standards', date: '2025-11-09', category: 'Craft', excerpt: 'What "infrastructure first" actually means at a Saansud site: road sections, wall specs, lighting spacing and drainage falls.' }
   ]
 }
 
