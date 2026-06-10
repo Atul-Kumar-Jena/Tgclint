@@ -78,3 +78,27 @@
 .gallery__item:nth-child(2) { grid-column: 8 / 13; aspect-ratio: 4 / 5; }
 .gallery__item:nth-child(3) { grid-column: 1 / 6; aspect-ratio: 4 / 5; }
 .gallery__item:nth-child(4) { grid-column: 6 / 13; aspect-ratio: 16 / 10; }
+
+/* ============================================================ blog article */
+.article { max-width: 62ch; }
+.article__title { font-size: clamp(2rem, 1.2rem + 3.4vw, 4.4rem); font-weight: 500; line-height: 1.06; letter-spacing: -.02em; max-width: 24ch; margin-top: 1.2rem; }
+.article__lead { margin-top: 1.6rem; max-width: 52ch; color: var(--ink-soft); font-size: var(--fs-lead); line-height: 1.42; }
+.article__p { font-size: clamp(1.05rem, .95rem + .5vw, 1.3rem); line-height: 1.7; color: var(--ink-soft); }
+.article__p + .article__p { margin-top: 1.4rem; }
+.article__h2 { font-size: var(--fs-h3); font-weight: 500; margin-bottom: 1.4rem; }
+.article__compare { margin-top: clamp(2.5rem, 5vh, 4rem); }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.compare__col { border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(1.3rem, 2.4vw, 1.9rem); }
+.compare__label { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
+.compare__col--a .compare__label { color: #b4543f; }
+.compare__col--b .compare__label { color: var(--accent); }
+.compare__col ul { display: grid; gap: .55rem; }
+.compare__col li { position: relative; padding-left: 1.2rem; color: var(--ink-soft); }
+.compare__col li::before { content: "\2022"; position: absolute; left: 0; color: var(--muted); }
+.compare__col--b li::before { color: var(--accent); }
+.article__cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: clamp(2.5rem, 5vh, 4rem); }
+.article__next { display: block; padding-block: clamp(3rem, 7vh, 5.5rem); }
+.article__next-label { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted-inv); }
+.article__next-title { font-family: var(--font-display); font-weight: 600; letter-spacing: -.02em; font-size: clamp(1.4rem, 1rem + 1.8vw, 2.6rem); line-height: 1.15; max-width: 30ch; margin-top: .7rem; transition: transform .7s var(--ease-power3); }
+.article__next:hover .article__next-title { transform: translateX(12px); }
+@media (max-width: 700px) { .compare { grid-template-columns: 1fr; } }
