@@ -73,6 +73,7 @@ img,svg,video{ display:block; max-width:100%; }
 img{ height:auto; }
 a{ color:inherit; text-decoration:none; }
 button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+a,button{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
 ul,ol{ padding-left:1.2em; }
 ::selection{ background:var(--terra); color:#fff; }
 :focus-visible{ outline:3px solid var(--terra); outline-offset:3px; border-radius:6px; }
@@ -791,6 +792,32 @@ body.menu-locked{ overflow:hidden; }
 }
 @media (min-width:1024px){
   .menu{ display:none; }
+}
+
+/* ============================================================
+   Performance budget — keep every frame under 16ms
+   ============================================================ */
+/* Footer renders lazily; it contains no sticky/IO-measured children */
+.footer{ content-visibility:auto; contain-intrinsic-size:auto 720px; }
+
+@media (max-width:719.5px){
+  /* cheaper glass on phones: lighter blur radius across the system */
+  :root{ --glass-blur: saturate(1.45) blur(12px); }
+  /* big sticky stack cards animate every frame — solid gradients
+     instead of live backdrop sampling */
+  .stack-card.s-light{
+    -webkit-backdrop-filter:none; backdrop-filter:none;
+    background:linear-gradient(150deg, rgba(255,255,255,.94), rgba(255,255,255,.82));
+  }
+  /* ambient blobs: static glow instead of animated mega-layers */
+  .atmos-blob{ animation:none; opacity:.38; filter:blur(64px); }
+  .hero-panel{ display:none; }
+  /* slightly tighter stack rhythm on small screens */
+  .stack-card{ min-height:min(430px, 60svh); }
+}
+/* coarse pointers never see hover sheens — drop the layer entirely */
+@media (hover:none){
+  .glass-sheen::after{ display:none; }
 }
 
 /* ---------- Motion preferences ---------- */

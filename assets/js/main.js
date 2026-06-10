@@ -58,6 +58,18 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
   $$(".rv, .rv-img").forEach((el) => ro.observe(el));
 
+  // release compositor layers once entrance transitions settle —
+  // dozens of pre-promoted .rv/.unveil layers would tax mobile GPUs
+  document.addEventListener("transitionend", (e) => {
+    const el = e.target;
+    if (el.classList && el.classList.contains("in") &&
+        (e.propertyName === "opacity" || e.propertyName === "clip-path")) {
+      el.style.willChange = "auto";
+      const img = el.querySelector(":scope > img");
+      if (img) img.style.willChange = "auto";
+    }
+  }, { passive: true });
+
   /* ---------- Counters ---------- */
   const fmtIN = (n) => n.toLocaleString("en-US");
   const co = new IntersectionObserver((entries) => {
@@ -119,6 +131,8 @@
       const vh = window.innerHeight;
       for (const cards of all) {
         const rects = cards.map((c) => c.getBoundingClientRect());
+        // skip stacks far outside the viewport entirely
+        if (rects[rects.length - 1].bottom < -vh || rects[0].top > vh * 2) continue;
         for (let k = 0; k < cards.length - 1; k++) {
           const span = Math.max(1, rects[k].height * 0.9);
           // how deep card k sits in the pile = how far later cards have
@@ -189,7 +203,8 @@
         el.style.transform =
           `perspective(1100px) translateY(${lift.toFixed(1)}px) rotateY(${tilt.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
         el.style.opacity = String(1 - fadeAmt * Math.min(1, a));
-        el.style.filter = a > 0.04 ? `brightness(${(1 - 0.1 * a).toFixed(3)})` : "";
+        // filter is the costliest channel — desktop only
+        el.style.filter = (!mob && a > 0.04) ? `brightness(${(1 - 0.1 * a).toFixed(3)})` : "";
       });
     };
     let fluidTick = false;
