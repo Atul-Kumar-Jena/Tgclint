@@ -14,7 +14,7 @@
       <div class="hscroll__sticky">
         <div class="container hscroll__head">
           <p class="eyebrow eyebrow--plain">The project</p>
-          <p class="hscroll__count" data-hscroll-count>01 / 06</p>
+          <p class="hscroll__count" data-hscroll-count>01 / 07</p>
         </div>
         <div class="container"><div class="hscroll__progress" data-hscroll-progress><span /></div></div>
         <div class="hscroll__viewport">

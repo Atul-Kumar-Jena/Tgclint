@@ -80,7 +80,7 @@
       <div class="hscroll__sticky">
         <div class="container hscroll__head">
           <div><p class="eyebrow">Featured projects</p><h2 class="h2" data-split style="margin-top:1rem">Built on trust.</h2></div>
-          <p class="hscroll__count" data-hscroll-count>01 / 0{{ site.projects.length }}</p>
+          <p class="hscroll__count" data-hscroll-count>01 / 0{{ site.projects.length + 1 }}</p>
         </div>
         <div class="container"><div class="hscroll__progress" data-hscroll-progress><span /></div></div>
         <div class="hscroll__viewport">
