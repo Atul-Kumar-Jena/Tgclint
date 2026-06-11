@@ -9,6 +9,69 @@
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
+  /* ---------- First-load curtain + hero entrance ----------
+     Played once per tab session so in-site navigation stays instant. */
+  const isHome = !!$("[data-rotator]");
+  let entranceDelay = 0;
+  if (!reduceMotion) {
+    let seen = false;
+    try { seen = sessionStorage.getItem("ss-seen") === "1"; } catch (_) {}
+    if (!seen && isHome) {
+      const veil = document.createElement("div");
+      veil.className = "curtain";
+      veil.setAttribute("aria-hidden", "true");
+      const logo = document.createElement("img");
+      logo.src = "assets/img/brand/logo-white.webp";
+      logo.alt = "";
+      veil.appendChild(logo);
+      document.body.appendChild(veil);
+      document.body.classList.add("entrance");
+      entranceDelay = 1450;
+      veil.addEventListener("animationend", (e) => { if (e.target === veil) veil.remove(); });
+      try { sessionStorage.setItem("ss-seen", "1"); } catch (_) {}
+    }
+  }
+
+  /* ---------- Inertial smooth scroll (fluid.glass feel) ----------
+     Lenis-style: wheel input is intercepted and the real document
+     scroll position is eased toward the target every frame, so
+     sticky pinning, IntersectionObservers and anchors all keep
+     working. Fine pointers only — touch stays native for 60fps. */
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  if (!reduceMotion && finePointer) {
+    const root = document.documentElement;
+    let target = window.scrollY, current = target, raf = null, idle = 0;
+    const max = () => root.scrollHeight - window.innerHeight;
+    const jump = (y) => window.scrollTo({ top: y, left: 0, behavior: "instant" });
+    const loop = () => {
+      current += (target - current) * 0.102;          // critically-damped glide
+      if (Math.abs(target - current) < 0.35) {
+        current = target;
+        jump(current);
+        raf = null;
+        return;
+      }
+      jump(Math.round(current * 100) / 100);
+      raf = requestAnimationFrame(loop);
+    };
+    const kick = () => { if (!raf) { current = window.scrollY; raf = requestAnimationFrame(loop); } };
+    addEventListener("wheel", (e) => {
+      if (e.ctrlKey || e.defaultPrevented) return;     // keep pinch-zoom native
+      const el = e.target instanceof Element ? e.target : null;
+      if (el && el.closest(".hscroll, .menu")) return; // rails own their wheel
+      e.preventDefault();
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+      target = Math.max(0, Math.min(max(), target + e.deltaY * unit));
+      kick();
+    }, { passive: false });
+    // external scroll sources (keyboard, anchors, drag) re-sync the engine
+    addEventListener("scroll", () => {
+      if (!raf) { target = window.scrollY; current = target; }
+      clearTimeout(idle);
+      idle = setTimeout(() => { if (!raf) { target = window.scrollY; current = target; } }, 80);
+    }, { passive: true });
+  }
+
   /* ---------- Nav: glass on scroll ---------- */
   const nav = $("[data-nav]");
   if (nav) {
@@ -16,6 +79,40 @@
     const setNav = () => { nav.classList.toggle("scrolled", window.scrollY > 24); navTick = false; };
     setNav();
     addEventListener("scroll", () => { if (!navTick) { navTick = true; requestAnimationFrame(setNav); } }, { passive: true });
+  }
+
+  /* ---------- Nav dropdown panels ----------
+     Hover-intent on fine pointers, click/tap toggle everywhere,
+     full keyboard + Escape support. One panel open at a time. */
+  const navItems = $$(".nav-item");
+  if (navItems.length) {
+    let openItem = null, closeTimer = null;
+    const close = (item) => {
+      if (!item) return;
+      item.classList.remove("open");
+      $("button", item).setAttribute("aria-expanded", "false");
+      if (openItem === item) openItem = null;
+    };
+    const open = (item) => {
+      clearTimeout(closeTimer);
+      if (openItem && openItem !== item) close(openItem);
+      item.classList.add("open");
+      $("button", item).setAttribute("aria-expanded", "true");
+      openItem = item;
+    };
+    navItems.forEach((item) => {
+      const btn = $("button", item);
+      btn.addEventListener("click", () => item.classList.contains("open") ? close(item) : open(item));
+      item.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") open(item); });
+      item.addEventListener("pointerleave", (e) => {
+        if (e.pointerType !== "mouse") return;
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => close(item), 240);
+      });
+      item.addEventListener("focusout", (e) => { if (!item.contains(e.relatedTarget)) close(item); });
+    });
+    addEventListener("keydown", (e) => { if (e.key === "Escape") close(openItem); });
+    document.addEventListener("click", (e) => { if (openItem && !openItem.contains(e.target)) close(openItem); });
   }
 
   /* ---------- Mobile menu ---------- */
@@ -34,16 +131,30 @@
     addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
   }
 
+  /* ---------- Image loading ----------
+     Every media container shimmers a branded base until its photo
+     decodes — no blank boxes, no pop-in, ever. */
+  const PH_SEL = ".media-card, .tile, .proj-media, .post-media, .leader-photo, .article figure, .award-card";
+  $$(PH_SEL).forEach((el) => {
+    const img = el.querySelector("img");
+    if (!img) return;
+    el.classList.add("img-ph");
+    const done = () => el.classList.add("ld");
+    if (img.complete && img.naturalWidth) done();
+    else {
+      img.addEventListener("load", done, { once: true });
+      img.addEventListener("error", done, { once: true });
+    }
+  });
+
   /* ---------- Image unveil tagging ----------
-     Give every photo its own personality: each media container gets a
-     seeded wipe direction + a small individual delay, so images across
-     the site uncover with quiet, organic variety. */
-  const UNVEIL_SEL = ".media-card, .tile, .proj-media, .post-media, .leader-photo, .article figure";
+     Each media container wipes open from a seeded direction with a
+     small individual delay — quiet, organic variety across the site. */
   const DIRS = ["", "uv-r", "uv-u", "uv-d", "", "uv-u", "uv-r", ""];
   if (!reduceMotion) {
-    $$(UNVEIL_SEL).forEach((el, i) => {
+    $$(PH_SEL).forEach((el, i) => {
       if (el.querySelector("img") == null) return;
-      const h = Math.abs(Math.sin((i + 1) * 91.7)) ;
+      const h = Math.abs(Math.sin((i + 1) * 91.7));
       el.classList.add("unveil");
       const dir = DIRS[Math.floor(h * DIRS.length) % DIRS.length];
       if (dir) el.classList.add(dir);
@@ -91,32 +202,46 @@
   }, { threshold: 0.4 });
   $$("[data-count]").forEach((el) => { el.textContent = "0"; co.observe(el); });
 
-  /* ---------- Hero rotator ---------- */
+  /* ---------- Hero rotator ----------
+     Outgoing line drifts up while the next settles in from below;
+     the active dot fills as a progress bar synced to the interval. */
   $$("[data-rotator]").forEach((rot) => {
     const slides = $$(".hero-slide", rot);
     const dots = $$(".hero-dots button", rot.parentElement);
     if (slides.length < 2) return;
+    const PERIOD = 6200;
+    rot.parentElement.style.setProperty("--rot-ms", `${PERIOD}ms`);
     let i = 0, timer = null;
     const show = (n) => {
+      const prev = i;
       i = (n + slides.length) % slides.length;
-      slides.forEach((s, k) => s.classList.toggle("active", k === i));
-      dots.forEach((d, k) => d.setAttribute("aria-selected", String(k === i)));
+      slides.forEach((s, k) => {
+        s.classList.toggle("leaving", k === prev && prev !== i);
+        s.classList.toggle("active", k === i);
+      });
+      dots.forEach((d, k) => {
+        // re-trigger the fill animation on the active dot
+        d.setAttribute("aria-selected", String(k === i));
+        if (k === i) { d.style.animation = "none"; void d.offsetWidth; d.style.animation = ""; }
+      });
     };
-    const play = () => { if (!reduceMotion) timer = setInterval(() => show(i + 1), 6200); };
+    const play = () => { if (!reduceMotion) timer = setInterval(() => show(i + 1), PERIOD); };
     const stop = () => clearInterval(timer);
     dots.forEach((d, k) => d.addEventListener("click", () => { stop(); show(k); play(); }));
-    rot.addEventListener("pointerenter", stop);
-    rot.addEventListener("pointerleave", () => { stop(); play(); });
+    rot.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") stop(); });
+    rot.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { stop(); play(); } });
     document.addEventListener("visibilitychange", () => document.hidden ? stop() : (stop(), play()));
-    show(0); play();
+    show(0);
+    setTimeout(play, entranceDelay);
   });
 
   /* ---------- Stack engine ----------
      Cards are position:sticky in natural DOM order (correct paint
-     order, so no z-index management is ever needed). While a card is
-     pinned and the next card travels over it, the pinned card eases
-     back in scale and dims — transform/filter only, computed in one
-     rAF pass per frame. No flicker, no jumps, no clipping. */
+     order — no z-index management). While a card is pinned and the
+     next card travels over it, the pinned card physically recedes
+     into the pile: it scales down, lifts back and up, tips away from
+     the viewer, and an ink veil deepens. Transform/filter/opacity
+     only — computed in one rAF pass per frame. */
   const stacks = $$("[data-stack]");
   if (stacks.length && !reduceMotion) {
     const all = [];
@@ -134,20 +259,30 @@
         // skip stacks far outside the viewport entirely
         if (rects[rects.length - 1].bottom < -vh || rects[0].top > vh * 2) continue;
         for (let k = 0; k < cards.length - 1; k++) {
-          const span = Math.max(1, rects[k].height * 0.9);
-          // how deep card k sits in the pile = how far later cards have
-          // travelled up over it (each contributes 0..1)
+          const span = Math.max(1, rects[k].height * 0.85);
+          // how deep card k sits in the pile = how far later cards
+          // have travelled up over it (each contributes 0..1)
           let depth = 0;
           for (let j = k + 1; j < cards.length; j++) {
-            depth += Math.max(0, Math.min(1, (vh * 0.82 - rects[j].top) / span));
+            depth += Math.max(0, Math.min(1, (vh * 0.86 - rects[j].top) / span));
           }
           depth = Math.min(depth, 3);
-          const s = 1 - 0.055 * depth;
           const card = cards[k];
-          card.style.transform = `scale(${s.toFixed(4)})`;
-          card.style.filter = depth > 0.01
-            ? `brightness(${(1 - 0.13 * depth).toFixed(3)}) saturate(${(1 - 0.08 * depth).toFixed(3)})`
-            : "";
+          if (depth > 0.004) {
+            // top-origin scale keeps every card's top edge parked on its
+            // own sticky step, so the pile reads as a visible staircase
+            const s = 1 - 0.07 * depth;            // strong scale recession
+            const y = -5 * depth;                  // slight lift into the pile
+            const rx = 1.4 * depth;                // tip away from the viewer
+            card.style.transform =
+              `perspective(1100px) translateY(${y.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) scale(${s.toFixed(4)})`;
+            card.style.filter = `brightness(${(1 - 0.10 * depth).toFixed(3)}) saturate(${(1 - 0.10 * depth).toFixed(3)})`;
+            card.style.setProperty("--veil", Math.min(0.44, 0.16 * depth).toFixed(3));
+          } else {
+            card.style.transform = "";
+            card.style.filter = "";
+            card.style.setProperty("--veil", "0");
+          }
         }
       }
     };
@@ -268,7 +403,7 @@
       c.dataset.target = `${len} ${C - len}`;
       c.setAttribute("stroke-dasharray", `0 ${C}`);
       c.setAttribute("stroke-dashoffset", String(-acc * C));
-      c.style.transition = "stroke-dasharray 1.3s cubic-bezier(.22,.61,.21,1)";
+      c.style.transition = "stroke-dasharray 1.3s cubic-bezier(.21,.68,.19,1)";
       acc += val;
     });
     const io = new IntersectionObserver((en) => {

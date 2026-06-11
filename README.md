@@ -33,8 +33,8 @@ python3 -m http.server 8000
 
 ## Design system (`assets/css/main.css`)
 
-- **Brand tokens** extracted from Saansud: deep forest green `#0E3A31`, dark blue-green
-  `#122C3E`, terracotta `#E8662C`, off-white/stone/fog neutrals.
+- **Brand tokens** from the Saansud brand book: Saansud orange `#F1530E` (print
+  `#ED4801`), deep brand ink `#0B102C`, royal navy `#1C2B60`, porcelain/stone neutrals.
 - **Glass primitives** (`.glass`, `.glass-d`) — frosted backdrop blur, inner highlights,
   layered shadow hierarchy, sheen sweep on hover.
 - **Typography**: Space Grotesk (display) + Inter (body) + Fraunces (italic accents).
@@ -42,9 +42,19 @@ python3 -m http.server 8000
 
 ## Interaction engine (`assets/js/main.js`)
 
+- **Inertial smooth scroll** — Lenis-style wheel smoothing that eases the real document
+  scroll position every frame (fine pointers only), so sticky pinning, observers and
+  anchors all keep working while the page glides.
+- **First-load curtain** — the Saansud mark animates in on an ink veil and hands over
+  into a staggered hero rise (once per session).
 - **Stack cards** — genuine physical stacking via `position: sticky` in natural DOM
-  order (no z-index management), with depth-driven scale/dim computed in a single rAF
-  pass. Compositor-only: no flicker, no clipping, no layout jumps.
+  order (no z-index management). Pinned cards recede into the pile: top-origin scale,
+  lift, rotateX tip and an ink veil, computed in a single rAF pass. Compositor-only:
+  no flicker, no clipping, no layout jumps.
+- **Dropdown glass panels** — Services / Company / Insights navigation with
+  hover-intent, keyboard and touch support; grouped discovery sheet on mobile.
+- **Image loading** — branded shimmer placeholders on every media container until the
+  photo decodes; hero atmospheres fetch at high priority; zero blank boxes or pop-in.
 - **Fluid rails** — horizontal scroll-snap galleries that "unfold" with seeded
   per-card perspective/scale/drift; spotlight-carousel tuning on phones; drag-to-scroll
   on desktop; arrows + progress bar.
