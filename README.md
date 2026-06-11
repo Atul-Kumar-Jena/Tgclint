@@ -1,72 +1,49 @@
-# Saansud Infra — Fluid Glass Rebuild
+# Saansud Infra — Fluid Glass experience
 
-Complete rebuild of [saansud.com](https://saansud.com) as a premium, Fluid-Glass-inspired
-static site. Every section, project, testimonial, leadership profile, award, media
-mention, blog article and contact detail from the original site is preserved — the
-execution layer (design system, motion, responsiveness) is rebuilt to a world-class
-standard.
+The Saansud Infra site rebuilt in the fluid.glass design language — floating glass
+dock, first-load curtain, stacked-card page transitions, pinned horizontal project
+narratives, masked text reveals and inertial smooth scrolling — carrying the real
+Saansud brand (orange `#F1530E` / deep ink navy from the brand book) and the real
+Saansud content: projects, services, leadership, testimonials, insights articles and
+contact details.
 
 ## Stack
 
-Pure static HTML + CSS + JS. No build step, no framework. Open `index.html` or serve
-the folder with any static server:
+- **Nuxt 3 + Vue 3** (`ssr: true`, statically generated for GitHub Pages)
+- **GSAP + ScrollTrigger** for all scroll choreography
+- **Lenis** for inertial smooth scrolling (bridged on the GSAP ticker)
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev        # local dev server
+npm run generate   # static build -> .output/public
 ```
 
-## Pages
+## Experience architecture
 
-| Page | File |
-|---|---|
-| Homepage (hero rotator, stats, about, why-us stack, projects, interiors rail, testimonials, leadership, brand summary donut, awards, media, blog, CTA) | `index.html` |
-| About (who we are, stats, why us, management, recognitions, media) | `about.html` |
-| Building Constructions (Saansud Shift stack, self-build comparison, process, packages) | `construction.html` |
-| Interior Solutions hub | `interior-solutions.html` |
-| Interior service pages | `space-planning.html`, `interior-designing.html`, `home-decoration.html`, `total-furnishing.html`, `exterior-designing.html` |
-| Apartments / Projects (cards, brand summary, testimonials) | `projects.html` |
-| Blogs list | `blog.html` |
-| Blog articles (full original content) | `blog-single.html`, `blog-smart-planning.html`, `blog-turnkey-confidence.html` |
-| Contact (CEO's message, form, join the conversation) | `contact.html` |
-| Careers | `careers.html` |
-| Legal | `privacy.html`, `terms.html`, `disclaimer.html` |
+- `app.vue` — first-load curtain and the stacked-card page transition: the old page
+  dims in place while the new page slides up over it as a rounded card; scroll reset
+  happens under full cover so it is never visible.
+- `components/Dock.vue` — the floating glass dock: pill → unfolding menu, with an
+  end-of-page auto-unfold. Scrollable drawer body opts out of Lenis
+  (`data-lenis-prevent`).
+- `components/QuotePanel.vue` — slide-in "Get a quote" panel. The panel owns its
+  wheel input (`data-lenis-prevent`) and halts the page behind the scrim while open.
+- `composables/usePageMotion.ts` — per-page GSAP context: masked line splits, reveals,
+  parallax media, the sketch→render pavilion scrub, sheet-recede section layering, and
+  the pinned horizontal project narrative (velocity lean, per-panel unfold from the
+  right, in-frame media drift, live counter + hairline progress).
+- `assets/css/tokens.css` — the Saansud design tokens (palette, glass recipes, type
+  scale, motion grammar).
 
-## Design system (`assets/css/main.css`)
+All motion is transform/opacity/clip-path only and respects
+`prefers-reduced-motion`.
 
-- **Brand tokens** from the Saansud brand book: Saansud orange `#F1530E` (print
-  `#ED4801`), deep brand ink `#0B102C`, royal navy `#1C2B60`, porcelain/stone neutrals.
-- **Glass primitives** (`.glass`, `.glass-d`) — frosted backdrop blur, inner highlights,
-  layered shadow hierarchy, sheen sweep on hover.
-- **Typography**: Space Grotesk (display) + Inter (body) + Fraunces (italic accents).
-- Mobile-first; fluid type/spacing via `clamp()`.
+## Deployment
 
-## Interaction engine (`assets/js/main.js`)
+Pushing to the working branch (or `main`) triggers
+`.github/workflows/deploy.yml`, which runs `nuxt generate` on a GitHub runner and
+force-publishes `.output/public` to the **gh-pages** branch (the repo's Pages
+source).
 
-- **Inertial smooth scroll** — Lenis-style wheel smoothing that eases the real document
-  scroll position every frame (fine pointers only), so sticky pinning, observers and
-  anchors all keep working while the page glides.
-- **First-load curtain** — the Saansud mark animates in on an ink veil and hands over
-  into a staggered hero rise (once per session).
-- **Stack cards** — genuine physical stacking via `position: sticky` in natural DOM
-  order (no z-index management). Pinned cards recede into the pile: top-origin scale,
-  lift, rotateX tip and an ink veil, computed in a single rAF pass. Compositor-only:
-  no flicker, no clipping, no layout jumps.
-- **Dropdown glass panels** — Services / Company / Insights navigation with
-  hover-intent, keyboard and touch support; grouped discovery sheet on mobile.
-- **Image loading** — branded shimmer placeholders on every media container until the
-  photo decodes; hero atmospheres fetch at high priority; zero blank boxes or pop-in.
-- **Fluid rails** — horizontal scroll-snap galleries that "unfold" with seeded
-  per-card perspective/scale/drift; spotlight-carousel tuning on phones; drag-to-scroll
-  on desktop; arrows + progress bar.
-- **Image unveil** — every photo container gets a seeded directional clip-path wipe and
-  settle-scale, so each image uncovers with its own character.
-- Hero rotator, animated counters, donut chart, share (Web Share API + clipboard
-  fallback), mail-handoff contact form, reveal-on-scroll. All effects respect
-  `prefers-reduced-motion`; content is fully visible without JavaScript.
-
-## Assets
-
-`assets/img/**` — imagery recovered at maximum available resolution from the brand
-reference (`docs/reference/`): logo (alpha-extracted), leadership portraits, project
-photography, interior galleries, blog imagery, award trophies, media-platform marks,
-ambient atmosphere strips.
+Live URL: <https://atul-kumar-jena.github.io/Tgclint/>

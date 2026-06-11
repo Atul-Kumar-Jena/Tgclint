@@ -1,0 +1,181 @@
+/* ==================================================================== reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; -webkit-tap-highlight-color: transparent; }
+html.lenis, html.lenis body { height: auto; }
+body {
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--bg-warm);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg, video, canvas { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+input, textarea, select { font: inherit; color: inherit; }
+ul { list-style: none; padding: 0; }
+/* no blue flash on click: suppress the default focus ring on pointer, keep it for keyboard */
+:focus { outline: none; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 3px; }
+.btn, .pill, .pill__menu, .pill__logo, .menu__close, .quote__close, .chip, .card, .news-item,
+.cookie__actions button, .hero__scroll, .topbar__brand, .logo { -webkit-user-select: none; user-select: none; }
+::selection { background: rgba(93, 128, 137, .25); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip {
+  position: fixed; top: 12px; left: 12px; z-index: 999;
+  background: #111; color: #fff; padding: .6rem 1rem; border-radius: 8px;
+  transform: translateY(-160%); transition: transform .3s var(--ease);
+}
+.skip:focus { transform: none; }
+
+/* ============================================================== typography */
+h1, h2, h3, h4 { font-weight: 500; line-height: var(--lh-snug); letter-spacing: var(--track-tight); }
+strong { font-weight: 600; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .65em;
+  font-size: var(--fs-eyebrow); font-weight: 500;
+  letter-spacing: var(--track-wide); text-transform: uppercase;
+  color: var(--local-muted, var(--muted));
+}
+.eyebrow::before {
+  content: ""; width: .5em; height: .5em; background: currentColor;
+  transform: rotate(45deg); opacity: .85; flex: none;
+}
+.eyebrow--plain::before { display: none; }
+
+.display { font-size: var(--fs-display); line-height: var(--lh-tight); font-weight: 500; letter-spacing: -.03em; }
+.h1 { font-size: var(--fs-h1); line-height: var(--lh-tight); }
+.h2 { font-size: var(--fs-h2); line-height: var(--lh-snug); }
+.h3 { font-size: var(--fs-h3); }
+.lead { font-size: var(--fs-lead); line-height: 1.32; font-weight: 400; }
+.muted { color: var(--local-muted, var(--muted)); }
+.measure { max-width: var(--maxw-text); }
+
+/* ============================================================ layout utils */
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad-x); }
+.section { padding-block: var(--pad-y); position: relative; }
+.section--tight { padding-block: clamp(3.5rem, 7vh, 7rem); }
+main { display: block; background: var(--bg-warm); }
+.center { text-align: center; }
+.stack > * + * { margin-top: 1.1em; }
+
+.hairline { height: 1px; width: 100%; background: var(--local-line, var(--line)); transform-origin: left; }
+
+/* =============================================================== grain/cover */
+.grain {
+  position: fixed; inset: 0; z-index: var(--z-grain); pointer-events: none;
+  opacity: .04; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+.page-cover {
+  position: fixed; inset: 0; z-index: var(--z-loader); pointer-events: none;
+  background: var(--bg-warm); transform: scaleY(0); transform-origin: bottom;
+  transition: transform .75s var(--ease-inout);
+}
+/* route change is handled by lifting/blurring #main (see page entrance below) */
+
+/* ============================================================ reveal motion */
+/* atmospheric reveal: minimal drift + soft opacity (kept light for perf) */
+.reveal { opacity: 0; transform: translateY(30px); will-change: transform, opacity; }
+.reveal.is-in {
+  opacity: 1; transform: none;
+  transition: opacity 1.5s var(--ease-power4), transform 1.6s var(--ease-power4);
+  transition-delay: calc(var(--i, 0) * var(--stagger, .1s));
+}
+/* let the GPU rest once a reveal has played */
+.reveal.is-settled, [data-split].is-settled .line > span,
+.card.reveal.is-settled, .clip-reveal.is-settled { will-change: auto; }
+
+/* cards materialise like glass: drift + slight scale + clarity */
+.card.reveal { transform: translateY(26px) scale(.985); filter: blur(6px); }
+.card.reveal.is-in {
+  transform: none; filter: blur(0);
+  transition: opacity 1.2s var(--ease-power3), transform 1.3s var(--ease-power3), filter 1.1s var(--ease-power3);
+  transition-delay: calc(var(--i, 0) * var(--stagger, .09s));
+}
+
+[data-split] .line { display: block; overflow: hidden; padding-block: .04em; }
+[data-split] .line > span { display: block; transform: translateY(118%); will-change: transform; }
+[data-split].is-in .line > span {
+  transform: none;
+  transition: transform 1.35s var(--ease);
+  transition-delay: calc(var(--i, 0) * var(--stagger, .09s) + var(--li, 0) * var(--stagger-line, .11s));
+}
+[data-fade] { opacity: 0; }
+[data-fade].is-in { opacity: 1; transition: opacity 1.6s var(--ease); transition-delay: calc(var(--i, 0) * var(--stagger, .09s)); }
+
+/* media clip reveal — blur-to-sharp + subtle scale settle (blur-up feel) */
+.clip-reveal { clip-path: inset(0 0 100% 0); filter: blur(10px); transform: scale(1.035); }
+.clip-reveal.is-in {
+  clip-path: inset(0 0 0% 0); filter: blur(0); transform: none;
+  transition: opacity 1.3s var(--ease), clip-path 1.7s var(--ease), filter 1.6s var(--ease), transform 1.9s var(--ease);
+}
+
+/* ===================================== page entrance: a glass card stacks onto the layer beneath */
+.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #202127, #0a0b0d 78%); }
+html.js #main { position: relative; z-index: 1; transform-origin: 50% 50vh; }
+html.js body:not(.is-entered) #main {
+  opacity: 0; transform: translateY(8vh) scale(.86); filter: blur(10px);
+  border-radius: 30px; overflow: hidden; box-shadow: 0 -10px 0 rgba(0,0,0,0), 0 80px 160px rgba(0, 0, 0, .6);
+  will-change: transform, filter, opacity;
+}
+body.is-entered #main {
+  opacity: 1; transform: none; filter: blur(0); border-radius: 0; overflow: hidden; box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: opacity .65s var(--ease-power4), transform 1.6s var(--ease-power4), filter 1.2s var(--ease-power4),
+    border-radius 1.5s var(--ease-power4), box-shadow 1.5s var(--ease-power4);
+}
+body.is-page-settled #main { overflow: visible; will-change: auto; filter: none; box-shadow: none; }
+/* clear residual blur layers once settled so text renders perfectly crisp */
+.card.reveal.is-settled, .clip-reveal.is-settled, .hero__title.is-settled { filter: none; }
+
+/* chrome materialises after the surface settles */
+html.js body:not(.is-entered) .pill { opacity: 0; transform: translateX(-50%) translateY(26px); }
+body.is-entered .pill { transition: opacity 1s var(--ease) .65s, transform 1.1s var(--ease) .65s, width .9s var(--ease), border-radius .9s var(--ease), box-shadow .6s var(--ease); }
+html.js body:not(.is-entered) .topbar { opacity: 0; transform: translateY(-14px); }
+body.is-entered .topbar { transition: opacity 1s var(--ease) .5s, transform 1.1s var(--ease) .5s; }
+
+/* route change (no-JS / fallback): the current card recedes; the next stacks in on load */
+body.is-leaving #main {
+  opacity: .55; transform: translateY(5vh) scale(.86); filter: blur(5px);
+  border-radius: 30px; overflow: hidden; box-shadow: 0 80px 160px rgba(0, 0, 0, .55);
+  transition: opacity .7s var(--ease), transform .75s var(--ease-power3), filter .7s var(--ease), border-radius .7s var(--ease);
+}
+
+/* SPA route swap: the incoming page card rises over the frozen previous page (no reload) */
+#main.spa-anim { z-index: 2; overflow: hidden;
+  transition: opacity .9s var(--ease-power4), transform 1.4s var(--ease-power4), filter 1.1s var(--ease-power4),
+    border-radius 1.3s var(--ease-power4), box-shadow 1.3s var(--ease-power4); }
+#main.spa-enter { opacity: 0; transform: translateY(7vh) scale(.9); filter: blur(9px); border-radius: 30px; box-shadow: 0 80px 160px rgba(0, 0, 0, .6); }
+.spa-prev {
+  position: fixed; z-index: 1; pointer-events: none; overflow: hidden; will-change: opacity, filter;
+  transition: opacity .6s var(--ease), filter .6s var(--ease), border-radius .6s var(--ease);
+}
+.spa-prev--out { opacity: .32; filter: blur(4px); border-radius: 26px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .card.reveal, [data-split] .line > span, [data-fade], .clip-reveal {
+    opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important;
+    transition: none !important;
+  }
+  html.js #main { opacity: 1 !important; transform: none !important; filter: none !important; }
+  html.js .pill { opacity: 1 !important; filter: none !important; }
+  html.js .topbar { opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero__media { clip-path: none !important; transform: none !important; }
+}

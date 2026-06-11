@@ -1,0 +1,21 @@
+{
+  "name": "fluid-glass",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "gsap": "3.13.0",
+    "lenis": "1.1.20"
+  },
+  "devDependencies": {
+    "nuxt": "3.14.1592",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  }
+}

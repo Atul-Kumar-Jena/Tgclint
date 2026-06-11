@@ -1,0 +1,133 @@
+{{> head }}
+
+<div class="loader" data-loader>
+  <div class="loader__brand">{{> logo }}<span>{{brand}}</span></div>
+  <div class="loader__bar"><span></span></div>
+</div>
+
+<header class="topbar">
+  <a class="topbar__brand" href="{{base}}index.html" aria-label="{{brand}} — home">{{> logo }}<span>{{brand}}</span></a>
+  <div class="topbar__quote">{{quoteBtn}}</div>
+</header>
+
+<main id="main">
+
+  <section class="hero" data-theme="dark">
+    <div class="hero__media">
+      <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
+      <div class="hero__veil"></div>
+      <svg class="hero__silhouette" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path d="M0 180 Q 120 150 240 168 T 480 160 T 720 172 T 960 156 T 1200 170 T 1440 158 L1440 220 L0 220Z" fill="#0a0b0d" opacity=".8"/>
+        <g fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.2">
+          <path d="M560 175 L560 120 L700 96 L840 120 L840 175"/>
+          <path d="M600 120 L600 175 M680 108 L680 175 M760 110 L760 175"/>
+        </g>
+        <path d="M560 175 L560 120 L700 96 L840 120 L840 175Z" fill="rgba(150,180,190,.10)"/>
+      </svg>
+    </div>
+    <div class="hero__inner container">
+      <h1 class="hero__title" data-split>Exceptional glazing for those<br>who build with vision.</h1>
+    </div>
+    <button class="hero__scroll" data-scroll-cue type="button" aria-label="Scroll to explore">
+      Scroll to explore <i></i>
+    </button>
+  </section>
+
+  <section class="section lede" data-theme="light" data-after-hero>
+    <div class="container">
+      <p class="eyebrow">About {{brand}}</p>
+      <h2 class="lede__title" data-split>We bring architecture to life through<br>craft and innovation. Trusted by architects<br>who demand precision, beauty, and care.</h2>
+      <div class="lede__cta reveal"><!-- @BTN_WHO --></div>
+    </div>
+  </section>
+
+  <section class="section" data-theme="light">
+    <div class="container">
+      <div class="feature">
+        <div class="feature__text">
+          <p class="eyebrow">Our approach</p>
+          <h2 class="feature__title" data-split>Quietly engineered,<br>beautifully resolved.</h2>
+          <p class="feature__copy reveal">Every junction is solved before it reaches site. We treat glass as a structural material and a luxury finish at once — so the parts that look effortless are the ones we have already proven twice.</p>
+          <div class="feature__cta reveal"><!-- @BTN_APPROACH --></div>
+        </div>
+        <div class="feature__media reveal">
+          <div class="feature__frame" data-parallax-wrap><div data-parallax><!-- @SCENE_HERO_INTERIOR --></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-theme="light" id="collection">
+    <div class="container">
+      <div class="collection__head">
+        <div>
+          <p class="eyebrow">Product collection</p>
+          <h2 class="h2" data-split style="margin-top:1rem">A complete system of glass.</h2>
+        </div>
+        <p class="collection__intro reveal">Our glazing collection is defined by exceptional craftsmanship, refined detailing and engineering that disappears — leaving only light.</p>
+      </div>
+      <div class="collection__grid"><!-- @PRODUCT_CARDS --></div>
+      <div style="margin-top:clamp(2rem,4vw,3rem)" class="reveal"><!-- @BTN_COLLECTION --></div>
+    </div>
+  </section>
+
+  <section class="section showroom" data-theme="dark">
+    <div class="container">
+      <div class="showroom__grid">
+        <div class="showroom__media reveal clip-reveal" data-parallax-wrap><div data-parallax><!-- @SCENE_SHOWROOM --></div></div>
+        <div class="showroom__text">
+          <p class="eyebrow">Showroom</p>
+          <h2 class="h2" data-split style="margin-top:1rem">See the glass<br>in person.</h2>
+          <address class="showroom__addr reveal">{{address}}<br>By appointment, Mon–Fri</address>
+          <div class="reveal"><!-- @BTN_SHOWROOM --></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hscroll" data-hscroll data-theme="light">
+    <div class="hscroll__sticky">
+      <div class="container hscroll__head">
+        <div>
+          <p class="eyebrow">Featured projects</p>
+          <h2 class="h2" data-split style="margin-top:1rem">Built with vision.</h2>
+        </div>
+        <p class="hscroll__count"><span data-hscroll-count>01 / {{projectsTotal}}</span></p>
+      </div>
+      <div class="hscroll__viewport">
+        <div class="hscroll__track" data-hscroll-track><!-- @HSCROLL_PANELS --></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stories" data-theme="dark" data-stories>
+    <div class="stories__track">
+      <div class="stories__sticky">
+        <div class="container" style="width:100%">
+          <div class="stories__top">
+            <p class="stories__counter" data-stories-counter><b>01</b> / {{storiesTotal}}</p>
+            <p class="eyebrow eyebrow--plain">Client stories</p>
+            <span class="stories__rating"><span class="stars">★★★★★</span> {{rating}} · {{ratingCount}} reviews</span>
+          </div>
+          <div class="stories__stage"><!-- @TESTIMONIALS --></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta" data-theme="light">
+    <div class="container">
+      <h2 class="cta__title" data-split>Where vision meets<br>execution</h2>
+      <div class="cta__buttons reveal">
+        <!-- @BTN_APPROACH -->
+        {{quoteBtnDark}}
+      </div>
+    </div>
+    <div class="cta__reveal" data-pavilion>
+        <div class="cta__pin"><!-- @PAVILION --></div>
+      </div>
+  </section>
+
+</main>
+
+{{> foot }}
