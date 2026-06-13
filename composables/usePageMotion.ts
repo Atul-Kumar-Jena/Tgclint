@@ -97,8 +97,9 @@ export function usePageMotion() {
       })
 
       // fluid.glass horizontal narrative: pinned scrub on desktop, native swipe on touch.
-      // Signature effect: each panel's media unfolds from a thin vertical strip to full
-      // width as it approaches the viewport centre — clip-path inset collapses to zero.
+      // Signature effect: as a panel travels to the viewport centre its frame UNVEILS —
+      // a square aperture widens from a thin strip while a dark veil lifts and the scene,
+      // anchored in world space, settles into the opening window. Leaving, it re-veils.
       gsap.utils.toArray('[data-hscroll]').forEach((hs: any) => {
         const track = hs.querySelector('[data-hscroll-track]') as HTMLElement | null
         if (!track) return
@@ -108,6 +109,20 @@ export function usePageMotion() {
         // exclude the end-panel from the counter total (same as fluid.glass)
         const projectCount = panels.filter(p => !p.classList.contains('hscroll__panel--end')).length || panels.length
         const pad = (v: number) => ('0' + v).slice(-2)
+
+        // cache per-panel refs + inject a compositor-only veil overlay (opacity-driven,
+        // so the dim/undim never triggers a repaint — keeps the unveil locked at 60fps)
+        const parts = panels.map((p) => {
+          const media = p.querySelector('.hscroll__media') as HTMLElement | null
+          const layer = p.querySelector('.hscroll__layer') as HTMLElement | null
+          const cap = p.querySelector('.hscroll__cap') as HTMLElement | null
+          let veil: HTMLElement | null = null
+          if (media) {
+            veil = media.querySelector('.hscroll__veil')
+            if (!veil) { veil = document.createElement('div'); veil.className = 'hscroll__veil'; media.appendChild(veil) }
+          }
+          return { p, media, layer, cap, veil }
+        })
 
         const feed = (p: number) => {
           if (bar) bar.style.transform = `scaleX(${Math.max(0, Math.min(1, p)).toFixed(4)})`
@@ -125,25 +140,32 @@ export function usePageMotion() {
           rects.forEach((r, i) => {
             // c ∈ -1..1: signed distance of panel centre from viewport centre
             const c = (r.left + r.width / 2 - vw / 2) / vw
-            const k = Math.min(Math.abs(c), 1) // 0 = fully centred, 1 = fully offscreen
+            const k = Math.min(Math.abs(c), 1)       // 0 = fully centred, 1 = far edge
+            const e = Math.pow(k, 0.82)               // eased: snappy unveil near centre, lingering veil at the edges
+            const part = parts[i]
 
-            // THE fluid.glass signature: image opens from a thin strip to full frame
-            const media = panels[i].querySelector('.hscroll__media') as HTMLElement | null
-            if (media) media.style.clipPath = `inset(0 ${Math.min(k * 22, 46).toFixed(1)}% round 14px)`
-
-            // layer drifts laterally for binocular depth (same formula as fluid.glass)
-            const layer = panels[i].querySelector('.hscroll__layer') as HTMLElement | null
-            if (layer) layer.style.transform = `translate3d(${(c * 5).toFixed(2)}%,0,0) scale(1.12)`
-
-            // caption glides up and sharpens as the panel centres
-            const cap = panels[i].querySelector('.hscroll__cap') as HTMLElement | null
-            if (cap) {
-              cap.style.opacity = (1 - k * 0.9).toFixed(3)
-              cap.style.transform = `translateY(${(k * 22).toFixed(1)}px)`
+            // THE unveil: a SQUARE aperture (no rounded corners) opens from a strip to the full frame
+            if (part.media) {
+              const sx = Math.min(e * 30, 48).toFixed(1)
+              const sy = (e * 5).toFixed(1)
+              part.media.style.clipPath = `inset(${sy}% ${sx}% ${sy}% ${sx}%)`
             }
 
-            // centre-focus: centred panel scales 2.2% larger than neighbours (fluid.glass feel)
-            panels[i].style.transform = `scale(${(1 + (1 - k) * 0.022).toFixed(4)})`
+            // anchored-scene parallax: the image counter-drifts so the scene stays fixed in
+            // space while the frame slides across it — a window revealing a held world
+            if (part.layer) part.layer.style.transform = `translate3d(${(-c * 8).toFixed(2)}%,0,0) scale(1.2)`
+
+            // the veil lifts as the panel takes centre stage (opacity only → no repaint)
+            if (part.veil) part.veil.style.opacity = (k * 0.55).toFixed(3)
+
+            // caption glides up and sharpens as the panel centres
+            if (part.cap) {
+              part.cap.style.opacity = Math.max(0, 1 - k * 1.05).toFixed(3)
+              part.cap.style.transform = `translateY(${(k * 26).toFixed(1)}px)`
+            }
+
+            // centre-focus: the centred panel lifts 3% larger than its veiled neighbours
+            part.p.style.transform = `scale(${(1 + (1 - k) * 0.03).toFixed(4)})`
           })
         }
 

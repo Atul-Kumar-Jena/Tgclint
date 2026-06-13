@@ -179,13 +179,20 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .hscroll__panel { flex: 0 0 auto; width: min(62vw, 660px); scroll-snap-align: center; }
 .hscroll__panel a { display: block; }
 .hscroll__media {
-  position: relative; aspect-ratio: 16 / 11; border-radius: var(--radius); overflow: hidden;
-  box-shadow: var(--shadow-card); will-change: clip-path, transform;
+  position: relative; aspect-ratio: 16 / 11; border-radius: 0; overflow: hidden;
+  box-shadow: var(--shadow-card); will-change: clip-path;
+}
+/* veil overlay: dims off-centre frames, lifts as the panel reaches the centre
+   (opacity driven from JS — compositor-only, never repaints) */
+.hscroll__veil {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+  background: radial-gradient(120% 130% at 50% 50%, rgba(5,7,15,.35), rgba(5,7,15,.86));
+  will-change: opacity;
 }
 /* light-sweep shimmer on hover */
 .hscroll__media::after {
   content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
-  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.09) 50%, transparent 65%);
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.12) 50%, transparent 65%);
   transform: translateX(-130%);
   transition: transform 0s;
 }
@@ -193,7 +200,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
   transform: translateX(130%);
   transition: transform .72s var(--ease);
 }
-.hscroll__layer { position: absolute; inset: -1% -8%; will-change: transform; }
+.hscroll__layer { position: absolute; inset: -2% -12%; will-change: transform; }
 .hscroll__layer .scene { width: 100%; height: 100%; }
 .hscroll__panel .scene { transition: transform 1.6s var(--ease); }
 .hscroll__panel:hover .hscroll__media .scene { transform: scale(1.04); }
