@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atul-kumar-jena.github.io/Tgclint/sitemap.xml

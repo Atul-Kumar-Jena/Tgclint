@@ -1,0 +1,42 @@
+name: Publish static site to gh-pages
+
+# This branch holds a hand-built static site (plain HTML/CSS/JS + WebP images) —
+# no build step is needed. We simply publish the repository root to the gh-pages
+# branch, which is the repo's existing GitHub Pages source. This replaces the
+# previous Nuxt deployment so the static pages (blog.html, projects.html, …)
+# resolve directly instead of 404-ing against the old SPA routes.
+
+on:
+  push:
+    branches: ["claude/fluid-glass-rollback-polish-bmf5c1"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-gh-pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish to gh-pages
+        run: |
+          # Drop CI-only files from the published tree.
+          rm -rf .git .github
+          # Disable Jekyll so files/folders beginning with _ are served as-is.
+          touch .nojekyll
+          git init -q
+          git checkout -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA::7} (static)"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
