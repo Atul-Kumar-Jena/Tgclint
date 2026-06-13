@@ -35,14 +35,25 @@ onMounted(() => {
   const el = loaderEl.value
   if (!el || !gsap || reduced()) { loaderOn.value = false; hold.value = false; return }
   document.body.classList.add('is-booting')
+
+  // page sits slightly pulled back under the curtain — rises and sharpens as it lifts
+  const shell = document.querySelector('.page-shell') as HTMLElement | null
+  if (shell) gsap.set(shell, { y: '2.5vh', scale: 0.95, filter: 'blur(6px)', transformOrigin: '50% 0%' })
+
   gsap.to(loaderBar.value, { scaleX: 1, duration: 1.15, ease: 'power2.inOut' })
   setTimeout(() => {
     gsap.timeline({
-      onComplete: () => { loaderOn.value = false; document.body.classList.remove('is-booting') }
+      onComplete: () => {
+        loaderOn.value = false
+        document.body.classList.remove('is-booting')
+        // remove inline transform so GSAP ScrollTrigger pins measure clean layout
+        if (shell) gsap.set(shell, { clearProps: 'all' })
+      }
     })
       .to(el, { yPercent: -100, borderBottomLeftRadius: '34px', borderBottomRightRadius: '34px', duration: 1.05, ease: 'power4.inOut' }, 0)
-      // release the page reveals while the curtain is still lifting, so the hero
-      // rises into view as the cover leaves — no dead frame, no flash
+      // page rises and sharpens in sync with the curtain lifting
+      .to(shell, { y: 0, scale: 1, filter: 'blur(0px)', duration: 1.05, ease: 'expo.out' }, 0.05)
+      // release the page reveals while the curtain is still lifting
       .call(() => { hold.value = false; document.body.classList.add('is-loaded') }, [], 0.34)
   }, 1250)
 })
@@ -65,9 +76,11 @@ const pageTransition = {
     const gsap = nuxtApp.$gsap
     if (!gsap || reduced()) { done(); return }
     if (enterTl) enterTl.progress(1) // settle any in-flight enter first
-    // slightly longer than the enter: the old page must stay in the document until
-    // the cover is complete, so layout (and the scrollbar) never collapses mid-flight
-    leaveTween = gsap.to(el, { opacity: 0.32, duration: 1.25, ease: 'power2.inOut', onComplete: done })
+    // old page recedes like a card being pushed aside — scale + blur + rounded corners
+    leaveTween = gsap.to(el, {
+      opacity: 0.45, scale: 0.88, y: '5vh', filter: 'blur(6px)', borderRadius: '28px',
+      transformOrigin: '50% 0%', duration: 1.25, ease: 'power2.inOut', onComplete: done
+    })
   },
   onEnter: (el: Element, done: () => void) => {
     const gsap = nuxtApp.$gsap
@@ -76,7 +89,8 @@ const pageTransition = {
     gsap.set(el, {
       position: 'fixed', top: 0, left: 0, width: '100%', height: vh, overflow: 'hidden',
       zIndex: 6, y: vh, scale: 0.94, transformOrigin: '50% 0%',
-      borderRadius: '34px 34px 0 0', boxShadow: '0 -36px 110px rgba(6,10,7,.62)'
+      borderRadius: '34px 34px 0 0', boxShadow: '0 -36px 110px rgba(6,10,7,.62)',
+      filter: 'blur(8px)'
     })
     enterTl = gsap.timeline({
       onComplete: () => {
@@ -89,6 +103,7 @@ const pageTransition = {
       }
     })
       .to(el, { y: 0, duration: 1.1, ease: 'expo.inOut' }, 0)
+      .to(el, { filter: 'blur(0px)', duration: 0.85, ease: 'power2.out' }, 0.1)
       .to(el, { scale: 1, duration: 0.95, ease: 'power3.inOut' }, 0.15)
       .to(el, { borderRadius: '0px 0px 0px 0px', duration: 0.4, ease: 'power2.out' }, 0.8)
   },

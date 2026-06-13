@@ -78,7 +78,7 @@ html.js .reveal { opacity: 0; }
 html.js .card.reveal { opacity: 0; }
 html.js [data-split] .line > span { transform: translateY(118%); }
 html.js [data-fade] { opacity: 0; }
-html.js .clip-reveal { clip-path: inset(0 0 100% 0); }
+html.js .clip-reveal { clip-path: inset(0 0 100% 0); filter: blur(10px); transform: scale(1.035); }
 [data-split] .line { display: block; overflow: hidden; padding-block: .04em; }
 [data-split] .line > span { display: block; will-change: transform; }
 
@@ -106,7 +106,10 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 
 /* clip media reveal (class toggled by ScrollTrigger) */
-.clip-reveal.is-in { clip-path: inset(0 0 0 0) !important; transition: clip-path 1.5s var(--ease); }
+.clip-reveal.is-in {
+  clip-path: inset(0 0 0 0) !important; filter: blur(0) !important; transform: none !important;
+  transition: clip-path 1.7s var(--ease), filter 1.6s var(--ease), transform 1.9s var(--ease);
+}
 
 /* scene wrapper is layout-transparent so the inner <svg class="scene"> fills its container */
 .scene-wrap { display: contents; }

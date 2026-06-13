@@ -33,15 +33,15 @@ export function usePageMotion() {
   function boot(gsap: any, ST: any) {
     ctx = gsap.context(() => {
       gsap.utils.toArray('.reveal:not(.card)').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 1.05, ease: 'expo.out',
+        gsap.fromTo(el, { autoAlpha: 0, y: 34, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.05, ease: 'expo.out',
           scrollTrigger: { trigger: el, start: 'top 88%' } })
       })
       gsap.utils.toArray('.card.reveal').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.985 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.95, ease: 'expo.out',
+        gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.985, filter: 'blur(4px)' }, { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.95, ease: 'expo.out',
           scrollTrigger: { trigger: el, start: 'top 92%' } })
       })
       gsap.utils.toArray('[data-split]').forEach((el: any) => {
-        gsap.fromTo(el.querySelectorAll('.line > span'), { yPercent: 118 }, { yPercent: 0, duration: 1.15, ease: 'expo.out', stagger: 0.085,
+        gsap.fromTo(el.querySelectorAll('.line > span'), { yPercent: 118 }, { yPercent: 0, duration: 1.15, ease: 'expo.out', stagger: 0.12,
           scrollTrigger: { trigger: el, start: 'top 88%' } })
       })
       gsap.utils.toArray('[data-fade]').forEach((el: any) => {
@@ -67,7 +67,6 @@ export function usePageMotion() {
         const line = pav.querySelector('.pavilion__line') as SVGElement | null
         const pin = pav.querySelector('.cta__pin') as HTMLElement | null
         if (fillRect) { fillRect.setAttribute('y', '640'); fillRect.setAttribute('height', '0') }
-        void pin // pin is handled by CSS sticky on .cta__pin
         ST.create({
           trigger: pav, start: 'top top', end: 'bottom bottom', scrub: true,
           onUpdate: (self: any) => {
@@ -140,8 +139,11 @@ export function usePageMotion() {
             const cap = panels[i].querySelector('.hscroll__cap') as HTMLElement | null
             if (cap) {
               cap.style.opacity = (1 - k * 0.9).toFixed(3)
-              cap.style.transform = `translateY(${(k * 16).toFixed(1)}px)`
+              cap.style.transform = `translateY(${(k * 22).toFixed(1)}px)`
             }
+
+            // centre-focus: centred panel scales 2.2% larger than neighbours (fluid.glass feel)
+            panels[i].style.transform = `scale(${(1 + (1 - k) * 0.022).toFixed(4)})`
           })
         }
 
@@ -155,7 +157,7 @@ export function usePageMotion() {
               trigger: hs, start: 'top top',
               // 1.3× pacing: the narrative advances more slowly and deliberately (fluid.glass)
               end: () => '+=' + (distance() * 1.3),
-              scrub: 1, pin: true,
+              scrub: 0.5, pin: true,
               invalidateOnRefresh: true,
               onUpdate: (self: any) => {
                 feed(self.progress)
