@@ -211,7 +211,7 @@ export function usePageMotion() {
             if (sticky && !hint) {
               hint = document.createElement('div')
               hint.className = 'hscroll__hint'
-              hint.innerHTML = '<span>Swipe to explore</span><i aria-hidden="true"></i>'
+              hint.innerHTML = '<span>Swipe to explore</span><i class="hscroll__arrows" aria-hidden="true"><b></b><b></b><b></b></i>'
               sticky.appendChild(hint)
             }
             let raf = 0

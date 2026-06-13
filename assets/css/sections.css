@@ -273,23 +273,35 @@ body.is-loaded .hero__scroll { opacity: 1; }
 
   /* "Swipe to explore →" cue, centred under the gallery; fades once the user swipes */
   .hscroll__hint {
-    display: inline-flex; align-items: center; gap: .55rem; align-self: center;
-    margin-top: clamp(1rem, 3vh, 1.6rem); padding: .5rem .95rem;
+    position: relative; overflow: hidden;
+    display: inline-flex; align-items: center; gap: .6rem; align-self: center;
+    margin-top: clamp(1rem, 3vh, 1.6rem); padding: .55rem 1.05rem;
     border: 1px solid var(--local-line, var(--line)); border-radius: var(--radius-pill);
     font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
     color: var(--local-muted, var(--muted)); background: rgba(255,255,255,.04);
     transition: opacity .5s var(--ease), transform .5s var(--ease);
   }
-  .hscroll__hint i {
-    width: 22px; height: 1px; position: relative; background: currentColor; opacity: .6;
-    animation: hintNudge 1.8s var(--ease-inout) infinite;
+  /* light sweep travelling across the pill */
+  .hscroll__hint::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.14) 50%, transparent 70%);
+    transform: translateX(-120%); animation: hintSweep 2.6s var(--ease-inout) infinite;
   }
-  .hscroll__hint i::after {
-    content: ""; position: absolute; right: -1px; top: -3px; width: 7px; height: 7px;
-    border-top: 1px solid currentColor; border-right: 1px solid currentColor; transform: rotate(45deg);
+  .hscroll__hint span { position: relative; }
+  /* cascading chevrons — light up rightward in sequence */
+  .hscroll__arrows { position: relative; display: inline-flex; align-items: center; gap: 2px; }
+  .hscroll__arrows b {
+    width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
+    transform: rotate(45deg); opacity: .2; animation: hintChev 1.5s var(--ease-inout) infinite;
   }
-  .hscroll__hint.is-gone { opacity: 0; transform: translateY(6px); pointer-events: none; }
-  @keyframes hintNudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+  .hscroll__arrows b:nth-child(2) { animation-delay: .16s; }
+  .hscroll__arrows b:nth-child(3) { animation-delay: .32s; }
+  .hscroll__hint.is-gone { opacity: 0; transform: translateY(8px) scale(.96); pointer-events: none; }
+  @keyframes hintChev { 0%, 100% { opacity: .18; } 45% { opacity: 1; } }
+  @keyframes hintSweep { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(120%); } }
 }
-@media (prefers-reduced-motion: reduce) { .hscroll__hint i { animation: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .hscroll__arrows b, .hscroll__hint::before { animation: none; }
+  .hscroll__arrows b { opacity: .6; }
+}
 @media (max-width: 600px) { .hscroll__panel, .hscroll__panel--text, .hscroll__panel--facts, .hscroll__panel--portfolio { width: 82vw; } }
