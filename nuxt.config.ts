@@ -24,6 +24,8 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/Tgclint/favicon.svg' },
+        // hero image preloads during the loader curtain so it is painted the instant it lifts
+        { rel: 'preload', as: 'image', href: '/Tgclint/img/projects/mahaveer-enclave.webp', fetchpriority: 'high' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Archivo:wght@500..800&display=swap' }

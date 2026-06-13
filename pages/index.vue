@@ -9,11 +9,6 @@
       <div class="hero__media">
         <Scene type="house" variant="hero" uid="hero" />
         <div class="hero__veil" />
-        <svg class="hero__silhouette" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-          <path d="M0 180 Q 120 150 240 168 T 480 160 T 720 172 T 960 156 T 1200 170 T 1440 158 L1440 220 L0 220Z" fill="#0a0c16" opacity=".8" />
-          <g fill="none" stroke="rgba(246,138,74,.35)" stroke-width="1.2"><path d="M560 175 L560 120 L700 96 L840 120 L840 175" /><path d="M600 120 L600 175 M680 108 L680 175 M760 110 L760 175" /></g>
-          <path d="M560 175 L560 120 L700 96 L840 120 L840 175Z" fill="rgba(240,104,30,.12)" />
-        </svg>
       </div>
       <div class="hero__inner container">
         <h1 class="hero__title" data-split>Land you can build<br>a life on.</h1>

@@ -74,6 +74,7 @@ const site = {
   news: [
     {
       slug: 'sasta-ru-hinasta-trap',
+      image: 'blog/card-sasta-hinasta.webp',
       category: 'Home Construction Odisha | Bhubaneswar House Cost',
       title: 'The "Sasta ru Hinasta" Trap: Why Self-Building Your Home is a Costly Illusion',
       excerpt: 'Trying to self-manage labor may seem cheaper, but hidden leakages in material, time, and stress often push homeowners far over budget.',
@@ -90,6 +91,7 @@ const site = {
     },
     {
       slug: 'hidden-health-cost',
+      image: 'blog/card-hidden-cost.webp',
       category: 'Best Construction Company Odisha | Residential Construction Tips',
       title: 'The Hidden Health Cost of Building a House: Why Your Peace of Mind is Worth More Than a Discount',
       excerpt: 'The real cost of self-build is not just money, it is decision fatigue, work disruption, and avoidable health stress over months.',
@@ -97,6 +99,7 @@ const site = {
     },
     {
       slug: 'land-into-landmark',
+      image: 'blog/card-land-landmark.webp',
       category: 'Trusted Builders in Odisha | Home Construction Guarantee',
       title: 'Transforming Land into a Landmark: The Foundation of Trust at Saansud Infra',
       excerpt: 'Learn how structural warranty, quality checks, and culture-rooted design turn a plot into a long-term family legacy.',

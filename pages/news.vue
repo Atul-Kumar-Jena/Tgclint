@@ -11,11 +11,14 @@
     <section class="section" data-theme="light" style="padding-top:clamp(2rem,5vh,4rem)">
       <div class="container">
         <div class="news-list">
-          <NuxtLink v-for="(n, i) in site.news" :key="n.slug" class="news-item reveal" :to="`/news/${n.slug}`" :style="`--i:${i}`" data-hover>
-            <span class="news-item__cat">{{ n.category }}</span>
-            <h3 class="news-item__title">{{ n.title }}</h3>
-            <p class="news-item__excerpt">{{ n.excerpt }}</p>
-            <span class="news-item__more">Read full story</span>
+          <NuxtLink v-for="(n, i) in site.news" :key="n.slug" class="news-item reveal" :to="`/news/${n.slug}`" :style="`--i:${i}`" data-hover data-cursor="explore">
+            <div class="news-item__media"><img :src="url(n.image)" :alt="n.title" loading="lazy" decoding="async"></div>
+            <div class="news-item__body">
+              <span class="news-item__cat">{{ n.category }}</span>
+              <h3 class="news-item__title">{{ n.title }}</h3>
+              <p class="news-item__excerpt">{{ n.excerpt }}</p>
+              <span class="news-item__more">Read full story</span>
+            </div>
           </NuxtLink>
         </div>
       </div>
@@ -27,6 +30,7 @@
 
 <script setup lang="ts">
 const site = useSite()
+const { url } = usePhotos()
 usePageMotion()
 useHead({ title: `Blog — ${site.brand}` })
 </script>

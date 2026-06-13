@@ -8,6 +8,12 @@
       </div>
     </section>
 
+    <section class="section" data-theme="light" style="padding-top:0;padding-bottom:clamp(2rem,5vh,4rem)">
+      <div class="container">
+        <div class="article__hero clip-reveal"><img :src="url(post.image)" :alt="post.title" loading="eager" fetchpriority="high" decoding="async"></div>
+      </div>
+    </section>
+
     <section class="section" data-theme="light" style="padding-top:0">
       <div class="container">
         <div class="article">
@@ -51,6 +57,7 @@
 
 <script setup lang="ts">
 const site = useSite()
+const { url } = usePhotos()
 const route = useRoute()
 const slug = computed(() => String(route.params.slug))
 const post = site.news.find((n) => n.slug === slug.value)

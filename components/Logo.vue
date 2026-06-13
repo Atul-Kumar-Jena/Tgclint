@@ -1,9 +1,9 @@
 <template>
   <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-    <!-- Saansud mark: orange drop with a script S, a bird perched on the stem -->
-    <path class="logo-mark__drop" d="M13.6 4.6 C9 8.6 5.6 13.4 5.6 18.4 a10.4 10.4 0 0 0 20.8 0 c0 -3.4 -1.6 -6.6 -3.6 -9.4 C20.6 6 17 3.4 13.6 4.6 Z" fill="var(--accent, #f0681e)" />
-    <path class="logo-mark__bird" d="M20.2 2.2 c1.5 -.9 3 -.6 3.7 .4 l2.7 -.3 -2 1.3 c.1 1.2 -.8 2.2 -2.2 2.6 l-3.4 1 c-.4 -2 -.4 -3.6 1.2 -5 Z" fill="var(--accent, #f0681e)" />
-    <path d="M19.8 11.2 c-1.2 -1.5 -3.6 -1.8 -5.2 -.8 -1.7 1 -2 3 -.7 4.2 1.1 1 2.9 1.2 4.3 2 1.6 .9 2 2.7 .8 3.9 -1.4 1.4 -4.1 1.2 -5.5 -.4" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" />
-    <path d="M20.9 8.1 L11.2 25.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".95" />
+    <!-- canonical Saansud mark: orange water-drop with a script "S", a bird perched on the stem -->
+    <path class="logo-mark__drop" d="M14 5.6 C10 9.2 7 13.4 7 17.8 a9 9 0 0 0 18 0 c0 -3 -1.4 -5.8 -3.2 -8.2 C19.8 6.8 17 4.6 14 5.6 Z" fill="var(--accent, #f0681e)" />
+    <path class="logo-mark__bird" d="M19.6 3.4 c1.3 -.8 2.6 -.5 3.2 .3 l2.3 -.2 -1.7 1.1 c.1 1 -.7 1.9 -1.9 2.3 l-3 .9 c-.3 -1.8 -.3 -3.2 1.1 -4.4 Z" fill="var(--accent, #f0681e)" />
+    <path d="M19.3 11.6 c-1 -1.3 -3.1 -1.6 -4.5 -.7 -1.5 .9 -1.7 2.6 -.6 3.6 .9 .9 2.5 1 3.7 1.8 1.4 .8 1.7 2.3 .7 3.4 -1.2 1.2 -3.5 1 -4.7 -.4" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" />
+    <path d="M20.2 8.9 L11.9 24.1" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" />
   </svg>
 </template>
