@@ -512,6 +512,20 @@ body.menu-locked{ overflow:hidden; }
 .icon-btn svg{ width:20px; height:20px; }
 .proj-actions{ display:flex; gap:8px; }
 
+/* ---------- Project gallery tiles (hscroll rail) ---------- */
+.proj-tile{ position:relative; width:min(72vw,440px); aspect-ratio:3/4; border-radius:var(--r-lg); overflow:hidden; isolation:isolate; box-shadow:var(--sh-2); flex:none; transition:box-shadow .5s var(--ease); }
+.proj-tile img{ width:100%; height:100%; object-fit:cover; transition:transform 1.3s var(--ease); }
+.proj-tile:hover img{ transform:scale(1.06); }
+.proj-tile:hover{ box-shadow:var(--sh-3); }
+.proj-tile .proj-tag{ position:absolute; top:16px; left:16px; z-index:2; }
+.proj-tile-cap{ position:absolute; inset-inline:0; bottom:0; padding:clamp(60px,10vw,90px) 24px 26px; background:linear-gradient(to top, rgba(8,20,14,.92) 52%, rgba(8,20,14,.3) 80%, transparent); display:flex; align-items:flex-end; justify-content:space-between; gap:16px; z-index:1; transition:background .45s var(--ease); }
+.proj-tile:hover .proj-tile-cap{ background:linear-gradient(to top, rgba(8,20,14,.97) 56%, rgba(8,20,14,.35) 82%, transparent); }
+.proj-tile-info h3{ font-family:var(--f-display); font-size:clamp(1rem,2.2vw,1.28rem); font-weight:700; color:#fff; line-height:1.22; margin-bottom:5px; }
+.proj-tile-info p{ font-size:.76rem; color:var(--terra-2); font-weight:500; letter-spacing:.02em; line-height:1.5; }
+.proj-tile-cap .icon-btn{ background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.26); color:#fff; flex:none; }
+.proj-tile-cap .icon-btn:hover{ background:var(--terra); border-color:var(--terra); color:#fff; }
+@media (min-width:720px){ .proj-tile{ width:min(38vw,440px); } }
+
 /* ---------- Gallery tiles ---------- */
 .tile{ position:relative; border-radius:var(--r-md); overflow:hidden; box-shadow:var(--sh-2); isolation:isolate; }
 .tile img{ width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease); }
