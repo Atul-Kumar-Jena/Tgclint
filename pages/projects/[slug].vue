@@ -10,7 +10,7 @@
     </section>
 
     <!-- the project reads sideways: a minimal pinned side-scroll, fluid.glass style -->
-    <section class="hscroll" data-hscroll data-theme="light">
+    <section class="hscroll" data-hscroll data-theme="dark">
       <div class="hscroll__sticky">
         <div class="container hscroll__head">
           <p class="eyebrow eyebrow--plain">The project</p>
@@ -42,10 +42,13 @@
             </article>
             <article class="hscroll__panel hscroll__panel--end">
               <NuxtLink class="hscroll__next" :to="`/projects/${next.slug}`" data-hover data-cursor="explore">
-                <div class="hscroll__media"><div class="hscroll__layer"><Scene type="house" :variant="next.scene" :uid="`pn-${next.slug}`" /></div></div>
-                <div class="hscroll__meta">
-                  <p class="eyebrow eyebrow--plain" style="margin-bottom:.5rem">Next project</p>
-                  <h3 class="hscroll__name">{{ next.name }}</h3>
+                <div class="hscroll__media">
+                  <div class="hscroll__layer"><Scene type="house" :variant="next.scene" :uid="`pn-${next.slug}`" /></div>
+                  <div class="hscroll__cap">
+                    <div class="hscroll__row"><span>Next</span><span>{{ next.year }}</span></div>
+                    <h3 class="hscroll__name">{{ next.name }}</h3>
+                    <p class="hscroll__loc">{{ next.location }}</p>
+                  </div>
                 </div>
               </NuxtLink>
             </article>

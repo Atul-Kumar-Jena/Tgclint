@@ -76,27 +76,29 @@
       </div>
     </section>
 
-    <section class="hscroll" data-hscroll data-theme="light">
+    <section class="hscroll" data-hscroll data-theme="dark">
       <div class="hscroll__sticky">
         <div class="container hscroll__head">
-          <div><p class="eyebrow">Featured projects</p><h2 class="h2" data-split style="margin-top:1rem">Built on trust.</h2></div>
+          <p class="eyebrow">Featured projects</p>
           <p class="hscroll__count" data-hscroll-count>01 / 0{{ site.projects.length + 1 }}</p>
         </div>
         <div class="container"><div class="hscroll__progress" data-hscroll-progress><span /></div></div>
         <div class="hscroll__viewport">
           <div class="hscroll__track" data-hscroll-track>
-            <article v-for="(p, i) in site.projects" :key="p.slug" class="hscroll__panel">
+            <article v-for="(p, i) in site.projects" :key="p.slug" class="hscroll__panel hscroll__panel--portfolio">
               <NuxtLink :to="`/projects/${p.slug}`" data-hover data-cursor="explore">
-                <div class="hscroll__media"><div class="hscroll__layer"><Scene type="house" :variant="p.scene" :uid="`hs-${p.slug}`" /></div></div>
-                <div class="hscroll__meta">
-                  <div class="hscroll__row"><span>0{{ i + 1 }}</span><span>{{ p.location }}</span></div>
-                  <h3 class="hscroll__name">{{ p.name }}</h3>
-                  <div class="card__tags"><span v-for="t in p.tags" :key="t">{{ t }}</span></div>
+                <div class="hscroll__media hscroll__media--tall">
+                  <div class="hscroll__layer"><Scene type="house" :variant="p.scene" :uid="`hs-${p.slug}`" /></div>
+                  <div class="hscroll__cap">
+                    <div class="hscroll__row"><span>0{{ i + 1 }}</span><span>{{ p.location }}</span></div>
+                    <h3 class="hscroll__name">{{ p.name }}</h3>
+                    <div class="card__tags"><span v-for="t in p.tags" :key="t">{{ t }}</span></div>
+                  </div>
                 </div>
               </NuxtLink>
             </article>
             <article class="hscroll__panel hscroll__panel--end">
-              <div class="hscroll__end"><p class="eyebrow">All developments</p><h3 class="hscroll__name">Explore every<br>project.</h3><Btn label="All projects" to="/projects" /></div>
+              <div class="hscroll__end"><p class="eyebrow">All developments</p><h3 class="hscroll__name">Explore every<br>project.</h3><Btn label="All projects" to="/projects" variant="light" /></div>
             </article>
           </div>
         </div>

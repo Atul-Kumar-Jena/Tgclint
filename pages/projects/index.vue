@@ -8,7 +8,7 @@
       </div>
     </section>
 
-    <section class="hscroll" data-hscroll data-theme="light">
+    <section class="hscroll" data-hscroll data-theme="dark">
       <div class="hscroll__sticky">
         <div class="container hscroll__head">
           <p class="eyebrow eyebrow--plain">Portfolio</p>
@@ -19,12 +19,14 @@
           <div class="hscroll__track" data-hscroll-track>
             <article v-for="(p, i) in site.projects" :key="p.slug" class="hscroll__panel hscroll__panel--portfolio">
               <NuxtLink :to="`/projects/${p.slug}`" data-hover data-cursor="explore">
-                <div class="hscroll__media hscroll__media--tall"><div class="hscroll__layer"><Scene type="house" :variant="p.scene" :uid="`pg-${p.slug}`" /></div></div>
-                <div class="hscroll__meta">
-                  <div class="hscroll__row"><span>0{{ i + 1 }}</span><span>{{ p.year }}</span></div>
-                  <h3 class="hscroll__name">{{ p.name }}</h3>
-                  <p class="card__summary">{{ p.location }}</p>
-                  <div class="card__tags"><span v-for="t in p.tags" :key="t">{{ t }}</span></div>
+                <div class="hscroll__media hscroll__media--tall">
+                  <div class="hscroll__layer"><Scene type="house" :variant="p.scene" :uid="`pg-${p.slug}`" /></div>
+                  <div class="hscroll__cap">
+                    <div class="hscroll__row"><span>0{{ i + 1 }}</span><span>{{ p.year }}</span></div>
+                    <h3 class="hscroll__name">{{ p.name }}</h3>
+                    <p class="hscroll__loc">{{ p.location }}</p>
+                    <div class="card__tags"><span v-for="t in p.tags" :key="t">{{ t }}</span></div>
+                  </div>
                 </div>
               </NuxtLink>
             </article>

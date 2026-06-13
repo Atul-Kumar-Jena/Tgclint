@@ -182,6 +182,22 @@
 .hscroll__panel--facts .facts { width: 100%; }
 .hscroll__next { display: block; width: 100%; }
 
+/* fluid.glass overlay caption — text lives inside the image frame */
+.hscroll__cap {
+  position: absolute; inset-inline: 0; bottom: 0; z-index: 2;
+  padding: clamp(48px,9vw,80px) 20px 22px;
+  background: linear-gradient(to top, rgba(5,7,16,.94) 42%, rgba(5,7,16,.32) 72%, transparent);
+  pointer-events: none;
+}
+.hscroll__cap .hscroll__row { color: rgba(255,255,255,.38); font-size: .7rem; }
+.hscroll__cap .hscroll__name { color: #f2f0ea; margin-block: .6rem .6rem; font-size: clamp(1.05rem,1.45vw,1.45rem); font-weight: 500; letter-spacing: -.01em; }
+.hscroll__cap .hscroll__loc { font-size: .75rem; color: rgba(255,255,255,.52); letter-spacing: .04em; margin-top: .2rem; }
+.hscroll__cap .card__tags { margin-top: .6rem; }
+.hscroll__cap .card__tags span { border-color: rgba(255,255,255,.18); color: rgba(255,255,255,.62); background: rgba(255,255,255,.06); font-size: .68rem; }
+
+/* hover: slightly lighten the overlay so image breathes */
+.hscroll__panel:hover .hscroll__cap { background: linear-gradient(to top, rgba(5,7,16,.88) 38%, rgba(5,7,16,.22) 70%, transparent); }
+
 @media (max-width: 1024px) {
   .hscroll__sticky { min-height: 0; height: auto; }
   .hscroll__viewport {
