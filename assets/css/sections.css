@@ -206,7 +206,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .hscroll__end .hscroll__name { font-size: var(--fs-h2); margin-bottom: 1.6rem; line-height: 1.06; }
 
 /* panel variants: portfolio cards, quiet text frames, facts, next-project */
-.hscroll__panel--portfolio { width: min(38vw, 470px); }
+.hscroll__panel--portfolio { width: min(62vw, 680px); }
 .hscroll__media--tall { aspect-ratio: 4 / 5; }
 .hscroll__panel--text, .hscroll__panel--facts { display: flex; flex-direction: column; justify-content: center; width: min(36vw, 470px); }
 .hscroll__lead { font-size: var(--fs-lead); line-height: 1.42; color: var(--fg, var(--ink)); }

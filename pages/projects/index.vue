@@ -19,7 +19,7 @@
           <div class="hscroll__track" data-hscroll-track>
             <article v-for="(p, i) in site.projects" :key="p.slug" class="hscroll__panel hscroll__panel--portfolio">
               <NuxtLink :to="`/projects/${p.slug}`" data-hover data-cursor="explore">
-                <div class="hscroll__media hscroll__media--tall">
+                <div class="hscroll__media">
                   <div class="hscroll__layer"><Scene type="house" :variant="p.scene" :uid="`pg-${p.slug}`" /></div>
                   <div class="hscroll__cap">
                     <div class="hscroll__row"><span>0{{ i + 1 }}</span><span>{{ p.year }}</span></div>
