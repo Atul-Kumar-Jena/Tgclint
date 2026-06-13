@@ -255,6 +255,9 @@ body.is-loaded .hero__scroll { opacity: 1; }
 /* hover: slightly lighten the overlay so image breathes */
 .hscroll__panel:hover .hscroll__cap { background: linear-gradient(to top, rgba(5,7,16,.88) 38%, rgba(5,7,16,.22) 70%, transparent); }
 
+/* swipe affordance — only shown on touch (see mobile query); hidden on desktop */
+.hscroll__hint { display: none; }
+
 @media (max-width: 1024px) {
   .hscroll__sticky { min-height: 0; height: auto; }
   .hscroll__viewport {
@@ -267,5 +270,26 @@ body.is-loaded .hero__scroll { opacity: 1; }
   .hscroll__panel--text, .hscroll__panel--facts { min-height: 46vw; }
   /* clip-path unfold is GSAP-driven on desktop only; disable on touch */
   .hscroll__media { clip-path: none !important; }
+
+  /* "Swipe to explore →" cue, centred under the gallery; fades once the user swipes */
+  .hscroll__hint {
+    display: inline-flex; align-items: center; gap: .55rem; align-self: center;
+    margin-top: clamp(1rem, 3vh, 1.6rem); padding: .5rem .95rem;
+    border: 1px solid var(--local-line, var(--line)); border-radius: var(--radius-pill);
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--local-muted, var(--muted)); background: rgba(255,255,255,.04);
+    transition: opacity .5s var(--ease), transform .5s var(--ease);
+  }
+  .hscroll__hint i {
+    width: 22px; height: 1px; position: relative; background: currentColor; opacity: .6;
+    animation: hintNudge 1.8s var(--ease-inout) infinite;
+  }
+  .hscroll__hint i::after {
+    content: ""; position: absolute; right: -1px; top: -3px; width: 7px; height: 7px;
+    border-top: 1px solid currentColor; border-right: 1px solid currentColor; transform: rotate(45deg);
+  }
+  .hscroll__hint.is-gone { opacity: 0; transform: translateY(6px); pointer-events: none; }
+  @keyframes hintNudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
 }
+@media (prefers-reduced-motion: reduce) { .hscroll__hint i { animation: none; } }
 @media (max-width: 600px) { .hscroll__panel, .hscroll__panel--text, .hscroll__panel--facts, .hscroll__panel--portfolio { width: 82vw; } }

@@ -205,8 +205,19 @@ export function usePageMotion() {
           // mobile: native swipe, same counter + progress + clip feedback
           const vp = hs.querySelector('.hscroll__viewport') as HTMLElement | null
           if (vp) {
+            // swipe affordance: tell the user the gallery scrolls sideways; it fades the
+            // moment they start swiping (injected here so no template edits are needed)
+            let hint: HTMLElement | null = sticky ? sticky.querySelector('.hscroll__hint') : null
+            if (sticky && !hint) {
+              hint = document.createElement('div')
+              hint.className = 'hscroll__hint'
+              hint.innerHTML = '<span>Swipe to explore</span><i aria-hidden="true"></i>'
+              sticky.appendChild(hint)
+            }
             let raf = 0
+            let hinted = false
             vp.addEventListener('scroll', () => {
+              if (!hinted && hint && vp.scrollLeft > 6) { hinted = true; hint.classList.add('is-gone') }
               if (raf) return
               raf = requestAnimationFrame(() => {
                 raf = 0
