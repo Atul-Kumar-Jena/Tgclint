@@ -1,0 +1,55 @@
+{{> head }}
+
+<main id="main">
+
+  <section class="project-hero" data-theme="dark">
+    <div class="project-hero__media" data-parallax-wrap><div data-parallax><!-- @PROJECT_HERO --></div></div>
+    <div class="project-hero__veil"></div>
+    <div class="project-hero__inner container">
+      <div class="project-hero__meta"><span><!-- @PROJECT_LOCATION --></span><span><!-- @PROJECT_YEAR --></span></div>
+      <h1 class="project-hero__title" data-split><!-- @PROJECT_NAME --></h1>
+    </div>
+  </section>
+
+  <section class="section" data-theme="light">
+    <div class="container">
+      <div class="project-intro">
+        <div class="project-intro__lead">
+          <p class="reveal"><!-- @PROJECT_INTRO --></p>
+          <div class="project-tags reveal"><!-- @PROJECT_TAGS --></div>
+        </div>
+        <dl class="project-intro__facts facts reveal"><!-- @PROJECT_FACTS --></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-theme="light" style="padding-top:0">
+    <div class="container">
+      <div class="project-duo">
+        <div class="project-media reveal clip-reveal" data-parallax-wrap><div data-parallax><!-- @PROJECT_INT --></div></div>
+        <div class="project-media reveal clip-reveal" data-parallax-wrap><div data-parallax><!-- @PROJECT_DETAIL --></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-theme="light">
+    <div class="container">
+      <div class="project-story">
+        <p class="eyebrow" style="margin-bottom:1.4rem">The build</p>
+        <!-- @PROJECT_STORY -->
+      </div>
+    </div>
+  </section>
+
+  <a class="project-next" href="<!-- @NEXT_HREF -->" data-theme="dark" data-hover data-cursor="explore">
+    <div data-parallax-wrap style="position:absolute;inset:0"><!-- @NEXT_SCENE --></div>
+    <div class="project-next__veil"></div>
+    <div class="project-next__inner container">
+      <p class="project-next__label">Next project</p>
+      <p class="project-next__name"><!-- @NEXT_NAME --></p>
+    </div>
+  </a>
+
+</main>
+
+{{> foot }}

@@ -1,0 +1,75 @@
+/* ============================================================== ≤1180px */
+@media (max-width: 1180px) {
+  .collection__grid { grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 4vw, 3rem); }
+}
+
+/* ============================================================== ≤1024px */
+@media (max-width: 1024px) {
+  .feature, .showroom__grid, .step, .product-section,
+  .intro-2, .contact-grid, .project-intro {
+    grid-template-columns: 1fr;
+  }
+  .feature__text, .feature__media,
+  .feature--flip .feature__text, .feature--flip .feature__media,
+  .showroom__media, .showroom__text,
+  .step__text, .step__media,
+  .product-section__media, .product-section__text,
+  .intro-2__eyebrow, .intro-2__body,
+  .contact-grid__intro, .contact-grid__cards,
+  .project-intro__lead, .project-intro__facts {
+    grid-column: auto; order: 0;
+  }
+  .feature--flip .feature__media, .product-section:nth-child(even) .product-section__media,
+  .step:nth-child(even) .step__media { order: -1; }
+  .feature__media, .showroom__media { max-width: 640px; }
+  .step__media { min-height: 78vw; max-height: 560px; }
+  .intro-2__eyebrow { margin-bottom: 1rem; }
+
+  .gallery__item { grid-column: 1 / -1 !important; aspect-ratio: 16 / 10 !important; }
+  .about-stat, .values { grid-template-columns: 1fr 1fr; }
+  .project-duo { grid-template-columns: 1fr; }
+  .project-duo .project-media:first-child { margin-top: 0; }
+}
+
+/* =============================================================== ≤768px */
+@media (max-width: 768px) {
+  :root { --pad-y: clamp(4rem, 9vh, 7rem); --sheet-r: 22px; }
+  /* lighter compositing for small GPUs: drop grain, ease the blurs */
+  .grain { display: none; }
+  .dock { -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%); }
+  .dock-scrim { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .hscroll__head { padding-top: clamp(3rem, 8vh, 5rem); }
+
+  .projects__grid { grid-template-columns: 1fr; }
+  .projects__grid .card:nth-child(even) { margin-top: 0; }
+  .collection__grid { grid-template-columns: 1fr 1fr; }
+  .quote__grid { grid-template-columns: 1fr; }
+  .stories__track { height: 320vh; }
+  .dock__foot { flex-direction: column; }
+  .dock__contact { text-align: left; }
+}
+
+/* =============================================================== ≤560px */
+@media (max-width: 560px) {
+  .collection__grid { grid-template-columns: 1fr; }
+  .about-stat, .values { grid-template-columns: 1fr; }
+  .dock { width: 186px; }
+  .dock__bar { gap: 8px; padding: 0 6px 0 8px; }
+  .dock__label { letter-spacing: .12em; font-size: .7rem; }
+  .hero__inner { padding-bottom: clamp(7rem, 22vh, 11rem); }
+  .footer__grid { grid-template-columns: 1fr; }
+  .quote__sidebar { display: none; }
+  .contact-card a, .contact-card p { font-size: 1.3rem; }
+  .topbar__quote { display: none; }
+  .topbar__brand { font-size: 1rem; }
+}
+
+/* reduce parallax amplitude on small screens (handled by JS via matchMedia too) */
+@media (max-width: 768px) {
+  [data-parallax] { top: -10%; height: 120%; }
+}
+
+/* very large screens: cap gutters already via maxw + clamp */
+@media (min-width: 1800px) {
+  :root { --pad-x: clamp(5.5rem, 8vw, 9rem); }
+}
