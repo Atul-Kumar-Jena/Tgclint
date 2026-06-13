@@ -181,7 +181,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .hscroll__sticky > *:not(.hscroll__atmos) { position: relative; z-index: 1; }
 .hscroll__head {
   display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap;
-  padding-top: clamp(4rem, 11vh, 9rem); padding-bottom: clamp(1.2rem, 2.4vh, 2rem);
+  padding-top: clamp(2.5rem, 6vh, 5rem); padding-bottom: clamp(1.2rem, 2.4vh, 2rem);
 }
 .hscroll__count { font-variant-numeric: tabular-nums; letter-spacing: .12em; color: var(--local-muted, var(--muted)); font-size: .95rem; }
 .hscroll__progress { height: 1px; background: var(--local-line, var(--line)); overflow: hidden; }
@@ -195,10 +195,10 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .hscroll__viewport::-webkit-scrollbar { display: none; }
 .hscroll__viewport { scrollbar-width: none; }
 .hscroll__track { display: flex; align-items: center; gap: clamp(1.5rem, 3vw, 3.5rem); padding-inline: var(--pad-x); will-change: transform; }
-.hscroll__panel { flex: 0 0 auto; width: min(62vw, 660px); scroll-snap-align: center; will-change: transform; transform-origin: 50% 50%; }
+.hscroll__panel { flex: 0 0 auto; width: min(74vw, 1100px); scroll-snap-align: center; will-change: transform; transform-origin: 50% 50%; }
 .hscroll__panel a { display: block; }
 .hscroll__media {
-  position: relative; aspect-ratio: 16 / 11; border-radius: 0; overflow: hidden;
+  position: relative; height: clamp(440px, 70vh, 760px); border-radius: 14px; overflow: hidden;
   box-shadow: var(--shadow-card); will-change: clip-path;
 }
 /* veil overlay: dims off-centre frames, lifts as the panel reaches the centre
@@ -219,19 +219,19 @@ body.is-loaded .hero__scroll { opacity: 1; }
   transform: translateX(130%);
   transition: transform .72s var(--ease);
 }
-.hscroll__layer { position: absolute; inset: -2% -12%; will-change: transform; }
+.hscroll__layer { position: absolute; inset: -3% -14%; will-change: transform; }
 .hscroll__layer .scene { width: 100%; height: 100%; }
 .hscroll__panel .scene { transition: transform 1.6s var(--ease); }
 .hscroll__panel:hover .hscroll__media .scene { transform: scale(1.04); }
 .hscroll__row { display: flex; justify-content: space-between; color: var(--local-muted, var(--muted)); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; }
 .hscroll__name { font-size: clamp(1.3rem, 1.7vw, 1.7rem); font-weight: 500; letter-spacing: -.01em; color: var(--fg-soft, var(--ink-soft)); margin: .7rem 0 .9rem; }
-.hscroll__panel--end { display: flex; align-items: center; width: min(44vw, 460px); }
+.hscroll__panel--end { display: flex; align-items: center; width: min(48vw, 520px); }
 .hscroll__end { padding: 2rem 0; }
 .hscroll__end .eyebrow { margin-bottom: 1.2rem; }
 .hscroll__end .hscroll__name { font-size: var(--fs-h2); margin-bottom: 1.6rem; line-height: 1.06; }
 
 /* panel variants: portfolio cards, quiet text frames, facts, next-project */
-.hscroll__panel--portfolio { width: min(56vw, 620px); }
+.hscroll__panel--portfolio { width: min(74vw, 1100px); }
 .hscroll__panel--text, .hscroll__panel--facts { display: flex; flex-direction: column; justify-content: center; width: min(36vw, 470px); }
 .hscroll__lead { font-size: var(--fs-lead); line-height: 1.42; color: var(--fg, var(--ink)); }
 .hscroll__story { font-size: clamp(1.1rem, .9rem + .7vw, 1.45rem); line-height: 1.55; color: var(--fg-soft, var(--ink-soft)); }
@@ -264,11 +264,11 @@ body.is-loaded .hero__scroll { opacity: 1; }
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
     mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
   }
-  .hscroll__panel, .hscroll__panel--text, .hscroll__panel--facts, .hscroll__panel--portfolio { width: min(78vw, 440px); scroll-snap-align: center; }
-  .hscroll__panel--end { width: min(70vw, 380px); }
+  .hscroll__panel, .hscroll__panel--text, .hscroll__panel--facts, .hscroll__panel--portfolio { width: min(86vw, 480px); scroll-snap-align: center; }
+  .hscroll__panel--end { width: min(74vw, 400px); }
   .hscroll__panel--text, .hscroll__panel--facts { min-height: 46vw; }
-  /* clip-path unfold is GSAP-driven on desktop only; disable on touch */
-  .hscroll__media { clip-path: none !important; }
+  /* immersive height on touch; clip-path unfold is GSAP-driven on desktop only, so disable it here */
+  .hscroll__media { height: 56vh; min-height: 320px; clip-path: none !important; }
 
   /* "Swipe to explore →" cue, centred under the gallery; fades once the user swipes */
   .hscroll__hint {
@@ -303,4 +303,4 @@ body.is-loaded .hero__scroll { opacity: 1; }
   .hscroll__arrows b, .hscroll__hint::before { animation: none; }
   .hscroll__arrows b { opacity: .6; }
 }
-@media (max-width: 600px) { .hscroll__panel, .hscroll__panel--text, .hscroll__panel--facts, .hscroll__panel--portfolio { width: 82vw; } }
+@media (max-width: 600px) { .hscroll__panel, .hscroll__panel--text, .hscroll__panel--facts, .hscroll__panel--portfolio { width: 88vw; } }

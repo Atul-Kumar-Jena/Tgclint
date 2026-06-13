@@ -21,5 +21,14 @@ export default defineNuxtPlugin((nuxtApp) => {
   // under the cover of the incoming card — never visibly.
   window.addEventListener('load', () => ScrollTrigger.refresh())
 
+  // recompute pinned/scrubbed layouts once the viewport settles after a resize or
+  // orientation change (debounced — refresh is expensive). Without this the pinned
+  // side-scroll keeps a stale travel distance and the pin appears broken.
+  let resizeT: ReturnType<typeof setTimeout> | undefined
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT)
+    resizeT = setTimeout(() => ScrollTrigger.refresh(), 180)
+  })
+
   return { provide: { gsap, ScrollTrigger, lenis } }
 })

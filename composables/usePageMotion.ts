@@ -96,10 +96,11 @@ export function usePageMotion() {
           scrollTrigger: { trigger: next, start: 'top 45%', end: 'top top', scrub: true } })
       })
 
-      // Modern gallery side-scroll (Awwwards register): pinned scrub on desktop, native
-      // swipe on touch. One refined language — the image parallaxes inside its frame like a
-      // moving window, panels scale-recede from the centre with an organic vertical rhythm,
-      // a deep atmosphere drifts behind, and the row skews into momentum on fast scrolls.
+      // Modern gallery side-scroll (fluid.glass register): a pinned horizontal pin-scrub on
+      // desktop, native swipe on touch. One clean language — each frame UNVEILS via a clip-path
+      // "door" as it nears the centre, the scene parallaxes inside its frame like a moving window,
+      // and off-centre frames dim + recede. No skew and no per-frame layout reads: panel positions
+      // are derived from the live track offset, so the reveal stays exact at any scroll speed.
       gsap.utils.toArray('[data-hscroll]').forEach((hs: any) => {
         const track = hs.querySelector('[data-hscroll-track]') as HTMLElement | null
         if (!track) return
@@ -118,89 +119,92 @@ export function usePageMotion() {
           sticky.insertBefore(atmos, sticky.firstChild)
         }
 
-        // cache per-panel refs; inject a compositor-only veil; assign each image panel an
-        // organic parallax depth + vertical lift so the gallery has rhythm, not a rigid grid
-        const lifts = [0, 26, -20, 16, -12]
-        let mediaIdx = 0
+        // cache per-panel refs; inject a compositor-only dimming veil into each image frame
         const parts = panels.map((p) => {
           const media = p.querySelector('.hscroll__media') as HTMLElement | null
           const layer = p.querySelector('.hscroll__layer') as HTMLElement | null
           const cap = p.querySelector('.hscroll__cap') as HTMLElement | null
           let veil: HTMLElement | null = null
-          let depth = 0, lift = 0
           if (media) {
             veil = media.querySelector('.hscroll__veil')
             if (!veil) { veil = document.createElement('div'); veil.className = 'hscroll__veil'; media.appendChild(veil) }
-            depth = 12 + (mediaIdx % 3) * 3        // 12 / 15 / 18 % glide
-            lift = lifts[mediaIdx % lifts.length]   // small vertical drift off-centre
-            mediaIdx++
           }
-          return { p, media, layer, cap, veil, depth, lift }
+          return { p, media, layer, cap, veil }
         })
 
+        let lastCur = -1
         const feed = (p: number) => {
           if (bar) bar.style.transform = `scaleX(${Math.max(0, Math.min(1, p)).toFixed(4)})`
           if (counter) {
             const cur = Math.min(projectCount, Math.floor(p * projectCount) + 1)
-            counter.textContent = `${pad(cur)} / ${pad(projectCount)}`
+            if (cur !== lastCur) { counter.textContent = `${pad(cur)} / ${pad(projectCount)}`; lastCur = cur }
           }
         }
 
-        // Per-frame panel update: batch all getBoundingClientRect reads before any writes
-        // to avoid layout thrashing. Runs inside the GSAP onUpdate (rAF-synced).
-        const updatePanels = () => {
-          const vw = window.innerWidth
-          const rects = panels.map(p => p.getBoundingClientRect())
-          rects.forEach((r, i) => {
-            // c ∈ -1..1: signed distance of panel centre from viewport centre
-            const c = (r.left + r.width / 2 - vw / 2) / vw
-            const k = Math.min(Math.abs(c), 1)   // 0 = centred, 1 = far edge
-            const ec = Math.pow(k, 0.9)
+        // Layout measured once per refresh (transforms don't affect offsetLeft/offsetWidth), so
+        // the per-frame work is pure maths with zero layout thrash. The track travels from the
+        // FIRST panel dead-centre to the LAST panel dead-centre, so every frame passes through
+        // the centre and earns its full-open moment (centre-to-centre, not edge-to-edge).
+        let vw = window.innerWidth
+        let startX = 0     // track x that places the first panel dead-centre
+        let distance = 0   // total horizontal travel: centre of first → centre of last
+        let bases: number[] = []
+        const measure = () => {
+          vw = window.innerWidth
+          bases = parts.map(part => part.p.offsetLeft + part.p.offsetWidth / 2)
+          startX = vw / 2 - bases[0]
+          distance = bases[bases.length - 1] - bases[0]
+        }
+
+        // Per frame: a panel's on-screen centre = its layout centre + the live track offset.
+        // |c| runs 0 (dead-centre) → 1 (a viewport away) and drives the whole reveal. Scaling is
+        // about the panel centre, so the centre stays fixed and the offset maths stays exact.
+        const render = (p: number) => {
+          const trackX = startX - distance * p
+          for (let i = 0; i < parts.length; i++) {
             const part = parts[i]
-
-            // scale-recede + organic vertical drift: centred panel is full size on the
-            // baseline; neighbours shrink to ~0.86 and drift a touch up/down
-            part.p.style.transform = `translate3d(0,${(part.lift * ec).toFixed(1)}px,0) scale(${(1 - ec * 0.14).toFixed(4)})`
-
+            const c = (bases[i] + trackX - vw / 2) / vw
+            const k = Math.min(Math.abs(c), 1)
+            const ec = Math.pow(k, 0.82)
+            part.p.style.transform = `scale(${(1 - k * 0.06).toFixed(4)})`
             if (part.media) {
-              // window parallax: the scene glides inside the frame as the panel crosses
-              if (part.layer) part.layer.style.transform = `translate3d(${(-c * part.depth).toFixed(2)}%,0,0) scale(1.3)`
-              // soft settle — image is ~88% open at the edges, fully open at centre (square)
-              part.media.style.clipPath = `inset(0 ${(ec * 6).toFixed(1)}%)`
-              // gentle veil lifts as the panel takes centre stage (opacity only → no repaint)
-              if (part.veil) part.veil.style.opacity = (k * 0.42).toFixed(3)
+              // the unveiling — clip "doors" close in on the sides as the frame leaves centre
+              part.media.style.clipPath = `inset(0 ${Math.min(ec * 36, 48).toFixed(1)}% round 14px)`
+              // window parallax + a slow push-in that resolves as the frame reaches centre
+              if (part.layer) part.layer.style.transform = `translate3d(${(-c * 16).toFixed(2)}%,0,0) scale(${(1.32 - ec * 0.08).toFixed(3)})`
+              // off-centre frames sink quietly into the dark
+              if (part.veil) part.veil.style.opacity = (ec * 0.52).toFixed(3)
             }
-
-            // caption glides up and sharpens as the panel centres
+            // caption rises and sharpens as the panel centres
             if (part.cap) {
-              part.cap.style.opacity = Math.max(0, 1 - k * 1.1).toFixed(3)
-              part.cap.style.transform = `translateY(${(k * 30).toFixed(1)}px)`
+              part.cap.style.opacity = Math.max(0, 1 - k * 1.15).toFixed(3)
+              part.cap.style.transform = `translate3d(0,${(k * 26).toFixed(1)}px,0)`
             }
-          })
+          }
         }
 
         if (window.innerWidth > 1024) {
-          const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
-          // velocity-based skewX lean — the row tilts into fast scrubs, settles on release
-          const lean = gsap.quickTo(track, 'skewX', { duration: 0.45, ease: 'power3.out' })
-          gsap.to(track, {
-            x: () => -distance(), ease: 'none',
-            scrollTrigger: {
-              trigger: hs, start: 'top top',
-              // 1.3× pacing: the gallery advances more slowly and deliberately
-              end: () => '+=' + (distance() * 1.3),
-              scrub: 0.5, pin: true,
-              invalidateOnRefresh: true,
-              onUpdate: (self: any) => {
-                feed(self.progress)
-                lean(gsap.utils.clamp(-1.8, 1.8, self.getVelocity() / -1800))
-                updatePanels()
-                // deep backdrop creeps opposite the row for parallax depth
-                if (atmos) atmos.style.transform = `translate3d(${(-self.progress * 6).toFixed(2)}%,0,0)`
+          measure()
+          gsap.fromTo(track,
+            { x: () => startX },
+            {
+              x: () => startX - distance, ease: 'none',
+              scrollTrigger: {
+                trigger: hs, start: 'top top',
+                // 1.1× pacing: the gallery advances deliberately, giving each reveal room to breathe
+                end: () => '+=' + (distance * 1.1),
+                scrub: 0.5, pin: true, anticipatePin: 1,
+                invalidateOnRefresh: true,
+                onRefresh: measure,
+                onUpdate: (self: any) => {
+                  feed(self.progress)
+                  render(self.progress)
+                  // deep backdrop creeps opposite the row for parallax depth
+                  if (atmos) atmos.style.transform = `translate3d(${(-self.progress * 5).toFixed(2)}%,0,0)`
+                }
               }
-            }
-          })
-          updatePanels() // initial state
+            })
+          render(0) // initial state
         } else {
           // mobile: native swipe, same counter + progress + clip feedback
           const vp = hs.querySelector('.hscroll__viewport') as HTMLElement | null
