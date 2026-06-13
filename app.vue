@@ -43,7 +43,7 @@ onMounted(() => {
       .to(el, { yPercent: -100, borderBottomLeftRadius: '34px', borderBottomRightRadius: '34px', duration: 1.05, ease: 'power4.inOut' }, 0)
       // release the page reveals while the curtain is still lifting, so the hero
       // rises into view as the cover leaves — no dead frame, no flash
-      .call(() => { hold.value = false }, [], 0.34)
+      .call(() => { hold.value = false; document.body.classList.add('is-loaded') }, [], 0.34)
   }, 1250)
 })
 

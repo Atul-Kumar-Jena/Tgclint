@@ -97,55 +97,76 @@ export function usePageMotion() {
           scrollTrigger: { trigger: next, start: 'top 45%', end: 'top top', scrub: true } })
       })
 
-      // horizontal narratives (pinned scrub on desktop, native swipe on touch):
-      // live counter, hairline progress, in-frame parallax and soft entrances
+      // fluid.glass horizontal narrative: pinned scrub on desktop, native swipe on touch.
+      // Signature effect: each panel's media unfolds from a thin vertical strip to full
+      // width as it approaches the viewport centre — clip-path inset collapses to zero.
       gsap.utils.toArray('[data-hscroll]').forEach((hs: any) => {
         const track = hs.querySelector('[data-hscroll-track]') as HTMLElement | null
         if (!track) return
         const counter = hs.querySelector('[data-hscroll-count]') as HTMLElement | null
         const bar = hs.querySelector('[data-hscroll-progress] span') as HTMLElement | null
         const panels = Array.from(track.querySelectorAll('.hscroll__panel')) as HTMLElement[]
-        const n = panels.length
-        const pad = (v: number) => String(v).padStart(2, '0')
+        // exclude the end-panel from the counter total (same as fluid.glass)
+        const projectCount = panels.filter(p => !p.classList.contains('hscroll__panel--end')).length || panels.length
+        const pad = (v: number) => ('0' + v).slice(-2)
+
         const feed = (p: number) => {
           if (bar) bar.style.transform = `scaleX(${Math.max(0, Math.min(1, p)).toFixed(4)})`
-          if (counter && n) {
-            const idx = Math.max(1, Math.min(n, Math.round(p * (n - 1)) + 1))
-            counter.textContent = `${pad(idx)} / ${pad(n)}`
+          if (counter) {
+            const cur = Math.min(projectCount, Math.floor(p * projectCount) + 1)
+            counter.textContent = `${pad(cur)} / ${pad(projectCount)}`
           }
         }
+
+        // Per-frame panel update: batch all getBoundingClientRect reads before any writes
+        // to avoid layout thrashing. Runs inside the GSAP onUpdate (rAF-synced).
+        const updatePanels = () => {
+          const vw = window.innerWidth
+          const rects = panels.map(p => p.getBoundingClientRect())
+          rects.forEach((r, i) => {
+            // c ∈ -1..1: signed distance of panel centre from viewport centre
+            const c = (r.left + r.width / 2 - vw / 2) / vw
+            const k = Math.min(Math.abs(c), 1) // 0 = fully centred, 1 = fully offscreen
+
+            // THE fluid.glass signature: image opens from a thin strip to full frame
+            const media = panels[i].querySelector('.hscroll__media') as HTMLElement | null
+            if (media) media.style.clipPath = `inset(0 ${Math.min(k * 22, 46).toFixed(1)}% round 14px)`
+
+            // layer drifts laterally for binocular depth (same formula as fluid.glass)
+            const layer = panels[i].querySelector('.hscroll__layer') as HTMLElement | null
+            if (layer) layer.style.transform = `translate3d(${(c * 5).toFixed(2)}%,0,0) scale(1.12)`
+
+            // caption glides up and sharpens as the panel centres
+            const cap = panels[i].querySelector('.hscroll__cap') as HTMLElement | null
+            if (cap) {
+              cap.style.opacity = (1 - k * 0.9).toFixed(3)
+              cap.style.transform = `translateY(${(k * 16).toFixed(1)}px)`
+            }
+          })
+        }
+
         if (window.innerWidth > 1024) {
           const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
-          // the train leans into fast scrubs and settles when the wheel rests
-          const lean = gsap.quickTo(track, 'skewX', { duration: 0.5, ease: 'power3.out' })
-          const tween = gsap.to(track, {
+          // velocity-based skewX lean — the train tilts into fast scrubs, settles on release
+          const lean = gsap.quickTo(track, 'skewX', { duration: 0.45, ease: 'power3.out' })
+          gsap.to(track, {
             x: () => -distance(), ease: 'none',
             scrollTrigger: {
-              trigger: hs, start: 'top top', end: () => '+=' + distance(), scrub: 1, pin: true,
+              trigger: hs, start: 'top top',
+              // 1.3× pacing: the narrative advances more slowly and deliberately (fluid.glass)
+              end: () => '+=' + (distance() * 1.3),
+              scrub: 1, pin: true,
               invalidateOnRefresh: true,
               onUpdate: (self: any) => {
                 feed(self.progress)
-                lean(gsap.utils.clamp(-2.4, 2.4, self.getVelocity() / -1400))
+                lean(gsap.utils.clamp(-2.2, 2.2, self.getVelocity() / -1500))
+                updatePanels()
               }
             }
           })
-          panels.forEach((panel) => {
-            // media drifts inside its frame as the train passes — layered depth
-            const layer = panel.querySelector('.hscroll__layer')
-            if (layer) {
-              gsap.fromTo(layer, { xPercent: -9, scale: 1.12 }, { xPercent: 9, scale: 1.02, ease: 'none',
-                scrollTrigger: { trigger: panel, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } })
-            }
-            // each panel unfolds toward the viewer as it enters from the right:
-            // it rises, untilts and sharpens over a long travel window so the
-            // reveal reads as physical, never as a lazy fade
-            gsap.fromTo(panel,
-              { y: 72, opacity: 0.08, scale: 0.92, rotationY: 9, transformPerspective: 1100, transformOrigin: '20% 50%' },
-              { y: 0, opacity: 1, scale: 1, rotationY: 0, ease: 'power3.out', duration: 0.8,
-                scrollTrigger: { trigger: panel, containerAnimation: tween, start: 'left 102%', end: 'left 52%', scrub: true } })
-          })
+          updatePanels() // initial state — all panels start clipped
         } else {
-          // native horizontal swipe: same counter + progress feedback on mobile
+          // mobile: native swipe, same counter + progress + clip feedback
           const vp = hs.querySelector('.hscroll__viewport') as HTMLElement | null
           if (vp) {
             let raf = 0
