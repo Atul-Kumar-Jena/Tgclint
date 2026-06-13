@@ -194,12 +194,12 @@ body.is-loaded .hero__scroll { opacity: 1; }
 }
 .hscroll__viewport::-webkit-scrollbar { display: none; }
 .hscroll__viewport { scrollbar-width: none; }
-.hscroll__track { display: flex; align-items: center; gap: clamp(1.5rem, 3vw, 3.5rem); padding-inline: var(--pad-x); will-change: transform; }
-.hscroll__panel { flex: 0 0 auto; width: min(74vw, 1100px); scroll-snap-align: center; will-change: transform; transform-origin: 50% 50%; }
+.hscroll__track { display: flex; align-items: center; gap: clamp(2rem, 4vw, 4.5rem); padding-inline: var(--pad-x); will-change: transform; }
+.hscroll__panel { flex: 0 0 auto; width: min(74vw, 1100px); scroll-snap-align: center; will-change: transform, filter; transform-origin: 50% 50%; }
 .hscroll__panel a { display: block; }
 .hscroll__media {
   position: relative; height: clamp(440px, 70vh, 760px); border-radius: 14px; overflow: hidden;
-  box-shadow: var(--shadow-card); will-change: clip-path;
+  box-shadow: var(--shadow-card); will-change: clip-path, transform, filter;
 }
 /* veil overlay: dims off-centre frames, lifts as the panel reaches the centre
    (opacity driven from JS — compositor-only, never repaints) */

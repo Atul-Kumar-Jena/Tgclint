@@ -129,7 +129,7 @@ export function usePageMotion() {
             veil = media.querySelector('.hscroll__veil')
             if (!veil) { veil = document.createElement('div'); veil.className = 'hscroll__veil'; media.appendChild(veil) }
           }
-          return { p, media, layer, cap, veil }
+          return { p, media, layer, cap, veil, isEnd: p.classList.contains('hscroll__panel--end') }
         })
 
         let lastCur = -1
@@ -166,19 +166,28 @@ export function usePageMotion() {
             const c = (bases[i] + trackX - vw / 2) / vw
             const k = Math.min(Math.abs(c), 1)
             const ec = Math.pow(k, 0.82)
-            part.p.style.transform = `scale(${(1 - k * 0.06).toFixed(4)})`
-            if (part.media) {
-              // the unveiling — clip "doors" close in on the sides as the frame leaves centre
-              part.media.style.clipPath = `inset(0 ${Math.min(ec * 36, 48).toFixed(1)}% round 14px)`
-              // window parallax + a slow push-in that resolves as the frame reaches centre
-              if (part.layer) part.layer.style.transform = `translate3d(${(-c * 16).toFixed(2)}%,0,0) scale(${(1.32 - ec * 0.08).toFixed(3)})`
-              // off-centre frames sink quietly into the dark
-              if (part.veil) part.veil.style.opacity = (ec * 0.52).toFixed(3)
+            // end card reads as a clean CTA destination — no clip or blur theatrics
+            if (part.isEnd) {
+              part.p.style.transform = `scale(${(1 - k * 0.04).toFixed(4)})`
+              if (part.veil) part.veil.style.opacity = (ec * 0.32).toFixed(3)
+              continue
             }
-            // caption rises and sharpens as the panel centres
+            part.p.style.transform = `scale(${(1 - k * 0.12).toFixed(4)})`
+            if (part.media) {
+              // focus depth: centred panel is tack sharp; off-centre panels go softly out-of-focus
+              part.media.style.filter = `blur(${(k * 4).toFixed(1)}px)`
+              // the unveiling — clip "doors" close dramatically as the frame leaves centre
+              part.media.style.clipPath = `inset(0 ${Math.min(ec * 44, 54).toFixed(1)}% round 18px)`
+              // cinematic push-in resolves as the frame reaches centre; layer parallaxes as a window
+              if (part.layer) part.layer.style.transform = `translate3d(${(-c * 16).toFixed(2)}%,0,0) scale(${(1.38 - ec * 0.12).toFixed(3)})`
+              // off-centre frames sink deeply into the dark — strong spotlight contrast
+              if (part.veil) part.veil.style.opacity = (ec * 0.62).toFixed(3)
+            }
+            // caption sharpens (blur lifts) and rises as the panel nears centre
             if (part.cap) {
               part.cap.style.opacity = Math.max(0, 1 - k * 1.15).toFixed(3)
               part.cap.style.transform = `translate3d(0,${(k * 26).toFixed(1)}px,0)`
+              part.cap.style.filter = `blur(${(k * 5).toFixed(1)}px)`
             }
           }
         }
@@ -192,15 +201,15 @@ export function usePageMotion() {
               scrollTrigger: {
                 trigger: hs, start: 'top top',
                 // 1.1× pacing: the gallery advances deliberately, giving each reveal room to breathe
-                end: () => '+=' + (distance * 1.1),
-                scrub: 0.5, pin: true, anticipatePin: 1,
+                end: () => '+=' + (distance * 1.15),
+                scrub: 0.35, pin: true, anticipatePin: 1,
                 invalidateOnRefresh: true,
                 onRefresh: measure,
                 onUpdate: (self: any) => {
                   feed(self.progress)
                   render(self.progress)
                   // deep backdrop creeps opposite the row for parallax depth
-                  if (atmos) atmos.style.transform = `translate3d(${(-self.progress * 5).toFixed(2)}%,0,0)`
+                  if (atmos) atmos.style.transform = `translate3d(${(-self.progress * 8).toFixed(2)}%,0,0)`
                 }
               }
             })

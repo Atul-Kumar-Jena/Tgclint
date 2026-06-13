@@ -47,6 +47,13 @@
   .stories__track { height: 320vh; }
   .dock__foot { flex-direction: column; }
   .dock__contact { text-align: left; }
+  /* project hero title can sit flush against the container edge on mobile */
+  .project-hero__inner { padding-inline: clamp(1rem, 5vw, 2.5rem); }
+}
+
+/* =============================================================== ≤640px — smooth dock width transition */
+@media (max-width: 640px) {
+  .dock { width: 224px; }
 }
 
 /* =============================================================== ≤560px */
@@ -62,6 +69,8 @@
   .contact-card a, .contact-card p { font-size: 1.3rem; }
   .topbar__quote { display: none; }
   .topbar__brand { font-size: 1rem; }
+  /* prevent long words from overflowing on narrow screens */
+  .article__title { overflow-wrap: break-word; hyphens: auto; }
 }
 
 /* reduce parallax amplitude on small screens (handled by JS via matchMedia too) */
