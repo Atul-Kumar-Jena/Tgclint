@@ -53,7 +53,7 @@
   --fs-h3: clamp(1.2rem, .95rem + 1.4vw, 2.2rem);
   --fs-h2: clamp(1.8rem, 1.2rem + 3.2vw, 5rem);
   --fs-h1: clamp(2.8rem, 1.8rem + 5.5vw, 8rem);
-  --fs-display: clamp(4rem, 3rem + 8vw, 12rem);
+  --fs-display: clamp(4rem, 3rem + 8vw, 13rem);
   --lh-tight: 1.0;
   --lh-snug: 1.1;
   --lh-body: 1.62;
