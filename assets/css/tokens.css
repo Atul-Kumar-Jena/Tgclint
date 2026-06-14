@@ -96,12 +96,12 @@
   color: var(--fg);
 }
 [data-theme="light"] {
-  --bg: var(--bg-warm);
-  --fg: var(--ink-inv);         /* light text on now-dark warm bg */
-  --fg-soft: var(--ink-inv-soft);
-  --local-muted: var(--muted-inv);
-  --local-line: var(--line-inv);
-  --on-dark: 1;
+  --bg: #f0ede6;                        /* fluid.glass warm cream */
+  --fg: #14182e;                        /* dark navy text */
+  --fg-soft: rgba(20,24,46,0.62);
+  --local-muted: rgba(20,24,46,0.42);
+  --local-line: rgba(20,24,46,0.14);
+  --on-dark: 0;
   background: var(--bg);
   color: var(--fg);
 }
