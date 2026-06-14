@@ -27,9 +27,9 @@
 .btn:hover .btn__label:first-child, .btn:focus-visible .btn__label:first-child { transform: translateY(-118%); }
 .btn:hover .btn__label + .btn__label, .btn:focus-visible .btn__label + .btn__label { transform: none; }
 
-.btn--dark { background: var(--ink); color: var(--ink-inv); --btn-fill: #2b3154; }
-.btn--light { background: var(--ink-inv); color: var(--ink); --btn-fill: #ffffff; }
-.btn--ghost { background: transparent; border-color: var(--local-line, var(--line)); color: var(--fg, var(--ink)); --btn-fill: color-mix(in srgb, currentColor 12%, transparent); }
+.btn--dark { background: #1a1a1a; color: var(--ink-inv); --btn-fill: #2a2a2a; }
+.btn--light { background: var(--ink-inv); color: #0a0a0a; --btn-fill: rgba(240,237,230,0.8); }
+.btn--ghost { background: transparent; border-color: var(--local-line, var(--line-inv)); color: var(--fg, var(--ink-inv)); --btn-fill: color-mix(in srgb, currentColor 12%, transparent); }
 .btn--mini { padding: .55rem 1rem; font-size: .68rem; letter-spacing: .1em; }
 .btn--wa { background: #0d3b32; color: #f2f0ea; border-color: var(--accent); --btn-fill: rgba(240, 104, 30, .25); }
 

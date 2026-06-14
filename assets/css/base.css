@@ -4,7 +4,7 @@
 html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; background: #070707; }
 body {
   font-family: var(--font); font-size: var(--fs-body); line-height: var(--lh-body); font-weight: 400;
-  color: var(--ink); background: var(--bg-warm);
+  color: var(--ink); background: #0a0a0a;
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden;
 }
 img, svg, video, canvas { display: block; max-width: 100%; }
@@ -55,7 +55,7 @@ strong { font-weight: 600; }
 
 /* the page surface sits above the stage; sections are opaque so the stage only shows in transitions.
    NOTE: no will-change/transform here — a transformed ancestor would break GSAP pinning. */
-.page-shell { position: relative; z-index: 1; background: var(--bg-warm); }
+.page-shell { position: relative; z-index: 1; background: #0a0a0a; }
 main.shell { display: block; }
 
 /* ============================================================ scroll deck

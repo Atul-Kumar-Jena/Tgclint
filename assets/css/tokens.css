@@ -2,24 +2,25 @@
    Saansud Infra brand system — vivid Saansud orange on deep indigo navy,
    over clean warm-white. Bold geometric display sans (Archivo) + quiet grotesk. */
 :root {
-  /* palette — fluid.glass exact (#0B1012 primary dark, #212325 charcoal) */
-  --bg-warm: #f4f2ee;
-  --bg-warm-2: #e9e6df;
-  --bg-dark: #070707;     /* fluid.glass near-black */
+  /* palette — fluid.glass full dark (all sections near-black, light text) */
+  --bg-warm: #0a0a0a;     /* "warm" sections: near-black, slightly warmer */
+  --bg-warm-2: #111009;   /* warm charcoal tint */
+  --bg-dark: #070707;     /* pure near-black — hero, hscroll, stories */
   --bg-dark-2: #0d0f16;
   --charcoal: #212325;    /* fluid.glass secondary dark */
-  --ink: #14182e;
-  --ink-soft: #3c4054;
+  --ink: #f0ede6;         /* warm white (was dark — now all text is light) */
+  --ink-soft: rgba(240,237,230,0.62);
   --ink-inv: #f0ede6;
-  --ink-inv-soft: rgba(240,237,230,0.58);
-  --muted: #87858f;
+  --ink-inv-soft: rgba(240,237,230,0.55);
+  --ink-on-light: #14182e;  /* kept for rare dark-on-light contexts (quote form) */
+  --muted: rgba(240,237,230,0.38);
   --muted-inv: rgba(240,237,230,0.38);
-  --line: rgba(24, 26, 42, .14);
-  --line-inv: rgba(240, 237, 230, .10);
+  --line: rgba(240, 237, 230, .09);
+  --line-inv: rgba(240, 237, 230, .09);
   --accent: #f1530e;   /* Saansud brand orange */
   --accent-warm: #ff8a4d;
   --gold: #c9a96e;
-  --warn: #c25a3a;
+  --warn: #e8704a;
 
   /* glass surfaces */
   --glass-dark: rgba(7, 7, 7, .78);
@@ -96,11 +97,11 @@
 }
 [data-theme="light"] {
   --bg: var(--bg-warm);
-  --fg: var(--ink);
-  --fg-soft: var(--ink-soft);
-  --local-muted: var(--muted);
-  --local-line: var(--line);
-  --on-dark: 0;
+  --fg: var(--ink-inv);         /* light text on now-dark warm bg */
+  --fg-soft: var(--ink-inv-soft);
+  --local-muted: var(--muted-inv);
+  --local-line: var(--line-inv);
+  --on-dark: 1;
   background: var(--bg);
   color: var(--fg);
 }
