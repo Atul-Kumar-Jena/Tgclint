@@ -1,10 +1,5 @@
 <template>
   <div class="page-shell">
-    <header class="topbar">
-      <NuxtLink class="topbar__brand" to="/" aria-label="Saansud Infra — home"><Logo /><span>{{ site.brand }}</span></NuxtLink>
-      <div class="topbar__quote"><Btn label="Get a quote" variant="ghost" quote /></div>
-    </header>
-
     <section class="hero" data-theme="dark">
       <div class="hero__media">
         <HeroGlass />

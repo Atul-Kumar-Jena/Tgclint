@@ -87,8 +87,7 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 3;
-  animation: hgFloat 9s ease-in-out infinite alternate;
-  transition: transform 1s cubic-bezier(.25, .46, .45, .94);
+  transition: transform 1.1s cubic-bezier(.25, .46, .45, .94);
   will-change: transform;
 }
 .hero-glass__svg {
@@ -96,10 +95,11 @@ onMounted(() => {
   height: 100%;
   display: block;
   overflow: visible;
+  animation: hgFloat 9s ease-in-out infinite alternate;
 }
 @keyframes hgFloat {
-  from { transform: translate(-50%, calc(-50% + 0px)); }
-  to   { transform: translate(-50%, calc(-50% - 22px)); }
+  from { transform: translateY(0); }
+  to   { transform: translateY(-22px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-glass { animation: none; }
