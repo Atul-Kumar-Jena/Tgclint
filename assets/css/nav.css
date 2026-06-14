@@ -22,6 +22,18 @@
   bottom: calc(clamp(16px, 2.8vh, 30px) + env(safe-area-inset-bottom, 0px));
   z-index: var(--z-pill); display: flex; justify-content: center;
   pointer-events: none;
+  transition: bottom .5s var(--ease), top .5s var(--ease);
+}
+/* pill state: float at top-center like fluid.glass navigation island */
+.dockzone[data-state="pill"] {
+  bottom: auto;
+  top: clamp(1rem, 2.2vh, 1.6rem);
+}
+/* menu/end state: return to bottom (natural expansion zone) */
+.dockzone[data-state="menu"],
+.dockzone[data-state="end"] {
+  bottom: calc(clamp(16px, 2.8vh, 30px) + env(safe-area-inset-bottom, 0px));
+  top: auto;
 }
 .dock-scrim {
   position: fixed; inset: 0; z-index: -1;
@@ -38,10 +50,10 @@
   max-height: calc(100svh - clamp(18px, 3vh, 32px) - 14px);
   width: 236px; border-radius: calc(var(--pill-h) / 2);
   color: var(--ink-inv);
-  background: linear-gradient(180deg, rgba(24, 28, 48, .68), rgba(12, 15, 28, .76));
-  -webkit-backdrop-filter: blur(28px) saturate(170%); backdrop-filter: blur(28px) saturate(170%);
+  background: linear-gradient(180deg, rgba(18, 18, 18, .82), rgba(7, 7, 7, .90));
+  -webkit-backdrop-filter: blur(32px) saturate(160%); backdrop-filter: blur(32px) saturate(160%);
   border: 1px solid var(--glass-edge);
-  box-shadow: 0 14px 36px rgba(4, 6, 14, .32), 0 2px 8px rgba(4, 6, 14, .18);
+  box-shadow: 0 14px 36px rgba(2, 4, 6, .36), 0 2px 8px rgba(2, 4, 6, .20);
   transition:
     width .5s var(--ease), border-radius .5s var(--ease),
     transform .45s var(--ease), opacity .35s var(--ease), box-shadow .45s var(--ease);

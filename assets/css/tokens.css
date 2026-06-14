@@ -2,29 +2,30 @@
    Saansud Infra brand system — vivid Saansud orange on deep indigo navy,
    over clean warm-white. Bold geometric display sans (Archivo) + quiet grotesk. */
 :root {
-  /* palette */
+  /* palette — fluid.glass exact (#0B1012 primary dark, #212325 charcoal) */
   --bg-warm: #f4f2ee;
   --bg-warm-2: #e9e6df;
-  --bg-dark: #12172f;
-  --bg-dark-2: #1b2142;
+  --bg-dark: #070707;     /* fluid.glass near-black */
+  --bg-dark-2: #0d0f16;
+  --charcoal: #212325;    /* fluid.glass secondary dark */
   --ink: #14182e;
   --ink-soft: #3c4054;
-  --ink-inv: #f2f0ea;
-  --ink-inv-soft: #c9c9cf;
+  --ink-inv: #f0ede6;
+  --ink-inv-soft: rgba(240,237,230,0.58);
   --muted: #87858f;
-  --muted-inv: #8e93ab;
+  --muted-inv: rgba(240,237,230,0.38);
   --line: rgba(24, 26, 42, .14);
-  --line-inv: rgba(240, 242, 255, .15);
-  --accent: #f1530e;   /* Saansud brand orange (print #ED4801) */
+  --line-inv: rgba(240, 237, 230, .10);
+  --accent: #f1530e;   /* Saansud brand orange */
   --accent-warm: #ff8a4d;
-  --gold: #ff8a4d;
-  --warn: #c25a3a;     /* form errors / negative column — brand-adjacent terracotta */
+  --gold: #c9a96e;
+  --warn: #c25a3a;
 
   /* glass surfaces */
-  --glass-dark: rgba(20, 23, 40, .62);
-  --glass-tint: rgba(255, 252, 245, .06);
-  --glass-edge: rgba(244, 246, 255, .14);
-  --glass-blur: 18px;
+  --glass-dark: rgba(7, 7, 7, .78);
+  --glass-tint: rgba(255, 255, 255, .04);
+  --glass-edge: rgba(240, 237, 230, .10);
+  --glass-blur: 28px;
 
   /* depth */
   --shadow-soft: 0 26px 70px rgba(12, 14, 26, .18);
@@ -47,11 +48,11 @@
   --font-display: "Archivo", "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
   --fs-eyebrow: clamp(.72rem, .82vw, .82rem);
   --fs-body: clamp(1rem, .55rem + .55vw, 1.18rem);
-  --fs-lead: clamp(1.2rem, .9rem + .9vw, 1.6rem);
-  --fs-h3: clamp(1.35rem, 1rem + 1.4vw, 2.1rem);
-  --fs-h2: clamp(2rem, 1.1rem + 3.6vw, 4.5rem);
-  --fs-h1: clamp(2.6rem, 1rem + 7.6vw, 7.9rem);
-  --fs-display: clamp(3rem, 1rem + 9vw, 9.2rem);
+  --fs-lead: clamp(1.1rem, .9rem + .55vw, 1.45rem);
+  --fs-h3: clamp(1.2rem, .95rem + 1.4vw, 2.2rem);
+  --fs-h2: clamp(1.8rem, 1.2rem + 3.2vw, 5rem);
+  --fs-h1: clamp(2.8rem, 1.8rem + 5.5vw, 8rem);
+  --fs-display: clamp(4rem, 3rem + 8vw, 12rem);
   --lh-tight: 1.0;
   --lh-snug: 1.1;
   --lh-body: 1.62;

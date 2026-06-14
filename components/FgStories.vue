@@ -115,8 +115,8 @@ onBeforeUnmount(() => { if (trig) trig.kill() })
 }
 .stories__rating-inline .stars { color: var(--accent-warm); letter-spacing: .12em; }
 
-/* body: keep enough room for stage without overlap */
-.stories__body { display: flex; flex-direction: column; gap: 0; }
+/* body: fills remaining sticky height — critical for stage not to be cramped */
+.stories__body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0; }
 
 /* controls in header row */
 .stories__controls {

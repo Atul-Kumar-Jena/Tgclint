@@ -1,10 +1,10 @@
 /* ================================================================= hero */
 .hero {
   position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
-  overflow: hidden; background: var(--bg-dark); color: var(--ink-inv);
+  overflow: hidden; background: #070707; color: var(--ink-inv);
 }
 .hero__media {
-  position: absolute; inset: 0; overflow: hidden; background: #12172f;
+  position: absolute; inset: 0; overflow: hidden; background: #070707;
   clip-path: inset(8% 8% 12% 8% round 24px);
   transform: scale(1.08);
   transition: clip-path 1.2s var(--ease), transform 1.3s var(--ease);
@@ -15,17 +15,42 @@ body.is-loaded .hero__media { clip-path: inset(0 0 0 0 round 0px); transform: no
 .hero__veil {
   position: absolute; inset: 0;
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(8, 8, 9, .5), transparent 55%),
-    linear-gradient(180deg, rgba(8, 8, 9, .2) 0%, rgba(8, 8, 9, 0) 35%, rgba(8, 8, 9, .65) 100%);
+    radial-gradient(120% 80% at 50% 0%, rgba(5, 8, 12, .62), transparent 55%),
+    linear-gradient(180deg, rgba(5, 8, 12, .28) 0%, rgba(5, 8, 12, 0) 30%, rgba(5, 8, 12, .72) 100%);
 }
+/* glass depth veil — looking through glass (Gaussian depth) */
+.glass-veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(11,16,18,0.48) 0%, rgba(11,16,18,0.08) 42%, rgba(11,16,18,0.30) 100%);
+  backdrop-filter: blur(1px);
+}
+/* glass panel utility — frosted depth badge */
+.glass-depth {
+  background: rgba(240,237,230,0.04);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid rgba(240,237,230,0.08);
+  border-radius: var(--radius);
+}
+.hero__eyebrow {
+  position: relative; z-index: 5; color: var(--ink-inv-soft);
+  opacity: 0; transition: opacity .7s var(--ease) .15s;
+  margin-bottom: 1.4rem;
+}
+body.is-loaded .hero__eyebrow { opacity: 1; }
 .hero__inner { position: relative; z-index: 5; width: 100%; padding-bottom: clamp(8rem, 18vh, 13rem); }
 .hero__title {
-  font-size: var(--fs-h1); line-height: 1.04; font-weight: 500; letter-spacing: -.03em;
-  text-align: center; max-width: 16ch; margin-inline: auto; text-wrap: balance;
+  font-size: var(--fs-display); line-height: .96; font-weight: 500; letter-spacing: -.04em;
+  text-align: center; max-width: 14ch; margin-inline: auto; text-wrap: balance;
   filter: blur(7px); opacity: 0;
   transition: filter 1s var(--ease) .05s, opacity .85s var(--ease) .03s;
 }
 body.is-loaded .hero__title { filter: blur(0); opacity: 1; }
+.hero__sub {
+  text-align: center; margin-top: 1.4rem; font-size: var(--fs-lead);
+  color: var(--ink-inv-soft); max-width: 44ch; margin-inline: auto;
+}
 .hero__scroll {
   position: absolute; left: 50%; bottom: clamp(6.5rem, 12vh, 8.5rem); transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: .6rem;
@@ -40,6 +65,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
   .hero__media { clip-path: none !important; transform: none !important; transition: none; }
   .hero__title { filter: none !important; opacity: 1 !important; transition: none; }
   .hero__scroll { opacity: 1 !important; transition: none; }
+  .hero__eyebrow { opacity: 1 !important; transition: none; }
 }
 
 /* ================================================================ lede */
@@ -75,7 +101,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .projects__grid .card--project .card__media { aspect-ratio: 4 / 5; }
 
 /* =============================================================== showroom */
-.showroom { background: var(--bg-dark); color: var(--ink-inv); }
+.showroom { background: var(--charcoal, #212325); color: var(--ink-inv); }
 .showroom__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); align-items: center; }
 .showroom__media { grid-column: 1 / 8; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 11; box-shadow: var(--shadow-card); }
 .showroom__text { grid-column: 9 / 13; }
@@ -88,6 +114,8 @@ body.is-loaded .hero__scroll { opacity: 1; }
   position: sticky; top: 0; height: 100svh;
   display: flex; flex-direction: column; overflow: hidden;
 }
+/* the .container wrapping top + stage must also grow to fill remaining space */
+.stories__body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 /* header row: counter | label | controls — fixed height, never shrinks */
 .stories__top {
   flex: none;

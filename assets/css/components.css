@@ -91,20 +91,48 @@
    seen before its entrance. Lifts upward like a sheet of glass. */
 .loader {
   position: fixed; inset: 0; z-index: var(--z-loader); display: grid; place-items: center;
-  background: #12162a; color: var(--ink-inv); will-change: transform;
+  background: #070707; color: var(--ink-inv); will-change: transform; overflow: hidden;
 }
 html:not(.js) .loader { display: none; }
+/* glass orb — animates in with the loading sequence */
+.loader__orb {
+  position: absolute;
+  width: clamp(240px, 50vmin, 560px); height: clamp(240px, 50vmin, 560px);
+  border-radius: 50%;
+  border: 1px solid rgba(240,237,230,0.08);
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.09), transparent 56%),
+    radial-gradient(circle at 64% 70%, rgba(5,8,12,0.45), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(241,83,14,0.04), transparent 80%);
+  left: 50%; top: 46%; transform: translate(-50%,-50%) scale(0.85);
+  animation: loaderOrbIn 1.4s var(--ease-out) .08s both, loaderOrbFloat 5s 1.5s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+.loader__orb::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 45%);
+}
+@keyframes loaderOrbIn { from{opacity:0;transform:translate(-50%,-50%)scale(.6)} to{opacity:1;transform:translate(-50%,-50%)scale(1)} }
+@keyframes loaderOrbFloat { from{transform:translate(-50%,-50%)translateY(0)} to{transform:translate(-50%,-50%)translateY(-16px)} }
 .loader__brand {
+  position: relative; z-index: 1;
   display: flex; align-items: center; gap: .6rem; font-size: clamp(1.15rem, 2vw, 1.5rem);
   font-weight: 500; letter-spacing: -.01em;
-  animation: loaderBrand 1s var(--ease-out) .12s both;
+  animation: loaderBrand 1s var(--ease-out) .22s both;
 }
 .loader__brand em { font-style: normal; color: var(--accent); letter-spacing: .22em; font-size: .72em; text-transform: uppercase; margin-left: .1em; }
 @keyframes loaderBrand { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .loader__brand .logo-mark { width: 28px; height: 28px; }
+/* small wordmark line below the brand (fluid.glass style) */
+.loader__wordmark {
+  position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%);
+  font-size: .62rem; letter-spacing: .44em; text-transform: uppercase;
+  color: rgba(240,237,230,0.28); white-space: nowrap;
+  animation: loaderBrand 1s var(--ease-out) .45s both;
+}
 .loader__bar {
-  position: absolute; bottom: 14%; left: 50%; transform: translateX(-50%);
-  width: min(42vw, 200px); height: 1px; background: rgba(255, 255, 255, .16); overflow: hidden;
+  position: absolute; bottom: 13%; left: 50%; transform: translateX(-50%);
+  width: min(42vw, 200px); height: 1px; background: rgba(240, 237, 230, .12); overflow: hidden;
 }
 .loader__bar span { display: block; height: 100%; width: 100%; background: var(--ink-inv); transform: scaleX(0); transform-origin: left; }
 body.is-booting { overflow: hidden; }
@@ -124,7 +152,7 @@ body.is-booting { overflow: hidden; }
 /* ============================================================ testimonials */
 .story { max-width: 62ch; }
 .story__stars { display: block; color: var(--accent-warm); letter-spacing: .22em; font-size: 1.05rem; margin-bottom: 1.4rem; }
-.story__quote { font-size: clamp(1.6rem, 1rem + 2.4vw, 3rem); font-weight: 500; line-height: 1.18; letter-spacing: -.02em; }
+.story__quote { font-size: clamp(1.55rem, .85rem + 2.8vw, 3.6rem); font-weight: 500; line-height: 1.14; letter-spacing: -.025em; }
 .story__by { display: flex; align-items: center; gap: 1rem; margin-top: 2.2rem; }
 .story__avatar {
   position: relative; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex: none;

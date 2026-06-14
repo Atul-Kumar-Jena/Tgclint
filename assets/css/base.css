@@ -1,7 +1,7 @@
 /* ==================================================================== reset */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; background: #0b0c0e; }
+html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; background: #070707; }
 body {
   font-family: var(--font); font-size: var(--fs-body); line-height: var(--lh-body); font-weight: 400;
   color: var(--ink); background: var(--bg-warm);
@@ -51,7 +51,7 @@ strong { font-weight: 600; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
-.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #232a4a, #0a0c16 78%); }
+.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #141414, #040404 78%); }
 
 /* the page surface sits above the stage; sections are opaque so the stage only shows in transitions.
    NOTE: no will-change/transform here — a transformed ancestor would break GSAP pinning. */

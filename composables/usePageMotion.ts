@@ -97,8 +97,8 @@ export function usePageMotion() {
           gsap.fromTo(inner, { y: 0 }, { y: -56, ease: 'none',
             scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } })
         }
-        // the covered sheet physically recedes: dims and eases back in scale
-        gsap.fromTo(sec, { opacity: 1, scale: 1 }, { opacity: 0.45, scale: 0.988, transformOrigin: '50% 0%', ease: 'none',
+        // the covered sheet physically recedes: dims and eases back in scale (fluid.glass cinematic depth)
+        gsap.fromTo(sec, { opacity: 1, scale: 1 }, { opacity: 0.28, scale: 0.976, transformOrigin: '50% 0%', ease: 'none',
           scrollTrigger: { trigger: next, start: 'top 45%', end: 'top top', scrub: true } })
       })
 

@@ -5,7 +5,9 @@
       <NuxtPage :transition="pageTransition" />
     </NuxtLayout>
     <div v-show="loaderOn" ref="loaderEl" class="loader" aria-hidden="true">
+      <div class="loader__orb" ref="loaderOrb"></div>
       <div class="loader__brand"><Logo /><span>Saansud <em>Infra</em></span></div>
+      <div class="loader__wordmark">SAANSUD INFRA</div>
       <div class="loader__bar"><span ref="loaderBar" /></div>
     </div>
     <div class="grain" aria-hidden="true"></div>
@@ -21,6 +23,7 @@ const hold = usePageHold()
 const loaderOn = ref(true)
 const loaderEl = ref<HTMLElement | null>(null)
 const loaderBar = ref<HTMLElement | null>(null)
+const loaderOrb = ref<HTMLElement | null>(null)
 
 const reduced = () => import.meta.client && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const scrollTop = () => {
@@ -59,6 +62,9 @@ onMounted(() => {
       .to(el, { yPercent: -100, borderBottomLeftRadius: '30px', borderBottomRightRadius: '30px', duration: 0.8, ease: 'power4.inOut' }, 0)
       // page rises and sharpens in sync with the curtain lifting
       .to(shell, { y: 0, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'expo.out' }, 0.04)
+      // orb collapses just before curtain lifts
+      .to('.loader__orb', { scale: 0.65, opacity: 0, duration: 0.45, ease: 'power3.in' }, 0)
+      .to('.loader__wordmark', { opacity: 0, y: -8, duration: 0.3, ease: 'power2.in' }, 0)
       // release the page reveals while the curtain is still lifting
       .call(() => { hold.value = false; document.body.classList.add('is-loaded') }, [], 0.26)
   }, 750)
