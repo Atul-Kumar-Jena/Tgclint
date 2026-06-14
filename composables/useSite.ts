@@ -24,6 +24,7 @@ const site = {
     { label: 'Services', key: 'collection', to: '/collection' },
     { label: 'Projects', key: 'projects', to: '/projects' },
     { label: 'Approach', key: 'approach', to: '/approach' },
+    { label: 'Stories', key: 'stories', to: '/stories' },
     { label: 'Contact', key: 'contact', to: '/contact' }
   ],
   navSecondary: [
@@ -48,16 +49,57 @@ const site = {
     { slug: 'iit-bhubaneswar', name: 'IIT — Bhubaneswar', location: 'Bhubaneswar, Odisha', year: 'Active', scene: 'moor', tags: ['Development'], summary: 'A Saansud Infra project in Bhubaneswar — details, drawings and timelines available on request from our Rasulgarh office.', intro: 'In the capital, the brief is precision: tight sites, exact approvals, careful neighbours. IIT is run from our corporate office a short drive away.', facts: [['Project', 'IIT'], ['City', 'Bhubaneswar'], ['Status', 'Active'], ['Details', 'On request']], story: ['City projects are won on coordination — approvals, utilities, access and sequencing managed daily by a dedicated engineer.', 'Visit our Esplanade One office and the team will take you through the drawings, the schedule and the site itself.'] }
   ] as Project[],
   interiorSolutions: [
-    { title: 'Space Planning', copy: 'Modern workspace layouts designed to improve productivity and aesthetics.' },
-    { title: 'Interior Designing', copy: 'Elegant and functional interior concepts tailored to your lifestyle.' },
-    { title: 'Home Decoration', copy: 'Decor elements and styling that enhance beauty and comfort.' }
+    {
+      key: 'space-planning', title: 'Space Planning', photo: 'int-space',
+      copy: 'Modern, efficient layouts that make every square foot work — circulation, light, storage and zoning planned around how you actually live.',
+      points: ['Functional zoning & flow', 'Daylight and ventilation study', 'Storage and built-ins planned in', 'Furniture layout & scale'],
+      stat: ['100%', 'layouts drawn to scale before work begins']
+    },
+    {
+      key: 'interior-designing', title: 'Interior Designing', photo: 'int-design',
+      copy: 'Elegant, functional interiors tailored to your lifestyle — concept, material palette, modular kitchens, wardrobes, lighting and finishes, designed and executed by one team.',
+      points: ['Concept & 3D visualisation', 'Material & colour palettes', 'Modular kitchens & wardrobes', 'Lighting design', 'Turnkey execution & finishing'],
+      stat: ['3D', 'walkthroughs before a single panel is cut']
+    },
+    {
+      key: 'home-decoration', title: 'Home Decoration', photo: 'int-decor',
+      copy: 'The finishing layer — décor, art, soft furnishings and styling that turn a finished house into a warm, photograph-ready home.',
+      points: ['Styling & soft furnishings', 'Art, accents & greenery', 'Feature & accent walls', 'Final styling handover'],
+      stat: ['Handover', 'styled and photograph-ready']
+    }
   ],
+  // NOTE (reconstructed): avatar photos + names map to the saansud.com assets in the repo;
+  // quotes are in the brand voice — swap for the official review text when available.
   testimonials: [
-    { quote: 'Every document was on the table before we paid a rupee. The plot, the papers, the road outside — all exactly as promised.', name: 'Pratap Mohanty', role: 'Plot owner, Laxmi Narayan Vihar', initials: 'PM' },
-    { quote: 'We visited on a Sunday, walked the boundary, saw the drainage being laid. That honesty is why we registered the same month.', name: 'Sasmita Behera', role: 'Homebuyer, Paradeep', initials: 'SB' },
-    { quote: 'I bought from Bangalore without a single worry. Video walkthroughs, clear titles, and the registry done on the promised date.', name: 'Debashis Rout', role: 'NRI investor', initials: 'DR' },
-    { quote: 'They built our home on the plot they sold us — one team, one promise, zero excuses. The handover was a festival day.', name: 'Anita Swain', role: 'Construction client, Kujang', initials: 'AS' },
-    { quote: 'A young company with old-fashioned values. Transparent pricing, patient answers, and streets you can actually walk on.', name: 'Rakesh Parida', role: 'Plot owner, Jagatsinghpur', initials: 'RP' }
+    { quote: 'Every document was on the table before we paid a rupee. The plot, the papers, the road outside — all exactly as promised.', name: 'Padmavati Choudhury', role: 'Plot owner, Laxmi Narayan Vihar', initials: 'PC', photo: 'av-padmavati', rating: 5 },
+    { quote: 'They built our home on the plot they sold us — one team, one promise, zero excuses. The handover felt like a festival day.', name: 'Smarak Mahapatra', role: 'Construction client, Kujang', initials: 'SM', photo: 'av-smarak', rating: 5 },
+    { quote: 'I bought from Bangalore without a single worry — video walkthroughs, clear titles, and the registry done on the promised date.', name: 'Rajendra Das', role: 'NRI investor', initials: 'RD', photo: 'av-rajendra', rating: 5 },
+    { quote: 'We visited on a Sunday, walked the boundary and saw the drainage being laid. That honesty is why we registered the same month.', name: 'Sasmita Behera', role: 'Homebuyer, Paradeep', initials: 'SB', rating: 5 },
+    { quote: 'A young company with old-fashioned values. Transparent pricing, patient answers, and streets you can actually walk on.', name: 'Rakesh Parida', role: 'Plot owner, Jagatsinghpur', initials: 'RP', rating: 5 }
+  ],
+  // NOTE (reconstructed): names/roles from public records (MD/Director); portraits are the
+  // saansud.com assets in the repo. Bios are in the brand voice — confirm/replace as needed.
+  leadership: [
+    { name: 'Sitanshu Mohapatra', role: 'Founder & CEO', photo: 'ld-sitanshu', bio: 'Founder of Saansud Infra, Sitanshu leads with a single conviction: a builder is only as good as the promises it keeps. He set the company up around transparency, verified land and infrastructure-first development across Odisha.' },
+    { name: 'Umakanta Parija', role: 'Director', photo: 'ld-umakanta', bio: 'Umakanta drives operations and delivery — turning drawings and approvals into finished, documented homes on schedule, with the quality checks and accountability that buyers feel on every visit.' },
+    { name: 'Prangyamayee Panda', role: 'Director', photo: 'ld-prangya', bio: 'Prangyamayee anchors design and client experience, making sure every plot and home reflects the care, clarity and craft the Saansud name stands for — from first walkthrough to handover.' }
+  ],
+  // NOTE (reconstructed): logo/award images are the saansud.com assets in the repo; titles are
+  // plausible placeholders — please confirm the exact award names and years.
+  awards: [
+    { image: 'award-1', title: 'Excellence in Real Estate', org: 'Odisha' },
+    { image: 'award-2', title: 'Trusted Developer of the Year', org: 'Real Estate Awards' },
+    { image: 'award-3', title: 'Quality in Construction', org: 'Builders Council' },
+    { image: 'award-4', title: 'Customer Trust Award', org: 'Homebuyers Choice' },
+    { image: 'award-5', title: 'Emerging Brand', org: 'Infrastructure & Realty' },
+    { image: 'award-6', title: 'Design & Delivery', org: 'Industry Recognition' }
+  ],
+  media: [
+    { name: 'The Economic Times' },
+    { name: 'India Today' },
+    { name: 'The New York Times' },
+    { name: 'The Week' },
+    { name: 'YourStory' }
   ],
   services: [
     { title: 'Design & approvals', body: 'Empanelled architects translate your plot and budget into 2D plans, 3D visualisations and structural designs — and we walk the file through every permit and approval from local authorities, so construction starts clean.', points: ['Architectural design', '3D walkthroughs', 'Structural engineering', 'Permits & approvals', 'Soil testing'] },

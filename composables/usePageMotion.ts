@@ -44,11 +44,11 @@ export function usePageMotion() {
         else gsap.fromTo(target, from, { ...vars, scrollTrigger: { trigger: el, start } })
       }
       gsap.utils.toArray('.reveal:not(.card)').forEach((el: any) =>
-        reveal(el, el, { autoAlpha: 0, y: 34, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.05, ease: 'expo.out' }, 'top 88%'))
+        reveal(el, el, { autoAlpha: 0, y: 28, filter: 'blur(5px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 0.78, ease: 'expo.out' }, 'top 90%'))
       gsap.utils.toArray('.card.reveal').forEach((el: any) =>
-        reveal(el, el, { autoAlpha: 0, y: 30, scale: 0.985, filter: 'blur(4px)' }, { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.95, ease: 'expo.out' }, 'top 92%'))
+        reveal(el, el, { autoAlpha: 0, y: 26, scale: 0.99, filter: 'blur(3px)' }, { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.68, ease: 'expo.out' }, 'top 94%'))
       gsap.utils.toArray('[data-fade]').forEach((el: any) =>
-        reveal(el, el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2, ease: 'power2.out' }, 'top 90%'))
+        reveal(el, el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.85, ease: 'power2.out' }, 'top 92%'))
       // Split-heading + clip reveals are class-driven (CSS transition), the reliable mechanism
       // that doesn't depend on the GSAP ticker/context being settled at boot. In view → reveal
       // on the next frame; below the fold → reveal once it scrolls into view.

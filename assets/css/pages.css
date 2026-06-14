@@ -96,7 +96,7 @@
 .compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
 .compare__col { border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(1.3rem, 2.4vw, 1.9rem); }
 .compare__label { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
-.compare__col--a .compare__label { color: #b4543f; }
+.compare__col--a .compare__label { color: var(--muted); }
 .compare__col--b .compare__label { color: var(--accent); }
 .compare__col ul { display: grid; gap: .55rem; }
 .compare__col li { position: relative; padding-left: 1.2rem; color: var(--ink-soft); }

@@ -40,7 +40,7 @@ onMounted(() => {
   const shell = document.querySelector('.page-shell') as HTMLElement | null
   if (shell) gsap.set(shell, { y: '2.5vh', scale: 0.95, filter: 'blur(6px)', transformOrigin: '50% 0%' })
 
-  gsap.to(loaderBar.value, { scaleX: 1, duration: 1.15, ease: 'power2.inOut' })
+  gsap.to(loaderBar.value, { scaleX: 1, duration: 0.8, ease: 'power2.inOut' })
   setTimeout(() => {
     gsap.timeline({
       onComplete: () => {
@@ -56,12 +56,12 @@ onMounted(() => {
         if (ST) requestAnimationFrame(() => ST.refresh())
       }
     })
-      .to(el, { yPercent: -100, borderBottomLeftRadius: '34px', borderBottomRightRadius: '34px', duration: 1.05, ease: 'power4.inOut' }, 0)
+      .to(el, { yPercent: -100, borderBottomLeftRadius: '30px', borderBottomRightRadius: '30px', duration: 0.8, ease: 'power4.inOut' }, 0)
       // page rises and sharpens in sync with the curtain lifting
-      .to(shell, { y: 0, scale: 1, filter: 'blur(0px)', duration: 1.05, ease: 'expo.out' }, 0.05)
+      .to(shell, { y: 0, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'expo.out' }, 0.04)
       // release the page reveals while the curtain is still lifting
-      .call(() => { hold.value = false; document.body.classList.add('is-loaded') }, [], 0.34)
-  }, 1250)
+      .call(() => { hold.value = false; document.body.classList.add('is-loaded') }, [], 0.26)
+  }, 750)
 })
 
 /* --------------------------------- stacked-card page transition (fluid.glass)
@@ -82,21 +82,22 @@ const pageTransition = {
     const gsap = nuxtApp.$gsap
     if (!gsap || reduced()) { done(); return }
     if (enterTl) enterTl.progress(1) // settle any in-flight enter first
-    // old page recedes like a card being pushed aside — scale + blur + rounded corners
+    // old page recedes — transform + opacity only (no blur/shadow) so it stays buttery
     leaveTween = gsap.to(el, {
-      opacity: 0.45, scale: 0.88, y: '5vh', filter: 'blur(6px)', borderRadius: '28px',
-      transformOrigin: '50% 0%', duration: 1.25, ease: 'power2.inOut', onComplete: done
+      opacity: 0.5, scale: 0.93, y: '3vh',
+      transformOrigin: '50% 0%', duration: 0.62, ease: 'power3.inOut', onComplete: done
     })
   },
   onEnter: (el: Element, done: () => void) => {
     const gsap = nuxtApp.$gsap
     if (!gsap || reduced()) { scrollTop(); done(); return }
     const vh = window.innerHeight
+    // new page is a card sliding up over the old one. Transform-only animation; the shadow
+    // and rounded top are set once (static), never animated — that is what removes the stutter.
     gsap.set(el, {
       position: 'fixed', top: 0, left: 0, width: '100%', height: vh, overflow: 'hidden',
-      zIndex: 6, y: vh, scale: 0.94, transformOrigin: '50% 0%',
-      borderRadius: '34px 34px 0 0', boxShadow: '0 -36px 110px rgba(6,10,7,.62)',
-      filter: 'blur(8px)'
+      zIndex: 6, y: vh, transformOrigin: '50% 0%', willChange: 'transform',
+      borderRadius: '26px 26px 0 0', boxShadow: '0 -30px 80px rgba(6,10,7,.5)'
     })
     enterTl = gsap.timeline({
       onComplete: () => {
@@ -108,10 +109,8 @@ const pageTransition = {
         done()
       }
     })
-      .to(el, { y: 0, duration: 1.1, ease: 'expo.inOut' }, 0)
-      .to(el, { filter: 'blur(0px)', duration: 0.85, ease: 'power2.out' }, 0.1)
-      .to(el, { scale: 1, duration: 0.95, ease: 'power3.inOut' }, 0.15)
-      .to(el, { borderRadius: '0px 0px 0px 0px', duration: 0.4, ease: 'power2.out' }, 0.8)
+      .to(el, { y: 0, duration: 0.66, ease: 'expo.out' }, 0)
+      .to(el, { borderRadius: '0px', duration: 0.28, ease: 'power2.out' }, 0.42)
   },
   onAfterEnter: () => {
     const l = nuxtApp.$lenis

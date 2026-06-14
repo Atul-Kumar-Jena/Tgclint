@@ -24,15 +24,19 @@
 
     <section id="interior-solutions" class="section" data-theme="dark">
       <div class="container">
-        <p class="eyebrow" style="margin-bottom:clamp(2rem,4vw,3rem)">Interior design services</p>
-        <div class="values">
-          <div v-for="(s, i) in site.interiorSolutions" :key="s.title" class="value reveal" :style="`--i:${i}`">
-            <p class="value__num">0{{ i + 1 }}</p>
-            <h3>{{ s.title }}</h3>
-            <p>{{ s.copy }}</p>
+        <p class="eyebrow">Interior design services</p>
+        <h2 class="h2" data-split style="margin-top:1rem;max-width:18ch">Interiors, designed and<br>delivered by one team.</h2>
+        <div v-for="(s, i) in site.interiorSolutions" :id="s.key" :key="s.key" class="svc-detail">
+          <div class="svc-detail__media reveal clip-reveal"><FgImg :src="url(PHOTO[s.photo])" :alt="s.title" ratio="4 / 3" /></div>
+          <div class="svc-detail__text">
+            <p class="svc-detail__num">0{{ i + 1 }} — Interiors</p>
+            <h3 class="svc-detail__title" data-split>{{ s.title }}</h3>
+            <p class="svc-detail__copy reveal">{{ s.copy }}</p>
+            <ul class="svc-detail__points reveal"><li v-for="pt in s.points" :key="pt">{{ pt }}</li></ul>
+            <p class="svc-detail__stat reveal"><b>{{ s.stat[0] }}</b><span>{{ s.stat[1] }}</span></p>
           </div>
         </div>
-        <div class="reveal" style="margin-top:clamp(2rem,4vw,3rem)"><Btn label="Start your interior project" variant="light" quote /></div>
+        <div class="reveal" style="margin-top:clamp(2.5rem,5vw,4rem)"><Btn label="Start your interior project" variant="light" quote /></div>
       </div>
     </section>
 
@@ -42,6 +46,7 @@
 
 <script setup lang="ts">
 const site = useSite()
+const { PHOTO, url } = usePhotos()
 usePageMotion()
 useHead({ title: `Services — ${site.brand}` })
 </script>

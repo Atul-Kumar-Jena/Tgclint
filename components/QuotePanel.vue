@@ -13,8 +13,8 @@
           <div class="quote__field">
             <label class="quote__lead" for="q-name">Tell us about your project.</label>
             <div class="quote__grid">
-              <input id="q-name" v-model="name" type="text" placeholder="Full name" autocomplete="name" :style="nameErr ? 'border-color:#b4543f' : ''">
-              <input id="q-email" v-model="email" type="email" placeholder="Email address" autocomplete="email" :style="emailErr ? 'border-color:#b4543f' : ''">
+              <input id="q-name" v-model="name" type="text" placeholder="Full name" autocomplete="name" :style="nameErr ? 'border-color:var(--warn)' : ''">
+              <input id="q-email" v-model="email" type="email" placeholder="Email address" autocomplete="email" :style="emailErr ? 'border-color:var(--warn)' : ''">
               <input type="text" placeholder="Project location" autocomplete="off">
               <input type="tel" placeholder="Phone (optional)" autocomplete="tel">
             </div>

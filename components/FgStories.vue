@@ -10,9 +10,13 @@
           </div>
           <div class="stories__stage">
             <figure v-for="(t, i) in site.testimonials" :key="i" class="story" :data-active="i === active ? '' : null" :data-prev="i < active ? '' : null">
+              <span class="story__stars" aria-hidden="true">{{ '★'.repeat(t.rating || 5) }}</span>
               <blockquote class="story__quote">{{ t.quote }}</blockquote>
               <figcaption class="story__by">
-                <span class="story__avatar" aria-hidden="true">{{ t.initials }}</span>
+                <span class="story__avatar">
+                  <span class="story__initials" aria-hidden="true">{{ t.initials }}</span>
+                  <FgImg v-if="t.photo" class="story__photo" :src="url(PHOTO[t.photo])" :alt="t.name" />
+                </span>
                 <span class="story__meta"><span class="story__name">{{ t.name }}</span><span class="story__role">{{ t.role }}</span></span>
               </figcaption>
             </figure>
@@ -25,6 +29,7 @@
 
 <script setup lang="ts">
 const site = useSite()
+const { PHOTO, url } = usePhotos()
 const active = ref(0)
 const root = ref<HTMLElement | null>(null)
 const { $ScrollTrigger } = useNuxtApp() as any

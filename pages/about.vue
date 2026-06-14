@@ -43,6 +43,10 @@
       </div>
     </section>
 
+    <FgLeadership />
+
+    <FgAwards theme="light" />
+
     <FgCta label="All projects" to="/projects" />
   </div>
 </template>

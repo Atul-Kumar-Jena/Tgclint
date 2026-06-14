@@ -101,6 +101,7 @@
     </section>
 
     <FgStories />
+    <FgAwards compact theme="light" />
     <FgCta />
   </div>
 </template>
