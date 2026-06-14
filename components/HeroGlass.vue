@@ -9,22 +9,22 @@
           <feTurbulence type="fractalNoise" baseFrequency="0.018 0.014" numOctaves="3" seed="7" result="nz"/>
           <feDisplacementMap in="SourceGraphic" in2="nz" scale="8" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
-        <!-- body gradient: slightly lighter at center, darker rim -->
+        <!-- body gradient: glass body — lighter at center to read as translucent -->
         <radialGradient id="hg-body" cx="42%" cy="38%" r="62%">
-          <stop offset="0%"   stop-color="rgba(255,255,255,0.09)"/>
-          <stop offset="55%"  stop-color="rgba(255,255,255,0.03)"/>
-          <stop offset="100%" stop-color="rgba(0,0,0,0.18)"/>
+          <stop offset="0%"   stop-color="rgba(255,255,255,0.16)"/>
+          <stop offset="55%"  stop-color="rgba(255,255,255,0.06)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
         </radialGradient>
-        <!-- large specular catch on upper-left -->
-        <radialGradient id="hg-spec1" cx="30%" cy="22%" r="42%">
-          <stop offset="0%"   stop-color="rgba(255,255,255,0.72)"/>
-          <stop offset="22%"  stop-color="rgba(255,255,255,0.28)"/>
-          <stop offset="55%"  stop-color="rgba(255,255,255,0.04)"/>
+        <!-- large specular catch on upper-left — the glass "window" reflection -->
+        <radialGradient id="hg-spec1" cx="28%" cy="20%" r="46%">
+          <stop offset="0%"   stop-color="rgba(255,255,255,0.88)"/>
+          <stop offset="18%"  stop-color="rgba(255,255,255,0.42)"/>
+          <stop offset="48%"  stop-color="rgba(255,255,255,0.08)"/>
           <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
         </radialGradient>
         <!-- secondary small highlight off-center -->
-        <radialGradient id="hg-spec2" cx="68%" cy="32%" r="18%">
-          <stop offset="0%"   stop-color="rgba(255,255,255,0.38)"/>
+        <radialGradient id="hg-spec2" cx="68%" cy="32%" r="20%">
+          <stop offset="0%"   stop-color="rgba(255,255,255,0.52)"/>
           <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
         </radialGradient>
         <!-- caustic refraction spot — lower interior -->
@@ -32,10 +32,10 @@
           <stop offset="0%"   stop-color="rgba(255,240,210,0.55)"/>
           <stop offset="100%" stop-color="rgba(255,240,210,0)"/>
         </radialGradient>
-        <!-- depth shadow lower-right -->
+        <!-- depth shadow lower-right — very subtle, just edge darkening -->
         <radialGradient id="hg-depth" cx="68%" cy="74%" r="60%">
-          <stop offset="0%"   stop-color="rgba(0,0,0,0.62)"/>
-          <stop offset="70%"  stop-color="rgba(0,0,0,0.22)"/>
+          <stop offset="0%"   stop-color="rgba(0,0,0,0.22)"/>
+          <stop offset="70%"  stop-color="rgba(0,0,0,0.08)"/>
           <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
         </radialGradient>
         <!-- brand warm tint (very subtle) -->
@@ -46,15 +46,15 @@
         </radialGradient>
         <!-- rim gradient: bright edge catch-light -->
         <radialGradient id="hg-rim" cx="50%" cy="50%" r="50%">
-          <stop offset="82%"  stop-color="transparent"/>
-          <stop offset="93%"  stop-color="rgba(255,255,255,0.10)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0.42)"/>
+          <stop offset="80%"  stop-color="transparent"/>
+          <stop offset="91%"  stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.62)"/>
         </radialGradient>
         <!-- inner rim: glass thickness -->
         <radialGradient id="hg-rim-inner" cx="50%" cy="50%" r="50%">
-          <stop offset="86%"  stop-color="transparent"/>
-          <stop offset="94%"  stop-color="rgba(255,255,255,0.06)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0.12)"/>
+          <stop offset="84%"  stop-color="transparent"/>
+          <stop offset="93%"  stop-color="rgba(255,255,255,0.09)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.18)"/>
         </radialGradient>
         <clipPath id="hg-clip"><circle cx="250" cy="250" r="228"/></clipPath>
       </defs>
@@ -117,13 +117,13 @@ onMounted(() => {
 }
 .hero-glass__halo {
   position: absolute;
-  inset: -18%;
+  inset: -22%;
   border-radius: 50%;
   background: radial-gradient(circle at 42% 38%,
-    rgba(255,255,255,0.06) 0%,
-    rgba(241,83,14,0.04) 30%,
-    transparent 68%);
-  filter: blur(28px);
+    rgba(255,255,255,0.12) 0%,
+    rgba(241,83,14,0.06) 32%,
+    transparent 65%);
+  filter: blur(36px);
   animation: hgFloat 9s ease-in-out infinite alternate;
 }
 .hero-glass__svg {
@@ -132,7 +132,7 @@ onMounted(() => {
   display: block;
   overflow: visible;
   animation: hgFloat 9s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 40px rgba(255,255,255,0.06)) drop-shadow(0 20px 60px rgba(0,0,0,0.45));
+  filter: drop-shadow(0 0 60px rgba(255,255,255,0.10)) drop-shadow(0 24px 70px rgba(0,0,0,0.38));
 }
 @keyframes hgFloat {
   from { transform: translateY(0); }

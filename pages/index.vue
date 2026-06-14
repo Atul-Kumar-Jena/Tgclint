@@ -2,10 +2,12 @@
   <div class="page-shell">
     <section class="hero" data-theme="dark">
       <div class="hero__media">
-        <HeroGlass />
+        <Scene type="house" variant="hero" uid="hero" />
+        <div class="hero__veil"></div>
+        <div class="glass-veil"></div>
       </div>
+      <p class="hero__eyebrow eyebrow">Est. 2014 · Bhubaneswar, Odisha</p>
       <div class="hero__inner container">
-        <p class="hero__eyebrow eyebrow">Est. 2014 · Bhubaneswar, Odisha</p>
         <h1 class="hero__title" data-split>Land you can build<br>a life on.</h1>
         <p class="hero__sub reveal">Transparent land development &mdash; plot to possession.</p>
       </div>

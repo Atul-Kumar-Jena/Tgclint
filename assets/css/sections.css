@@ -15,15 +15,15 @@ body.is-loaded .hero__media { clip-path: inset(0 0 0 0 round 0px); transform: no
 .hero__veil {
   position: absolute; inset: 0;
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(5, 8, 12, .62), transparent 55%),
-    linear-gradient(180deg, rgba(5, 8, 12, .28) 0%, rgba(5, 8, 12, 0) 30%, rgba(5, 8, 12, .72) 100%);
+    radial-gradient(120% 70% at 50% 0%, rgba(7,7,7,.55), transparent 52%),
+    linear-gradient(180deg, rgba(7,7,7,.18) 0%, rgba(7,7,7,0) 28%, rgba(7,7,7,.88) 100%);
 }
 /* glass depth veil — looking through glass (Gaussian depth) */
 .glass-veil {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg,
-    rgba(11,16,18,0.48) 0%, rgba(11,16,18,0.08) 42%, rgba(11,16,18,0.30) 100%);
-  backdrop-filter: blur(1px);
+  background: linear-gradient(160deg,
+    rgba(7,7,7,0.58) 0%, rgba(7,7,7,0.05) 44%, rgba(7,7,7,0.38) 100%);
+  backdrop-filter: blur(0.8px);
 }
 /* glass panel utility — frosted depth badge */
 .glass-depth {
@@ -34,12 +34,13 @@ body.is-loaded .hero__media { clip-path: inset(0 0 0 0 round 0px); transform: no
   border-radius: var(--radius);
 }
 .hero__eyebrow {
-  position: relative; z-index: 5; color: var(--ink-inv-soft);
-  opacity: 0; transition: opacity .7s var(--ease) .15s;
-  margin-bottom: 1.4rem; display: flex; justify-content: center;
+  position: absolute; top: clamp(2.2rem, 4.5vh, 3.5rem); left: 50%; transform: translateX(-50%);
+  z-index: 5; color: rgba(240,237,230,0.52); white-space: nowrap;
+  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+  opacity: 0; transition: opacity .9s var(--ease) .3s;
 }
 body.is-loaded .hero__eyebrow { opacity: 1; }
-.hero__inner { position: relative; z-index: 5; width: 100%; padding-bottom: clamp(8rem, 18vh, 13rem); }
+.hero__inner { position: relative; z-index: 5; width: 100%; padding-bottom: clamp(5.5rem, 11vh, 8rem); }
 .hero__title {
   font-size: var(--fs-display); line-height: .96; font-weight: 500; letter-spacing: -.04em;
   text-align: center; max-width: 14ch; margin-inline: auto; text-wrap: balance;
@@ -52,7 +53,7 @@ body.is-loaded .hero__title { filter: blur(0); opacity: 1; }
   color: var(--ink-inv-soft); max-width: 44ch; margin-inline: auto;
 }
 .hero__scroll {
-  position: absolute; left: 50%; bottom: clamp(6.5rem, 12vh, 8.5rem); transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: clamp(1.4rem, 3vh, 2.8rem); transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: .6rem;
   font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-inv-soft);
   opacity: 0; transition: opacity .7s var(--ease) .55s;
