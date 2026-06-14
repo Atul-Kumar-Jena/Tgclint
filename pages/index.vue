@@ -57,6 +57,8 @@
       </div>
     </section>
 
+    <FgStories />
+
     <section class="section showroom" data-theme="dark">
       <div class="container">
         <div class="showroom__grid">
@@ -100,7 +102,6 @@
       </div>
     </section>
 
-    <FgStories />
     <FgAwards compact theme="light" />
     <FgCta />
   </div>

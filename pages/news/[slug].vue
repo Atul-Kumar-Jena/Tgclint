@@ -44,10 +44,18 @@
       </div>
     </section>
 
-    <NuxtLink class="article__next" :to="`/news/${next.slug}`" data-theme="dark" data-hover>
+    <NuxtLink class="article__next" :to="`/news/${next.slug}`" data-theme="dark">
       <div class="container">
-        <p class="article__next-label">Next post</p>
-        <p class="article__next-title">{{ next.title }}</p>
+        <div class="article__next-inner">
+          <div class="article__next-meta">
+            <span class="article__next-eyebrow">Next post</span>
+            <p class="article__next-title">{{ next.title }}</p>
+            <span class="article__next-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="article__next-thumb">
+            <img :src="url(next.image)" :alt="next.title" loading="lazy" decoding="async" />
+          </div>
+        </div>
       </div>
     </NuxtLink>
 

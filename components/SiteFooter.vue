@@ -10,23 +10,15 @@
         </div>
         <p class="footer__line reveal">{{ site.tagline }}</p>
       </div>
-      <div class="footer__grid">
-        <nav class="footer__nav reveal" aria-label="Footer">
-          <p class="footer__label">Quick links</p>
-          <ul>
-            <li v-for="n in [...site.nav, ...site.navSecondary]" :key="n.to"><NuxtLink :to="n.to" data-hover>{{ n.label }}</NuxtLink></li>
-            <li><NuxtLink to="/news" data-hover>Blogs</NuxtLink></li>
-            <li><NuxtLink to="/contact" data-hover>Become a channel partner</NuxtLink></li>
-          </ul>
-        </nav>
-        <div class="footer__contact reveal" style="--i:1">
+      <div class="footer__grid footer__grid--2col">
+        <div class="footer__contact reveal">
           <p class="footer__label">Reach us</p>
           <a :href="site.phoneHref" data-hover>{{ site.phone }}</a>
           <a :href="site.emailHref" data-hover>{{ site.email }}</a>
           <a class="footer__wa" :href="site.whatsapp" target="_blank" rel="noopener" data-hover>Let's connect on WhatsApp</a>
           <address>{{ site.address.join(', ') }}</address>
         </div>
-        <div class="footer__contact reveal" style="--i:2">
+        <div class="footer__contact reveal" style="--i:1">
           <p class="footer__label">Projects</p>
           <NuxtLink v-for="p in site.projects" :key="p.slug" :to="`/projects/${p.slug}`" data-hover>{{ p.name }}</NuxtLink>
         </div>

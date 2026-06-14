@@ -38,13 +38,13 @@
   max-height: calc(100svh - clamp(18px, 3vh, 32px) - 14px);
   width: 236px; border-radius: calc(var(--pill-h) / 2);
   color: var(--ink-inv);
-  background: linear-gradient(180deg, rgba(28, 32, 54, .58), rgba(14, 17, 30, .68));
-  -webkit-backdrop-filter: blur(26px) saturate(160%); backdrop-filter: blur(26px) saturate(160%);
+  background: linear-gradient(180deg, rgba(24, 28, 48, .68), rgba(12, 15, 28, .76));
+  -webkit-backdrop-filter: blur(28px) saturate(170%); backdrop-filter: blur(28px) saturate(170%);
   border: 1px solid var(--glass-edge);
   box-shadow: 0 14px 36px rgba(4, 6, 14, .32), 0 2px 8px rgba(4, 6, 14, .18);
   transition:
-    width .95s var(--ease), border-radius .95s var(--ease),
-    transform .8s var(--ease), opacity .5s var(--ease), box-shadow .8s var(--ease);
+    width .5s var(--ease), border-radius .5s var(--ease),
+    transform .45s var(--ease), opacity .35s var(--ease), box-shadow .45s var(--ease);
 }
 .dock:hover { box-shadow: 0 20px 50px rgba(4, 6, 14, .4), 0 2px 8px rgba(4, 6, 14, .22); }
 .dockzone[data-state="menu"] .dock,
@@ -55,7 +55,7 @@
 .dockzone[data-quote] .dock { transform: translateY(240%); opacity: 0; pointer-events: none; }
 
 /* height morph: a grid row going 0fr -> 1fr animates the unfold smoothly */
-.dock__drawer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .95s var(--ease); }
+.dock__drawer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
 .dockzone[data-state="menu"] .dock__drawer,
 .dockzone[data-state="end"] .dock__drawer { grid-template-rows: 1fr; }
 .dock__body {
@@ -72,6 +72,8 @@
 .dock__link {
   position: relative; width: max-content; max-width: 100%;
   font-size: clamp(1.4rem, 2vw, 1.7rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.32;
+  padding-block: .28rem; /* ensures ≥44px tap targets at typical font sizes */
+  min-height: 44px; display: flex; align-items: center;
 }
 .dock__link span { position: relative; display: inline-block; }
 .dock__link span::after {
@@ -79,7 +81,12 @@
   background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease);
 }
 .dock__link:hover span::after, .dock__link:focus-visible span::after { transform: scaleX(1); }
-.dock__link[aria-current="page"] { color: var(--gold); }
+.dock__link[aria-current="page"] { color: var(--gold); font-weight: 600; }
+.dock__link[aria-current="page"] span::before {
+  content: "◆";
+  position: absolute; left: -1.2em; top: 50%; transform: translateY(-50%);
+  font-size: .38em; color: var(--gold); display: inline-block; line-height: 1;
+}
 .dock__foot {
   display: flex; justify-content: space-between; gap: 1rem;
   margin-top: 1.2rem; padding-top: 1.1rem; border-top: 1px solid var(--glass-edge);
@@ -90,17 +97,17 @@
 .dock__contact { display: flex; flex-direction: column; gap: .3rem; text-align: right; }
 .dock__cta { margin: 1.2rem 0 1.4rem; }
 /* contents glide in just behind the unfold — short, quiet stagger */
-.dock__body > * { opacity: 0; transform: translateY(12px); transition: opacity .25s var(--ease), transform .25s var(--ease); }
+.dock__body > * { opacity: 0; transform: translateY(10px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
 .dockzone[data-state="menu"] .dock__body > *,
 .dockzone[data-state="end"] .dock__body > * {
   opacity: 1; transform: none;
-  transition: opacity .6s var(--ease) calc(.14s + var(--i, 0) * .04s), transform .7s var(--ease) calc(.12s + var(--i, 0) * .04s);
+  transition: opacity .45s var(--ease) calc(.08s + var(--i, 0) * .03s), transform .5s var(--ease) calc(.07s + var(--i, 0) * .03s);
 }
-.dock__nav .dock__link { opacity: 0; transform: translateY(12px); transition: opacity .25s var(--ease), transform .25s var(--ease); }
+.dock__nav .dock__link { opacity: 0; transform: translateY(10px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
 .dockzone[data-state="menu"] .dock__nav .dock__link,
 .dockzone[data-state="end"] .dock__nav .dock__link {
   opacity: 1; transform: none;
-  transition: opacity .6s var(--ease) calc(.16s + var(--i, 0) * .045s), transform .7s var(--ease) calc(.14s + var(--i, 0) * .045s);
+  transition: opacity .45s var(--ease) calc(.1s + var(--i, 0) * .03s), transform .5s var(--ease) calc(.09s + var(--i, 0) * .03s);
 }
 
 /* the bar — always visible, identical in every state */

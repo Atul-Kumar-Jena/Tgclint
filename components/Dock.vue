@@ -6,7 +6,15 @@
         <div class="dock__body" :aria-hidden="state === 'pill'" data-lenis-prevent>
           <p class="dock__eyebrow">{{ state === 'end' ? 'Navigate' : 'Menu' }}</p>
           <div class="dock__nav">
-            <NuxtLink v-for="(n, i) in site.nav" :key="n.to" class="dock__link" :style="`--i:${i}`" :to="n.to" @click="closeAll"><span>{{ n.label }}</span></NuxtLink>
+            <NuxtLink
+              v-for="(n, i) in site.nav"
+              :key="n.to"
+              class="dock__link"
+              :style="`--i:${i}`"
+              :to="n.to"
+              :exact="n.to === '/'"
+              @click="closeAll"
+            ><span>{{ n.label }}</span></NuxtLink>
           </div>
           <div class="dock__foot" :style="`--i:${site.nav.length}`">
             <div class="dock__subs">
@@ -45,7 +53,8 @@ const state = computed(() => (menuOpen.value ? 'menu' : endShown.value ? 'end' :
 const label = computed(() => {
   const p = route.path
   if (p === '/') return 'Home'
-  const found = [...site.nav, ...site.navSecondary].find((n) => p.startsWith(n.to))
+  const all = [...site.nav.filter((n) => n.to !== '/'), ...site.navSecondary]
+  const found = all.find((n) => p.startsWith(n.to))
   if (found) return found.label
   if (p.startsWith('/projects')) return 'Projects'
   return 'Saansud'

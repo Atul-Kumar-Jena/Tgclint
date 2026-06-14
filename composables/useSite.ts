@@ -20,6 +20,7 @@ const site = {
   rating: '4.9',
   ratingCount: '180+',
   nav: [
+    { label: 'Home', key: 'home', to: '/' },
     { label: 'About', key: 'about', to: '/about' },
     { label: 'Services', key: 'collection', to: '/collection' },
     { label: 'Projects', key: 'projects', to: '/projects' },

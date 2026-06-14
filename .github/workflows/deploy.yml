@@ -6,7 +6,7 @@ name: Build (Nuxt) & publish to gh-pages
 
 on:
   push:
-    branches: ["claude/fluid-glass-rollback-polish-bmf5c1", "claude/funny-lamport-vhtyaw", "main"]
+    branches: ["claude/fluid-glass-rollback-polish-bmf5c1", "claude/funny-lamport-vhtyaw", "claude/website-nav-visual-fixes-5n22gr", "main"]
   workflow_dispatch:
 
 permissions:
