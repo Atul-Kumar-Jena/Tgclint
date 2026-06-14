@@ -30,7 +30,7 @@
   display: grid; place-items: center; font-size: .72rem; letter-spacing: .04em;
   transition: background .3s var(--ease), color .3s var(--ease), border-color .3s;
 }
-.footer__socials a:hover { background: var(--ink-inv); color: var(--ink); border-color: var(--ink-inv); }
+.footer__socials a:hover { background: var(--ink-inv); color: var(--ink-on-light); border-color: var(--ink-inv); }
 .footer__cta { margin-top: 1.5rem; }
 .footer__base {
   display: flex; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap;
