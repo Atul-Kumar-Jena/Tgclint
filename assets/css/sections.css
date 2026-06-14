@@ -194,7 +194,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
 }
 .hscroll__viewport::-webkit-scrollbar { display: none; }
 .hscroll__viewport { scrollbar-width: none; }
-.hscroll__track { display: flex; align-items: center; gap: clamp(2rem, 4vw, 4.5rem); padding-inline: var(--pad-x); will-change: transform; }
+.hscroll__track { display: flex; align-items: center; gap: clamp(1.4rem, 2.4vw, 2.8rem); padding-inline: var(--pad-x); will-change: transform; }
 .hscroll__panel { flex: 0 0 auto; width: min(74vw, 1100px); scroll-snap-align: center; will-change: transform, filter; transform-origin: 50% 50%; }
 .hscroll__panel a { display: block; }
 .hscroll__media {

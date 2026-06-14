@@ -48,6 +48,12 @@ onMounted(() => {
         document.body.classList.remove('is-booting')
         // remove inline transform so GSAP ScrollTrigger pins measure clean layout
         if (shell) gsap.set(shell, { clearProps: 'all' })
+        // re-measure every trigger against the now-untransformed layout: boot() ran while
+        // the curtain still held the shell scaled/offset, so pin + reveal start positions
+        // were computed against a transformed page. Without this, above-the-fold reveals
+        // never fire and the pinned side-scroll keeps a stale travel distance.
+        const ST = nuxtApp.$ScrollTrigger
+        if (ST) requestAnimationFrame(() => ST.refresh())
       }
     })
       .to(el, { yPercent: -100, borderBottomLeftRadius: '34px', borderBottomRightRadius: '34px', duration: 1.05, ease: 'power4.inOut' }, 0)

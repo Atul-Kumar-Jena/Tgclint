@@ -32,26 +32,32 @@ export function usePageMotion() {
 
   function boot(gsap: any, ST: any) {
     ctx = gsap.context(() => {
-      gsap.utils.toArray('.reveal:not(.card)').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 34, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.05, ease: 'expo.out',
-          scrollTrigger: { trigger: el, start: 'top 88%' } })
+      // Reveal helper. Elements already inside the viewport when the page boots reveal
+      // IMMEDIATELY (a load entrance); anything below the fold keeps a scroll-triggered reveal.
+      // Above-the-fold reveals must not depend on scroll-position maths that can be thrown off
+      // by the loader curtain / page transition still settling.
+      const vh = window.innerHeight
+      const inView = (el: any) => el.getBoundingClientRect().top < vh * 0.92
+      const reveal = (el: any, target: any, from: any, to: any, start: string, stagger = 0) => {
+        const vars = stagger ? { ...to, stagger } : { ...to }
+        if (inView(el)) gsap.fromTo(target, from, { ...vars, delay: 0.12 })
+        else gsap.fromTo(target, from, { ...vars, scrollTrigger: { trigger: el, start } })
+      }
+      gsap.utils.toArray('.reveal:not(.card)').forEach((el: any) =>
+        reveal(el, el, { autoAlpha: 0, y: 34, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.05, ease: 'expo.out' }, 'top 88%'))
+      gsap.utils.toArray('.card.reveal').forEach((el: any) =>
+        reveal(el, el, { autoAlpha: 0, y: 30, scale: 0.985, filter: 'blur(4px)' }, { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.95, ease: 'expo.out' }, 'top 92%'))
+      gsap.utils.toArray('[data-fade]').forEach((el: any) =>
+        reveal(el, el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2, ease: 'power2.out' }, 'top 90%'))
+      // Split-heading + clip reveals are class-driven (CSS transition), the reliable mechanism
+      // that doesn't depend on the GSAP ticker/context being settled at boot. In view → reveal
+      // on the next frame; below the fold → reveal once it scrolls into view.
+      const classReveal = (sel: string, start: string) => gsap.utils.toArray(sel).forEach((el: any) => {
+        if (inView(el)) requestAnimationFrame(() => el.classList.add('is-in'))
+        else ST.create({ trigger: el, start, once: true, onEnter: () => el.classList.add('is-in') })
       })
-      gsap.utils.toArray('.card.reveal').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 30, scale: 0.985, filter: 'blur(4px)' }, { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.95, ease: 'expo.out',
-          scrollTrigger: { trigger: el, start: 'top 92%' } })
-      })
-      gsap.utils.toArray('[data-split]').forEach((el: any) => {
-        gsap.fromTo(el.querySelectorAll('.line > span'), { yPercent: 118 }, { yPercent: 0, duration: 1.15, ease: 'expo.out', stagger: 0.12,
-          scrollTrigger: { trigger: el, start: 'top 88%' } })
-      })
-      gsap.utils.toArray('[data-fade]').forEach((el: any) => {
-        gsap.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2, ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 90%' } })
-      })
-      // media clip reveal via class toggle (CSS transitions clip-path reliably)
-      gsap.utils.toArray('.clip-reveal').forEach((el: any) => {
-        ST.create({ trigger: el, start: 'top 86%', once: true, onEnter: () => el.classList.add('is-in') })
-      })
+      classReveal('[data-split]', 'top 88%')
+      classReveal('.clip-reveal', 'top 86%')
       // parallax media
       gsap.utils.toArray('[data-parallax]').forEach((el: any) => {
         const amt = parseFloat(el.dataset.parallax) || 12
@@ -172,16 +178,24 @@ export function usePageMotion() {
               if (part.veil) part.veil.style.opacity = (ec * 0.32).toFixed(3)
               continue
             }
-            part.p.style.transform = `scale(${(1 - k * 0.12).toFixed(4)})`
+            part.p.style.transform = `scale(${(1 - k * 0.13).toFixed(4)})`
             if (part.media) {
               // focus depth: centred panel is tack sharp; off-centre panels go softly out-of-focus
-              part.media.style.filter = `blur(${(k * 4).toFixed(1)}px)`
-              // the unveiling — clip "doors" close dramatically as the frame leaves centre
-              part.media.style.clipPath = `inset(0 ${Math.min(ec * 44, 54).toFixed(1)}% round 18px)`
-              // cinematic push-in resolves as the frame reaches centre; layer parallaxes as a window
-              if (part.layer) part.layer.style.transform = `translate3d(${(-c * 16).toFixed(2)}%,0,0) scale(${(1.38 - ec * 0.12).toFixed(3)})`
+              part.media.style.filter = `blur(${(k * 3.4).toFixed(1)}px)`
+              // Asymmetric "door": the clip closes only on the OUTER edge (the side facing away
+              // from centre), so the inner edge always reaches toward the middle. This unveils a
+              // frame as it arrives and seals it away as it leaves — without ever emptying the
+              // centre during a hand-off (a symmetric clip eats the inner edge and leaves a void).
+              const outer = (ec * 42).toFixed(1)
+              part.media.style.clipPath = c < 0
+                ? `inset(0 0 0 ${outer}% round 16px)`
+                : `inset(0 ${outer}% 0 0 round 16px)`
+              // Crisp at centre, gentle overscan toward the edges. The layer is the moving "window":
+              // minimal scale at centre keeps the hero sharp; more scale off-centre gives the
+              // parallax translate headroom (paired with the -14% inset so no edge is ever revealed).
+              if (part.layer) part.layer.style.transform = `translate3d(${(-c * 12).toFixed(2)}%,0,0) scale(${(1.05 + ec * 0.14).toFixed(3)})`
               // off-centre frames sink deeply into the dark — strong spotlight contrast
-              if (part.veil) part.veil.style.opacity = (ec * 0.62).toFixed(3)
+              if (part.veil) part.veil.style.opacity = (ec * 0.58).toFixed(3)
             }
             // caption sharpens (blur lifts) and rises as the panel nears centre
             if (part.cap) {

@@ -82,6 +82,16 @@ html.js .clip-reveal { clip-path: inset(0 0 100% 0); filter: blur(10px); transfo
 [data-split] .line { display: block; overflow: hidden; padding-block: .04em; }
 [data-split] .line > span { display: block; will-change: transform; }
 
+/* Split-heading reveal is class-driven (CSS transition) rather than tween-driven, the same
+   reliable mechanism as .clip-reveal / body.is-loaded — immune to GSAP ticker/context timing
+   that was leaving above-the-fold headings stuck in their hidden state. JS adds .is-in. */
+html.js [data-split] .line > span { transition: transform 1.05s var(--ease-power3, var(--ease)); }
+html.js [data-split].is-in .line > span { transform: none; }
+[data-split] .line:nth-child(2) > span { transition-delay: .08s; }
+[data-split] .line:nth-child(3) > span { transition-delay: .16s; }
+[data-split] .line:nth-child(4) > span { transition-delay: .24s; }
+[data-split] .line:nth-child(5) > span { transition-delay: .32s; }
+
 /* safety net: if the app never boots (chunk failure), reveal everything after 6s */
 html.js-fallback .reveal, html.js-fallback .card.reveal, html.js-fallback [data-fade] { opacity: 1 !important; }
 html.js-fallback [data-split] .line > span { transform: none !important; }
