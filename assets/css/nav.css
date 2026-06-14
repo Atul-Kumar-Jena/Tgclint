@@ -22,18 +22,7 @@
   bottom: calc(clamp(16px, 2.8vh, 30px) + env(safe-area-inset-bottom, 0px));
   z-index: var(--z-pill); display: flex; justify-content: center;
   pointer-events: none;
-  transition: bottom .5s var(--ease), top .5s var(--ease);
-}
-/* pill state: float at top-center like fluid.glass navigation island */
-.dockzone[data-state="pill"] {
-  bottom: auto;
-  top: clamp(1rem, 2.2vh, 1.6rem);
-}
-/* menu/end state: return to bottom (natural expansion zone) */
-.dockzone[data-state="menu"],
-.dockzone[data-state="end"] {
-  bottom: calc(clamp(16px, 2.8vh, 30px) + env(safe-area-inset-bottom, 0px));
-  top: auto;
+  transition: bottom .5s var(--ease);
 }
 .dock-scrim {
   position: fixed; inset: 0; z-index: -1;
@@ -217,7 +206,7 @@
 /* ================================================================ cookie */
 .cookie {
   position: fixed; left: clamp(16px, 3vw, 28px);
-  bottom: clamp(26px, 5vh, 48px);
+  bottom: calc(var(--pill-h) + clamp(20px, 4vh, 38px) + env(safe-area-inset-bottom, 0px));
   z-index: var(--z-cookie); width: min(90vw, 330px);
   padding: 1.1rem 1.2rem; border-radius: 16px;
   background: linear-gradient(180deg, rgba(28, 29, 33, .66), rgba(16, 17, 20, .72)); color: var(--ink-inv);

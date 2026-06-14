@@ -1,59 +1,84 @@
 <template>
   <div class="hero-glass" aria-hidden="true" ref="el">
-    <svg class="hero-glass__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" overflow="visible">
+    <!-- ambient glow halo behind the orb -->
+    <div class="hero-glass__halo"></div>
+    <svg class="hero-glass__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" overflow="visible">
       <defs>
-        <filter id="hg-refract" x="-30%" y="-30%" width="160%" height="160%"
-                color-interpolation-filters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.009"
-                        numOctaves="4" seed="14" result="nz"/>
-          <feDisplacementMap in="SourceGraphic" in2="nz"
-                             scale="52" xChannelSelector="R" yChannelSelector="G" result="disp"/>
-          <feGaussianBlur in="disp" stdDeviation="0.6" result="soft"/>
-          <feColorMatrix in="soft" type="matrix"
-            values="1.06 0 0 0 0  0 1.03 0 0 0  0 0 1.10 0 0  0 0 0 1 0"/>
+        <!-- glass refraction filter — displaces edges subtly -->
+        <filter id="hg-refract" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.014" numOctaves="3" seed="7" result="nz"/>
+          <feDisplacementMap in="SourceGraphic" in2="nz" scale="8" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
-        <radialGradient id="hg-shine" cx="36%" cy="28%" r="60%">
-          <stop offset="0%"   stop-color="rgba(255,255,255,0.30)"/>
-          <stop offset="38%"  stop-color="rgba(255,255,255,0.06)"/>
+        <!-- body gradient: slightly lighter at center, darker rim -->
+        <radialGradient id="hg-body" cx="42%" cy="38%" r="62%">
+          <stop offset="0%"   stop-color="rgba(255,255,255,0.09)"/>
+          <stop offset="55%"  stop-color="rgba(255,255,255,0.03)"/>
+          <stop offset="100%" stop-color="rgba(0,0,0,0.18)"/>
+        </radialGradient>
+        <!-- large specular catch on upper-left -->
+        <radialGradient id="hg-spec1" cx="30%" cy="22%" r="42%">
+          <stop offset="0%"   stop-color="rgba(255,255,255,0.72)"/>
+          <stop offset="22%"  stop-color="rgba(255,255,255,0.28)"/>
+          <stop offset="55%"  stop-color="rgba(255,255,255,0.04)"/>
           <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
         </radialGradient>
-        <radialGradient id="hg-depth" cx="64%" cy="72%" r="54%">
-          <stop offset="0%"   stop-color="rgba(5,8,12,0.52)"/>
+        <!-- secondary small highlight off-center -->
+        <radialGradient id="hg-spec2" cx="68%" cy="32%" r="18%">
+          <stop offset="0%"   stop-color="rgba(255,255,255,0.38)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <!-- caustic refraction spot — lower interior -->
+        <radialGradient id="hg-caustic" cx="58%" cy="74%" r="14%">
+          <stop offset="0%"   stop-color="rgba(255,240,210,0.55)"/>
+          <stop offset="100%" stop-color="rgba(255,240,210,0)"/>
+        </radialGradient>
+        <!-- depth shadow lower-right -->
+        <radialGradient id="hg-depth" cx="68%" cy="74%" r="60%">
+          <stop offset="0%"   stop-color="rgba(0,0,0,0.62)"/>
+          <stop offset="70%"  stop-color="rgba(0,0,0,0.22)"/>
+          <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+        </radialGradient>
+        <!-- brand warm tint (very subtle) -->
+        <radialGradient id="hg-brand" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="rgba(241,83,14,0.06)"/>
+          <stop offset="60%"  stop-color="rgba(201,155,90,0.03)"/>
           <stop offset="100%" stop-color="transparent"/>
         </radialGradient>
+        <!-- rim gradient: bright edge catch-light -->
         <radialGradient id="hg-rim" cx="50%" cy="50%" r="50%">
-          <stop offset="78%"  stop-color="transparent"/>
-          <stop offset="92%"  stop-color="rgba(255,255,255,0.06)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0.22)"/>
+          <stop offset="82%"  stop-color="transparent"/>
+          <stop offset="93%"  stop-color="rgba(255,255,255,0.10)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.42)"/>
         </radialGradient>
-        <radialGradient id="hg-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stop-color="rgba(241,83,14,0.04)"/>
-          <stop offset="70%"  stop-color="rgba(201,169,110,0.03)"/>
-          <stop offset="100%" stop-color="transparent"/>
+        <!-- inner rim: glass thickness -->
+        <radialGradient id="hg-rim-inner" cx="50%" cy="50%" r="50%">
+          <stop offset="86%"  stop-color="transparent"/>
+          <stop offset="94%"  stop-color="rgba(255,255,255,0.06)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.12)"/>
         </radialGradient>
-        <clipPath id="hg-clip">
-          <circle cx="200" cy="200" r="188"/>
-        </clipPath>
+        <clipPath id="hg-clip"><circle cx="250" cy="250" r="228"/></clipPath>
       </defs>
 
-      <!-- refraction lens — applies displacement to what's rendered beneath -->
-      <circle cx="200" cy="200" r="188"
-              fill="rgba(255,255,255,0.03)"
-              filter="url(#hg-refract)"/>
-      <!-- subtle warm glow from brand orange -->
-      <circle cx="200" cy="200" r="188" fill="url(#hg-glow)"/>
-      <!-- depth shadow lower-right -->
-      <circle cx="200" cy="200" r="188" fill="url(#hg-depth)"/>
-      <!-- upper-left specular shine -->
-      <circle cx="200" cy="200" r="188" fill="url(#hg-shine)"/>
-      <!-- rim highlight -->
-      <circle cx="200" cy="200" r="188" fill="url(#hg-rim)"/>
-      <!-- outer stroke ring -->
-      <circle cx="200" cy="200" r="190" fill="none"
-              stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
-      <!-- inner fine ring for glass thickness feel -->
-      <circle cx="200" cy="200" r="182" fill="none"
-              stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+      <!-- base body — slight translucency defines the sphere shape -->
+      <circle cx="250" cy="250" r="228" fill="url(#hg-body)"/>
+      <!-- brand tint -->
+      <circle cx="250" cy="250" r="228" fill="url(#hg-brand)"/>
+      <!-- depth shadow (lower-right darkening) -->
+      <circle cx="250" cy="250" r="228" fill="url(#hg-depth)"/>
+      <!-- large primary specular highlight (upper-left, the glass "window" reflection) -->
+      <circle cx="250" cy="250" r="228" fill="url(#hg-spec1)"/>
+      <!-- secondary highlight -->
+      <ellipse cx="338" cy="158" rx="55" ry="44" fill="url(#hg-spec2)"/>
+      <!-- caustic refraction spot -->
+      <circle cx="250" cy="250" r="228" fill="url(#hg-caustic)"/>
+      <!-- rim catch-light -->
+      <circle cx="250" cy="250" r="228" fill="url(#hg-rim)"/>
+      <!-- inner rim (glass thickness feel) -->
+      <circle cx="250" cy="250" r="218" fill="url(#hg-rim-inner)"/>
+      <!-- outer stroke — very subtle edge definition -->
+      <circle cx="250" cy="250" r="230" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+      <!-- tiny specular dot (pinpoint light source reflection) -->
+      <circle cx="182" cy="142" r="9" fill="rgba(255,255,255,0.82)" filter="url(#hg-refract)"/>
     </svg>
   </div>
 </template>
@@ -70,7 +95,7 @@ onMounted(() => {
     const dx = (e.clientX - cx) / cx
     const dy = (e.clientY - cy) / cy
     el.value.style.transform =
-      `translate(calc(-50% + ${(dx * 16).toFixed(2)}px), calc(-50% + ${(dy * 10).toFixed(2)}px))`
+      `translate(calc(-50% + ${(dx * 18).toFixed(2)}px), calc(-50% + ${(dy * 12).toFixed(2)}px))`
   }
   window.addEventListener('mousemove', move, { passive: true })
   onBeforeUnmount(() => window.removeEventListener('mousemove', move))
@@ -80,15 +105,26 @@ onMounted(() => {
 <style scoped>
 .hero-glass {
   position: absolute;
-  width: clamp(260px, 44vmin, 600px);
-  height: clamp(260px, 44vmin, 600px);
+  width: clamp(320px, 52vmin, 680px);
+  height: clamp(320px, 52vmin, 680px);
   left: 50%;
-  top: 44%;
+  top: 40%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 3;
-  transition: transform 1.1s cubic-bezier(.25, .46, .45, .94);
+  transition: transform 1.2s cubic-bezier(.25, .46, .45, .94);
   will-change: transform;
+}
+.hero-glass__halo {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%,
+    rgba(255,255,255,0.06) 0%,
+    rgba(241,83,14,0.04) 30%,
+    transparent 68%);
+  filter: blur(28px);
+  animation: hgFloat 9s ease-in-out infinite alternate;
 }
 .hero-glass__svg {
   width: 100%;
@@ -96,12 +132,13 @@ onMounted(() => {
   display: block;
   overflow: visible;
   animation: hgFloat 9s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 40px rgba(255,255,255,0.06)) drop-shadow(0 20px 60px rgba(0,0,0,0.45));
 }
 @keyframes hgFloat {
   from { transform: translateY(0); }
-  to   { transform: translateY(-22px); }
+  to   { transform: translateY(-24px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-glass { animation: none; }
+  .hero-glass__svg, .hero-glass__halo { animation: none; }
 }
 </style>
