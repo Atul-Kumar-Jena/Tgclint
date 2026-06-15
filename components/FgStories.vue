@@ -1,5 +1,5 @@
 <template>
-  <section ref="root" class="stories" data-theme="dark">
+  <section ref="root" class="stories" data-theme="light">
     <!-- marketing intro above the scroll track -->
     <div class="stories__intro container">
       <div class="stories__intro-head">
@@ -43,7 +43,7 @@
 
           <div class="stories__stage">
             <figure v-for="(t, i) in site.testimonials" :key="i" class="story" :data-active="i === active ? '' : null" :data-prev="i < active ? '' : null">
-              <span class="story__stars" aria-hidden="true">{{ '★'.repeat(t.rating || 5) }}</span>
+              <span class="story__stars" aria-hidden="true">"</span>
               <blockquote class="story__quote">{{ t.quote }}</blockquote>
               <figcaption class="story__by">
                 <span class="story__avatar">
@@ -107,7 +107,7 @@ onBeforeUnmount(() => { if (trig) trig.kill() })
 }
 .stories__intro-sub {
   margin: 1.4rem auto 0; max-width: 52ch;
-  color: var(--ink-inv-soft); font-size: var(--fs-lead); line-height: 1.4;
+  color: var(--fg-soft, var(--ink-soft)); font-size: var(--fs-lead); line-height: 1.4;
 }
 .stories__rating-inline {
   display: inline-flex; align-items: center; gap: .45rem;
@@ -123,14 +123,14 @@ onBeforeUnmount(() => { if (trig) trig.kill() })
   display: flex; align-items: center; gap: .6rem;
 }
 .stories__btn {
-  width: 40px; height: 40px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 8px;
   display: grid; place-items: center; flex: none;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
-  color: var(--ink-inv);
-  transition: background .3s var(--ease), transform .3s var(--ease);
+  background: transparent;
+  border: 1px solid var(--local-line, rgba(20,24,46,0.18));
+  color: var(--fg, var(--ink));
+  transition: background .3s var(--ease), border-color .3s var(--ease);
 }
-.stories__btn:hover { background: rgba(255,255,255,.18); transform: scale(1.08); }
+.stories__btn:hover { background: rgba(20,24,46,0.06); border-color: rgba(20,24,46,0.3); }
 .stories__btn:active { transform: scale(.94); transition-duration: .12s; }
 .stories__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
@@ -139,13 +139,13 @@ onBeforeUnmount(() => { if (trig) trig.kill() })
 }
 .stories__dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: rgba(255,255,255,.28);
+  background: rgba(20,24,46,0.22);
   border: none; padding: 0; flex: none;
   transition: background .35s var(--ease), transform .35s var(--ease), width .35s var(--ease);
   cursor: pointer;
 }
 .stories__dot.is-active {
-  background: var(--accent-warm);
+  background: var(--accent);
   width: 22px; border-radius: 4px; transform: none;
 }
 .stories__dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

@@ -70,6 +70,22 @@
 .card:hover .card__title { transform: translateX(4px); }
 .card__index { color: var(--local-muted, var(--muted)); font-size: .85rem; letter-spacing: .1em; flex: none; }
 .card__summary { margin-top: .5rem; color: var(--local-muted, var(--muted)); max-width: 42ch; }
+/* photo-card overlay: title lives inside the media, white on gradient */
+.card__overlay {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 1.1rem 1.2rem;
+  background: linear-gradient(to top, rgba(8,8,9,0.74) 0%, rgba(8,8,9,0.18) 48%, transparent 72%);
+  pointer-events: none;
+}
+.card--product .card__title {
+  color: #f0ede6; font-size: clamp(1.1rem, .7rem + 1.6vw, 1.8rem);
+  font-weight: 500; letter-spacing: -.015em;
+}
+.card--product .card__index {
+  color: rgba(240,237,230,0.55); font-size: .78rem; letter-spacing: .1em; flex: none;
+}
+.card--product:hover .card__title { transform: none; }
 .card__tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .75rem; }
 .card__tags span {
   font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
@@ -91,7 +107,7 @@
    seen before its entrance. Lifts upward like a sheet of glass. */
 .loader {
   position: fixed; inset: 0; z-index: var(--z-loader); display: grid; place-items: center;
-  background: #070707; color: var(--ink-inv); will-change: transform; overflow: hidden;
+  background: #f0ede6; color: #14182e; will-change: transform; overflow: hidden;
 }
 html:not(.js) .loader { display: none; }
 /* glass orb — animates in with the loading sequence */
@@ -99,10 +115,10 @@ html:not(.js) .loader { display: none; }
   position: absolute;
   width: clamp(240px, 50vmin, 560px); height: clamp(240px, 50vmin, 560px);
   border-radius: 50%;
-  border: 1px solid rgba(240,237,230,0.08);
+  border: 1px solid rgba(20,24,46,0.07);
   background:
-    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.09), transparent 56%),
-    radial-gradient(circle at 64% 70%, rgba(5,8,12,0.45), transparent 60%),
+    radial-gradient(circle at 36% 30%, rgba(20,24,46,0.05), transparent 56%),
+    radial-gradient(circle at 64% 70%, rgba(20,24,46,0.08), transparent 60%),
     radial-gradient(circle at 50% 50%, rgba(241,83,14,0.04), transparent 80%);
   left: 50%; top: 46%; transform: translate(-50%,-50%) scale(0.85);
   animation: loaderOrbIn 1.4s var(--ease-out) .08s both, loaderOrbFloat 5s 1.5s ease-in-out infinite alternate;
@@ -110,7 +126,7 @@ html:not(.js) .loader { display: none; }
 }
 .loader__orb::after {
   content: ""; position: absolute; inset: -1px; border-radius: 50%;
-  background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 45%);
+  background: radial-gradient(circle at 50% 0%, rgba(20,24,46,0.05), transparent 45%);
 }
 @keyframes loaderOrbIn { from{opacity:0;transform:translate(-50%,-50%)scale(.6)} to{opacity:1;transform:translate(-50%,-50%)scale(1)} }
 @keyframes loaderOrbFloat { from{transform:translate(-50%,-50%)translateY(0)} to{transform:translate(-50%,-50%)translateY(-16px)} }
@@ -127,14 +143,14 @@ html:not(.js) .loader { display: none; }
 .loader__wordmark {
   position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%);
   font-size: .62rem; letter-spacing: .44em; text-transform: uppercase;
-  color: rgba(240,237,230,0.28); white-space: nowrap;
+  color: rgba(20,24,46,0.42); white-space: nowrap;
   animation: loaderBrand 1s var(--ease-out) .45s both;
 }
 .loader__bar {
   position: absolute; bottom: 13%; left: 50%; transform: translateX(-50%);
-  width: min(42vw, 200px); height: 1px; background: rgba(240, 237, 230, .12); overflow: hidden;
+  width: min(42vw, 200px); height: 1px; background: rgba(20,24,46,0.12); overflow: hidden;
 }
-.loader__bar span { display: block; height: 100%; width: 100%; background: var(--ink-inv); transform: scaleX(0); transform-origin: left; }
+.loader__bar span { display: block; height: 100%; width: 100%; background: #14182e; transform: scaleX(0); transform-origin: left; }
 body.is-booting { overflow: hidden; }
 
 /* =========================================================== top hero bar */
@@ -151,13 +167,17 @@ body.is-booting { overflow: hidden; }
 
 /* ============================================================ testimonials */
 .story { max-width: 62ch; }
-.story__stars { display: block; color: var(--accent-warm); letter-spacing: .22em; font-size: 1.05rem; margin-bottom: 1.4rem; }
-.story__quote { font-size: clamp(1.55rem, .85rem + 2.8vw, 3.6rem); font-weight: 500; line-height: 1.14; letter-spacing: -.025em; }
-.story__by { display: flex; align-items: center; gap: 1rem; margin-top: 2.2rem; }
+.story__stars {
+  display: block; font-size: clamp(3.5rem, 2rem + 5vw, 6rem); line-height: .8;
+  color: var(--fg, var(--ink)); margin-bottom: 1rem; font-weight: 400; opacity: .75;
+  font-family: Georgia, serif;
+}
+.story__quote { font-size: clamp(1.8rem, .8rem + 4.2vw, 4.4rem); font-weight: 500; line-height: 1.12; letter-spacing: -.025em; }
+.story__by { display: flex; align-items: center; gap: 1rem; margin-top: 2.4rem; }
 .story__avatar {
-  position: relative; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex: none;
-  display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.28);
-  outline: 1px solid rgba(255,255,255,.12); outline-offset: 2px;
+  position: relative; width: 56px; height: 56px; border-radius: 8px; overflow: hidden; flex: none;
+  display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  outline: 1px solid var(--local-line, rgba(20,24,46,0.14)); outline-offset: 2px;
 }
 .story__initials {
   position: absolute; inset: 0; display: grid; place-items: center;

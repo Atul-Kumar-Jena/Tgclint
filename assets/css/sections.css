@@ -114,7 +114,7 @@ body.is-loaded .hero__scroll { opacity: 1; }
 .showroom__addr { color: var(--ink-inv-soft); margin: 1.2rem 0 1.8rem; font-style: normal; line-height: 1.7; }
 
 /* =============================================================== stories */
-.stories { background: var(--bg-dark); color: var(--ink-inv); position: relative; }
+.stories { position: relative; }
 .stories__track { position: relative; height: 360vh; }
 .stories__sticky {
   position: sticky; top: 0; height: 100svh;
@@ -128,10 +128,10 @@ body.is-loaded .hero__scroll { opacity: 1; }
   display: flex; justify-content: space-between; align-items: center;
   padding-top: clamp(2rem, 4vh, 3rem);
   padding-bottom: clamp(1.2rem, 2.5vh, 2rem);
-  border-bottom: 1px solid var(--line-inv);
+  border-bottom: 1px solid var(--local-line, rgba(20,24,46,0.14));
 }
 .stories__counter { font-size: clamp(.88rem, 1.6vw, 1.2rem); letter-spacing: .12em; font-variant-numeric: tabular-nums; }
-.stories__counter b { font-weight: 600; color: var(--ink-inv); }
+.stories__counter b { font-weight: 600; color: var(--fg, var(--ink)); }
 .stories__rating { display: none; } /* now inside intro block */
 /* stage fills the remaining space */
 .stories__stage { position: relative; flex: 1; min-height: 0; }

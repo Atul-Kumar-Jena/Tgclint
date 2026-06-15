@@ -33,7 +33,7 @@
 
 /* =============================================================== ≤768px */
 @media (max-width: 768px) {
-  :root { --pad-y: clamp(4rem, 9vh, 7rem); --sheet-r: 22px; }
+  :root { --pad-y: clamp(3rem, 6vh, 5rem); --sheet-r: 22px; }
   /* lighter compositing for small GPUs: drop grain, ease the blurs */
   .grain { display: none; }
   .dock { -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%); }
@@ -44,7 +44,7 @@
   .projects__grid .card:nth-child(even) { margin-top: 0; }
   .collection__grid { grid-template-columns: 1fr 1fr; }
   .quote__grid { grid-template-columns: 1fr; }
-  .stories__track { height: 320vh; }
+  .stories__track { height: 280vh; }
   .dock__foot { flex-direction: column; }
   .dock__contact { text-align: left; }
   /* project hero title can sit flush against the container edge on mobile */

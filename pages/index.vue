@@ -46,9 +46,13 @@
         </div>
         <div class="collection__grid">
           <NuxtLink v-for="(p, i) in site.products" :key="p.key" class="card card--product reveal" :to="`/collection#${p.key}`" data-hover data-cursor="explore" :style="`--i:${i}`">
-            <div class="card__media" data-parallax-wrap><div data-parallax><Scene type="product" :variant="p.tint" :uid="`prod-${p.key}`" /></div></div>
-            <div class="card__row"><h3 class="card__title">{{ p.name }}</h3><span class="card__index">0{{ i + 1 }}</span></div>
-            <p class="card__summary">{{ p.summary }}</p>
+            <div class="card__media" data-parallax-wrap>
+              <div data-parallax><Scene type="product" :variant="p.tint" :uid="`prod-${p.key}`" /></div>
+              <div class="card__overlay">
+                <h3 class="card__title">{{ p.name }}</h3>
+                <span class="card__index">0{{ i + 1 }}</span>
+              </div>
+            </div>
           </NuxtLink>
         </div>
         <div style="margin-top:clamp(2rem,4vw,3rem)" class="reveal"><Btn label="All services" to="/collection" variant="ghost" /></div>
