@@ -1,5 +1,5 @@
 <template>
-  <section class="section cta" data-theme="dark">
+  <section class="section cta" data-theme="light">
     <div class="container">
       <h2 class="cta__title" data-split>From your plot<br>to your front door</h2>
       <div class="cta__buttons reveal">

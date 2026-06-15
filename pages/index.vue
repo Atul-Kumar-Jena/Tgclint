@@ -71,31 +71,23 @@
       </div>
     </section>
 
-    <section class="hscroll" data-hscroll data-theme="dark">
-      <div class="hscroll__sticky">
-        <div class="container hscroll__head">
-          <p class="eyebrow">Featured projects</p>
-          <p class="hscroll__count" data-hscroll-count>01 / 0{{ site.projects.length + 1 }}</p>
+    <section class="section proj-list" data-theme="light">
+      <div class="container">
+        <div class="proj-list__head">
+          <p class="eyebrow">Featured Projects</p>
+          <h2 class="proj-list__title" data-split>Each project tells<br>its own story.</h2>
+          <div class="reveal"><Btn label="All projects" to="/projects" /></div>
         </div>
-        <div class="container"><div class="hscroll__progress" data-hscroll-progress><span /></div></div>
-        <div class="hscroll__viewport">
-          <div class="hscroll__track" data-hscroll-track>
-            <article v-for="(p, i) in site.projects" :key="p.slug" class="hscroll__panel hscroll__panel--portfolio">
-              <NuxtLink :to="`/projects/${p.slug}`" data-hover data-cursor="explore">
-                <div class="hscroll__media">
-                  <div class="hscroll__layer"><Scene type="house" :variant="p.scene" :uid="`hs-${p.slug}`" /></div>
-                  <div class="hscroll__cap">
-                    <div class="hscroll__row"><span>0{{ i + 1 }}</span><span>{{ p.location }}</span></div>
-                    <h3 class="hscroll__name">{{ p.name }}</h3>
-                    <div class="card__tags"><span v-for="t in p.tags" :key="t">{{ t }}</span></div>
-                  </div>
-                </div>
-              </NuxtLink>
-            </article>
-            <article class="hscroll__panel hscroll__panel--end">
-              <div class="hscroll__end"><p class="eyebrow">All developments</p><h3 class="hscroll__name">Explore every<br>project.</h3><Btn label="All projects" to="/projects" variant="light" /></div>
-            </article>
-          </div>
+        <div class="proj-list__table">
+          <NuxtLink v-for="(p, i) in site.projects" :key="p.slug" :to="`/projects/${p.slug}`" class="proj-list__row reveal" data-hover>
+            <span class="proj-list__num">0{{ i + 1 }}</span>
+            <h3 class="proj-list__name">{{ p.name }}</h3>
+            <span class="proj-list__loc">{{ p.location }}</span>
+            <span class="proj-list__tags">
+              <span v-for="t in p.tags.slice(0, 2)" :key="t">{{ t }}</span>
+            </span>
+            <span class="proj-list__arr" aria-hidden="true">&#8599;</span>
+          </NuxtLink>
         </div>
       </div>
     </section>

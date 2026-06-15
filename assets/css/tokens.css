@@ -38,7 +38,7 @@
   --maxw: 1560px;
   --maxw-text: 64ch;
   --pad-x: clamp(1.5rem, 6.5vw, 8.5rem);
-  --pad-y: clamp(6rem, 14vh, 16rem);
+  --pad-y: clamp(9rem, 18vh, 22rem);
   --gap: clamp(1.5rem, 2.6vw, 2.75rem);
   --radius: 14px;
   --radius-lg: 22px;
