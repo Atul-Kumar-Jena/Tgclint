@@ -258,6 +258,28 @@ export function usePageMotion() {
     })
 
     ST.refresh()
+
+    // Safety net — after a page transition the first reveal measurement can land
+    // while the incoming card is still settling, leaving above-the-fold story beats
+    // (notably the split hero heading) stuck in their hidden state. Re-assert every
+    // in-view reveal on the next frames and once more after the card lands, so the
+    // new page always arrives fully composed (idempotent: only touches still-hidden,
+    // in-view elements).
+    const settleReveals = () => {
+      if (disposed) return
+      const vh2 = window.innerHeight
+      const within = (el: HTMLElement) => el.getBoundingClientRect().top < vh2 * 0.95
+      document.querySelectorAll<HTMLElement>('[data-split], .clip-reveal').forEach((el) => {
+        if (!el.classList.contains('is-in') && within(el)) el.classList.add('is-in')
+      })
+      gsap.utils.toArray('.reveal:not(.card), .card.reveal, [data-fade]').forEach((el: any) => {
+        if (within(el) && parseFloat(getComputedStyle(el).opacity) < 0.02) {
+          gsap.to(el, { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.72, ease: 'expo.out' })
+        }
+      })
+    }
+    requestAnimationFrame(() => requestAnimationFrame(settleReveals))
+    gsap.delayedCall(0.3, settleReveals)
   }
 
   onBeforeUnmount(() => { disposed = true; if (ctx) ctx.revert() })

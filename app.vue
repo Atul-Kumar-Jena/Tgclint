@@ -117,6 +117,11 @@ const pageTransition = {
     })
       .to(el, { y: 0, duration: 0.66, ease: 'expo.out' }, 0)
       .to(el, { borderRadius: '0px', duration: 0.28, ease: 'power2.out' }, 0.42)
+      // release the page reveals while the card is still rising, so the new page
+      // arrives already composing in (rich, fluid.glass-style) instead of sliding up
+      // blank and only filling after it lands. The motion safety-net re-asserts any
+      // above-the-fold beat once the card settles.
+      .call(() => { hold.value = false }, [], 0.4)
   },
   onAfterEnter: () => {
     const l = nuxtApp.$lenis

@@ -45,8 +45,8 @@
   --radius-pill: 100px;
 
   /* type */
-  --font: "Schibsted Grotesk", "Hanken Grotesk", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-display: "Archivo", "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font: "Schibsted Grotesk Variable", "Schibsted Grotesk", "Hanken Grotesk", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Archivo Variable", "Archivo", "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
   --fs-eyebrow: clamp(.72rem, .82vw, .82rem);
   --fs-body: clamp(1rem, .55rem + .55vw, 1.18rem);
   --fs-lead: clamp(1.1rem, .9rem + .55vw, 1.45rem);
@@ -95,13 +95,16 @@
   background: var(--bg);
   color: var(--fg);
 }
+/* "light" is now the ELEVATED dark surface — a warm charcoal that lifts off the
+   near-black dark sections, giving a subtle two-tone cinematic chapter rhythm
+   while the whole site reads full-dark (the original fluid.glass intent). */
 [data-theme="light"] {
-  --bg: #f0ede6;                        /* fluid.glass warm cream */
-  --fg: #14182e;                        /* dark navy text */
-  --fg-soft: rgba(20,24,46,0.62);
-  --local-muted: rgba(20,24,46,0.42);
-  --local-line: rgba(20,24,46,0.14);
-  --on-dark: 0;
+  --bg: #15140f;                        /* warm elevated charcoal (was cream) */
+  --fg: #f0ede6;                        /* warm white */
+  --fg-soft: rgba(240,237,230,0.64);
+  --local-muted: rgba(240,237,230,0.42);
+  --local-line: rgba(240,237,230,0.12);
+  --on-dark: 1;
   background: var(--bg);
   color: var(--fg);
 }
