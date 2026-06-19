@@ -1,0 +1,65 @@
+/* ============================================================================
+   DESIGN SYSTEM — TOKENS
+   Framework-agnostic foundation: colour, type, easing, spacing, glass.
+   Drop into any project and build your own layouts on top.
+
+   Aesthetic lineage: the "fluid glass" editorial look. The original uses the
+   licensed Aeonik Pro/Mono — substitute any neutral grotesque + mono, or
+   license Aeonik (https://www.fontshare.com/fonts/aeonik).
+   ========================================================================== */
+:root {
+  /* ---- palette ---- */
+  --color-black: #0b1012;
+  --color-white: #ffffff;
+  --color-cream: #f3f0ec;
+  --color-taupe: #d4cec6;
+  --color-grey:  #212325;
+
+  /* ---- fonts (swap in Aeonik or your preferred grotesque + mono) ---- */
+  --font-sans: "Aeonik Pro", "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "Aeonik Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* ---- fluid sizing -------------------------------------------------------
+     Redefine the root unit so every rem scales with the viewport.
+     1rem ≈ 10px at the reference width; everything grows/shrinks together. */
+  --size: 1600;                               /* desktop reference width */
+  --font-s: calc((100vw / var(--size)) * 10);
+
+  /* ---- easing curves ---- */
+  --ease-in-out-quart: cubic-bezier(.77, 0, .175, 1);
+  --ease-in-out-cubic: cubic-bezier(.645, .045, .355, 1);
+  --ease-in-out-quad:  cubic-bezier(.455, .03, .515, .955);
+  --ease-out-quart:    cubic-bezier(.165, .84, .44, 1);
+  --ease-out-cubic:    cubic-bezier(.215, .61, .355, 1);
+  --ease-out-quad:     cubic-bezier(.25, .46, .45, .94);
+  --ease-none:         cubic-bezier(.25, .25, .75, .75);
+
+  /* ---- spacing scale ---- */
+  --space-2xs: .5rem;
+  --space-xs:  1rem;
+  --space-s:   1.5rem;
+  --space-m:   2rem;
+  --space-l:   3rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+  --space-4xl: 12rem;
+
+  /* ---- glass ---- */
+  --glass-blur:       2rem;
+  --glass-dark:       color-mix(in srgb, var(--color-black) 80%, transparent);
+  --glass-light:      color-mix(in srgb, var(--color-white) 20%, transparent);
+  --glass-edge-dark:  color-mix(in srgb, var(--color-white) 10%, transparent);
+  --glass-edge-light: color-mix(in srgb, var(--color-grey)  10%, transparent);
+
+  /* ---- borders ---- */
+  --line:         color-mix(in srgb, var(--color-grey)  20%, transparent);
+  --line-on-dark: color-mix(in srgb, var(--color-white) 12%, transparent);
+}
+
+@media (max-width: 600px) {
+  :root { --size: 375; }                      /* mobile reference width */
+}
+
+/* apply the fluid unit at the root so all rem values scale with the viewport */
+html { font-size: var(--font-s); }

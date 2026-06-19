@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design System — Reference</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    section { padding: var(--space-3xl) 0; }
+    .stack > * + * { margin-top: var(--space-m); }
+    .row { display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center; }
+    .swatches { display: flex; gap: var(--space-s); flex-wrap: wrap; margin-top: var(--space-l); }
+    .swatch { width: 14rem; height: 14rem; border-radius: .8rem; border: 1px solid var(--line);
+              display: flex; align-items: flex-end; padding: 1.2rem; font-family: var(--font-mono); font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- TYPE -->
+  <section class="container is-cream">
+    <p class="section-title">Design system</p>
+    <div class="stack" style="margin-top: var(--space-l)">
+      <h1 class="h1">Heading one, set in a regular weight.</h1>
+      <h2 class="h2">Heading two for sections.</h2>
+      <h3 class="h3">Subsection heading.</h3>
+      <p class="text" style="max-width: 60rem">Body copy sits at a comfortable measure. Replace everything here with your
+        own content — the system gives you the type, colour, spacing and motion; the layout is yours to build.</p>
+      <p class="caption">Caption / metadata label</p>
+    </div>
+  </section>
+
+  <!-- COLOUR -->
+  <section class="container">
+    <p class="section-title">Colour</p>
+    <div class="swatches">
+      <div class="swatch is-cream">Cream&nbsp;#f3f0ec</div>
+      <div class="swatch is-grey">Grey&nbsp;#212325</div>
+      <div class="swatch is-dark">Black&nbsp;#0b1012</div>
+      <div class="swatch" style="background: var(--color-taupe)">Taupe&nbsp;#d4cec6</div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="container is-grey">
+    <p class="section-title" style="color: var(--color-white)">Buttons &amp; links</p>
+    <div class="row" style="margin-top: var(--space-l)">
+      <a class="btn btn--solid">Solid button</a>
+      <a class="btn btn--glass">Glass button</a>
+      <a class="btn btn--text" style="color: var(--color-white)">Text button</a>
+      <a class="link" href="#" style="color: var(--color-white)">Animated underline link</a>
+    </div>
+  </section>
+
+  <!-- MOTION -->
+  <section class="container is-cream">
+    <p class="section-title">Line-mask reveal — click to replay</p>
+    <h2 class="h2" id="reveal" style="margin-top: var(--space-l); cursor: pointer">
+      <span class="line-mask"><span class="line">Each line is masked</span></span>
+      <span class="line-mask"><span class="line">and rises into place.</span></span>
+    </h2>
+  </section>
+
+  <script>
+    // replay the line-mask reveal on load and on click (real projects use an
+    // IntersectionObserver to add .is-in when the element scrolls into view)
+    const el = document.getElementById('reveal');
+    const play = () => { el.classList.remove('is-in'); requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('is-in'))); };
+    play();
+    el.addEventListener('click', play);
+  </script>
+</body>
+</html>
