@@ -1,190 +1,180 @@
-/* Fluid Glass — interactions
-   - Lenis smooth scroll (progressive enhancement; falls back to native)
-   - lazy-image fade-in via IntersectionObserver
-   - reveal-on-scroll
-   - bottom nav bar + mobile menu
-   - scrollspy active link
-   - product detail modal
-   - dynamic year
+/* Fluid Glass — interactions (faithful fluid.glass behaviours)
+   intro splash · custom cursor · cookie banner · capsule menu · header title ·
+   Lenis smooth scroll · lazy images · reveals · scrollspy · product modal · year
 */
 (function () {
   'use strict';
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canHover = window.matchMedia('(hover: hover)').matches;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---- intro splash (once per session) ------------------------------- */
+  function initIntro() {
+    var intro = document.querySelector('.intro');
+    if (!intro) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem('fg_intro') === '1'; } catch (e) {}
+    if (seen || reduceMotion) { intro.classList.add('is-hidden'); intro.setAttribute('aria-hidden', 'true'); return; }
+    window.setTimeout(function () {
+      intro.classList.add('is-hidden');
+      intro.setAttribute('aria-hidden', 'true');
+      try { sessionStorage.setItem('fg_intro', '1'); } catch (e) {}
+    }, 2300);
+  }
 
-  /* ---- Lenis smooth scroll (optional, loaded from CDN) ---------------- */
+  /* ---- custom cursor -------------------------------------------------- */
+  function initCursor() {
+    var cursor = document.querySelector('.cursor');
+    if (!cursor || !canHover || reduceMotion) { if (cursor) cursor.remove(); return; }
+    var label = cursor.querySelector('.label');
+    var x = 0, y = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', function (e) { x = e.clientX; y = e.clientY; });
+    function raf() { cx += (x - cx) * 0.18; cy += (y - cy) * 0.18;
+      cursor.style.transform = 'translate(' + (cx - 0) + 'px,' + (cy - 0) + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    document.querySelectorAll('a, button, [data-cursor]').forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        cursor.classList.add('is-visible');
+        if (label) label.textContent = el.getAttribute('data-cursor') || 'View';
+      });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('is-visible'); });
+    });
+  }
+
+  /* ---- cookie banner -------------------------------------------------- */
+  function initCookies() {
+    var c = document.querySelector('.cookies');
+    if (!c) return;
+    var done;
+    try { done = localStorage.getItem('fg_cookies'); } catch (e) {}
+    if (done) return;
+    window.setTimeout(function () { c.classList.add('is-visible'); }, 1400);
+    c.querySelectorAll('[data-cookie]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        try { localStorage.setItem('fg_cookies', b.getAttribute('data-cookie')); } catch (e) {}
+        c.classList.remove('is-visible');
+      });
+    });
+  }
+
+  /* ---- capsule menu (header + overlay) ------------------------------- */
+  var header = document.querySelector('.header');
+  var menuToggle = document.querySelector('.header .burger');
+  var menuClose = document.querySelector('.header .close');
+
+  function setMenu(open) {
+    document.body.classList.toggle('is-menu', open);
+    if (header) header.classList.toggle('is-menu', open);
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', String(open));
+    if (window.__lenis) { open ? window.__lenis.stop() : window.__lenis.start(); }
+  }
+  function initMenu() {
+    if (header) header.addEventListener('click', function (e) {
+      // clicking the capsule (not the logo link) toggles the menu
+      if (e.target.closest('.logo')) return;
+      setMenu(!document.body.classList.contains('is-menu'));
+    });
+    if (menuClose) menuClose.addEventListener('click', function (e) { e.stopPropagation(); setMenu(false); });
+    document.querySelectorAll('.menu .link').forEach(function (l) {
+      l.addEventListener('click', function () { setMenu(false); });
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  /* ---- header centre title: brand ↔ active section -------------------- */
+  function initHeaderTitle() {
+    var inner = document.querySelector('.header .title-inner');
+    if (!inner) return;
+    var base = inner.getAttribute('data-base') || inner.textContent.trim();
+    var sections = [].slice.call(document.querySelectorAll('section[data-name]'));
+    if (!sections.length || !('IntersectionObserver' in window)) return;
+    var current = base;
+    function set(t) { if (t === current) return; current = t; inner.style.opacity = '0';
+      window.setTimeout(function () { inner.textContent = t; inner.style.opacity = '1'; }, 200); }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) set(en.target.getAttribute('data-name') || base); });
+    }, { rootMargin: '-50% 0px -49% 0px' });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  /* ---- Lenis smooth scroll ------------------------------------------- */
   function initLenis() {
     if (reduceMotion || typeof window.Lenis !== 'function') return;
-    const lenis = new window.Lenis({ duration: 1.1, smoothWheel: true });
+    var lenis = new window.Lenis({ duration: 1.1, smoothWheel: true });
     window.__lenis = lenis;
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
-
-    // anchor links route through Lenis (modal triggers handle their own clicks)
-    document.querySelectorAll('a[href^="#"]:not([data-modal])').forEach((a) => {
-      a.addEventListener('click', (e) => {
-        const id = a.getAttribute('href');
-        if (id.length < 2) return;
-        const target = document.querySelector(id);
-        if (!target) return;
-        e.preventDefault();
-        lenis.scrollTo(target, { offset: 0 });
-        closeNav();
+    document.querySelectorAll('a[href^="#"]:not([data-modal])').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href'); if (id.length < 2) return;
+        var target = document.querySelector(id); if (!target) return;
+        e.preventDefault(); lenis.scrollTo(target, { offset: 0 }); setMenu(false);
       });
     });
   }
 
   /* ---- lazy images ---------------------------------------------------- */
   function initLazyImages() {
-    const imgs = document.querySelectorAll('img.lazy-image');
-    const mark = (img) => {
+    var imgs = document.querySelectorAll('img.lazy-image');
+    function mark(img) {
       if (img.complete && img.naturalWidth > 0) img.classList.add('loaded');
-      else img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
-      img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
-    };
+      else img.addEventListener('load', function () { img.classList.add('loaded'); }, { once: true });
+      img.addEventListener('error', function () { img.classList.add('loaded'); }, { once: true });
+    }
     if (!('IntersectionObserver' in window)) { imgs.forEach(mark); return; }
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) { mark(en.target); obs.unobserve(en.target); }
-      });
+    var io = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (en) { if (en.isIntersecting) { mark(en.target); obs.unobserve(en.target); } });
     }, { rootMargin: '200px' });
-    imgs.forEach((img) => io.observe(img));
+    imgs.forEach(function (img) { io.observe(img); });
   }
 
-  /* ---- reveal on scroll ----------------------------------------------- */
+  /* ---- reveal on scroll ---------------------------------------------- */
   function initReveal() {
-    const els = document.querySelectorAll('.reveal');
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      els.forEach((el) => el.classList.add('in'));
-      return;
-    }
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
-      });
+    var els = document.querySelectorAll('.reveal');
+    if (reduceMotion || !('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); } });
     }, { threshold: 0.12 });
-    els.forEach((el) => io.observe(el));
+    els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---- header + nav --------------------------------------------------- */
-  const header = document.querySelector('.site-header');
-  const nav = document.querySelector('.nav');
-  const toggle = document.querySelector('.nav-toggle');
-
-  function closeNav() {
-    if (nav) nav.classList.remove('open');
-    if (header) header.classList.remove('menu-open');
-    if (toggle) toggle.setAttribute('aria-expanded', 'false');
-  }
-
-  function initNav() {
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        if (header) header.classList.toggle('menu-open', open);
-        toggle.setAttribute('aria-expanded', String(open));
-      });
-    }
-  }
-
-  /* ---- product detail modal ------------------------------------------- */
+  /* ---- product detail modal ------------------------------------------ */
   function initModal() {
-    const modal = document.getElementById('product-modal');
+    var modal = document.getElementById('product-modal');
     if (!modal) return;
-    const imgEl = modal.querySelector('#modal-img');
-    const idxEl = modal.querySelector('#modal-index');
-    const titleEl = modal.querySelector('#modal-title');
-    const descEl = modal.querySelector('#modal-desc');
-    const specsEl = modal.querySelector('#modal-specs');
-    let lastFocused = null;
-
-    function openModal(t) {
-      lastFocused = t;
-      imgEl.src = t.dataset.img || '';
-      imgEl.alt = t.dataset.title || '';
-      idxEl.textContent = t.dataset.index || '';
-      titleEl.textContent = t.dataset.title || '';
-      descEl.textContent = t.dataset.desc || '';
-      specsEl.innerHTML = '';
-      (t.dataset.specs || '').split('|').forEach((s) => {
-        if (!s.trim()) return;
-        const li = document.createElement('li');
-        li.textContent = s.trim();
-        specsEl.appendChild(li);
-      });
-      modal.hidden = false;
-      document.documentElement.style.overflow = 'hidden';
+    var imgEl = modal.querySelector('#modal-img'), idxEl = modal.querySelector('#modal-index'),
+        titleEl = modal.querySelector('#modal-title'), descEl = modal.querySelector('#modal-desc'),
+        specsEl = modal.querySelector('#modal-specs'); var last = null;
+    function open(t) {
+      last = t; imgEl.src = t.dataset.img || ''; imgEl.alt = t.dataset.title || '';
+      idxEl.textContent = t.dataset.index || ''; titleEl.textContent = t.dataset.title || '';
+      descEl.textContent = t.dataset.desc || ''; specsEl.innerHTML = '';
+      (t.dataset.specs || '').split('|').forEach(function (s) { if (!s.trim()) return;
+        var li = document.createElement('li'); li.textContent = s.trim(); specsEl.appendChild(li); });
+      modal.hidden = false; document.documentElement.style.overflow = 'hidden';
       if (window.__lenis) window.__lenis.stop();
-      requestAnimationFrame(() => modal.classList.add('open'));
-      const cb = modal.querySelector('.modal-close');
-      if (cb) cb.focus();
+      requestAnimationFrame(function () { modal.classList.add('open'); });
+      var cb = modal.querySelector('.modal-close'); if (cb) cb.focus();
     }
-    function closeModal() {
-      modal.classList.remove('open');
-      document.documentElement.style.overflow = '';
+    function close() {
+      modal.classList.remove('open'); document.documentElement.style.overflow = '';
       if (window.__lenis) window.__lenis.start();
-      window.setTimeout(() => { modal.hidden = true; }, 450);
-      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      window.setTimeout(function () { modal.hidden = true; }, 450);
+      if (last && last.focus) last.focus();
     }
-
-    document.querySelectorAll('[data-modal]').forEach((t) => {
-      t.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        openModal(t);
-      });
+    document.querySelectorAll('[data-modal]').forEach(function (t) {
+      t.addEventListener('click', function (e) { e.preventDefault(); e.stopImmediatePropagation(); open(t); });
     });
-    // close on backdrop, X, or the CTA (CTA still navigates to #contact)
-    modal.querySelectorAll('[data-modal-close]').forEach((el) => {
-      el.addEventListener('click', () => closeModal());
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.hidden) closeModal();
-    });
+    modal.querySelectorAll('[data-modal-close]').forEach(function (el) { el.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
   }
 
-  /* ---- scrollspy: highlight the nav link of the section in view ------- */
-  function initScrollSpy() {
-    const links = [...document.querySelectorAll('.nav-links a[href^="#"]')];
-    const map = new Map();
-    links.forEach((l) => {
-      const id = l.getAttribute('href').slice(1);
-      const sec = document.getElementById(id);
-      if (sec) map.set(sec, l);
-    });
-    if (!map.size || !('IntersectionObserver' in window)) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) {
-          links.forEach((l) => l.classList.remove('is-active'));
-          const link = map.get(en.target);
-          if (link) link.classList.add('is-active');
-        }
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    map.forEach((_, sec) => io.observe(sec));
-  }
-
-  /* ---- year ----------------------------------------------------------- */
-  function initYear() {
-    document.querySelectorAll('[data-year]').forEach((el) => {
-      el.textContent = String(new Date().getFullYear());
-    });
-  }
+  function initYear() { document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = String(new Date().getFullYear()); }); }
 
   function init() {
-    initLazyImages();
-    initReveal();
-    initNav();
-    initScrollSpy();
-    initModal();
-    initYear();
-    initLenis();
+    initIntro(); initCursor(); initCookies(); initMenu(); initHeaderTitle();
+    initLazyImages(); initReveal(); initModal(); initYear(); initLenis();
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
