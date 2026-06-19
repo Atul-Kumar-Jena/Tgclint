@@ -79,6 +79,12 @@
       l.addEventListener('click', function () { setMenu(false); });
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+    // click anywhere outside the capsule/menu closes it
+    document.addEventListener('click', function (e) {
+      if (!document.body.classList.contains('is-menu')) return;
+      if (e.target.closest('.menu') || e.target.closest('.header')) return;
+      setMenu(false);
+    });
   }
 
   /* ---- header centre title: brand ↔ active section -------------------- */

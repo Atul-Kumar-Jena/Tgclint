@@ -7,6 +7,16 @@
    responsive · reduced-motion.
    ========================================================================= */
 
+/* ---- fonts: the Fontshare <link> loads the "Satoshi" + "JetBrains Mono"
+   web families. Point the Aeonik vars straight at them (the old
+   @font-face local('Satoshi') trick failed — local() can't see web fonts,
+   so everything was falling back to a system sans). ---------------------- */
+:root {
+  --font-f-aeonik-pro: "Satoshi", "Aeonik Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-f-aeonik-mono: "JetBrains Mono", "Aeonik Mono", "SF Mono", "Fira Code", monospace;
+}
+body { font-family: var(--font-f-aeonik-pro); }
+
 /* ---- fluid type: design-system gives --size 1600 / 375. Add a tablet
    midpoint so 600–1024px isn't tiny. -------------------------------------- */
 @media (min-width: 601px) and (max-width: 1024px) { :root { --size: 1100; } }
@@ -212,7 +222,7 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
   width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); }
 .home-header .background::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(11,16,18,.45), rgba(11,16,18,.05) 35%, rgba(11,16,18,.6)); }
-.home-header .container { position: relative; z-index: 1; padding-bottom: 6rem; display: grid; gap: 3rem; }
+.home-header .container { position: relative; z-index: 1; padding-bottom: 11rem; display: grid; gap: 3rem; }
 .home-header .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 4rem; flex-wrap: wrap; }
 .home-header .base-heading {
   font-family: var(--font-f-aeonik-pro); font-weight: 400;
@@ -391,7 +401,7 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
 /* =========================================================================
    Generic sub-page hero + prose
    ========================================================================= */
-.page-hero { position: relative; padding: 22rem 4rem 8rem; background: var(--color-cream); }
+.page-hero { position: relative; padding: 15rem 4rem 6rem; background: var(--color-cream); }
 .page-hero .eyebrow { color: var(--color-grey); margin-bottom: 2.4rem; }
 .page-hero h1 { font-family: var(--font-f-aeonik-pro); font-weight: 400;
   font-size: clamp(4rem, 7vw, 8rem); line-height: 1; letter-spacing: -.03em; color: var(--color-black); max-width: 16ch; }
@@ -438,7 +448,7 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
   .section { padding-top: 8rem; padding-bottom: 8rem; }
   .header { bottom: 3rem; }
   .page-header { padding: 2rem; }
-  .home-header .container { padding-bottom: 4rem; }
+  .home-header .container { padding-bottom: 12rem; }
   .home-header .row { flex-direction: column; align-items: flex-start; }
   .product-grid, .projects-grid, .assets-duo, .two-col, .contact-grid, .stats { grid-template-columns: 1fr; }
   .assets-duo .figure.tall { grid-row: auto; }
@@ -446,13 +456,13 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
   .product-card, .product-card.tall { aspect-ratio: 4/4.2; }
   .news-grid { grid-template-columns: 1fr; }
   .banner .inner, .page-hero { padding-left: 2rem; padding-right: 2rem; }
-  .page-hero { padding-top: 16rem; }
+  .page-hero { padding-top: 11rem; padding-bottom: 4rem; }
   .menu { width: 32rem; padding: 5rem 4rem 4rem; bottom: 9rem; }
   .menu .sub { columns: 1; }
   .footer .inner { padding: 6rem 2rem calc(4rem + 8rem); }
   .footer .top { grid-template-columns: 1fr; }
   .footer .bottom { flex-direction: column; align-items: flex-start; }
-  .cookies { right: 1rem; left: 1rem; bottom: 1rem; width: auto; }
+  .cookies { right: 1rem; left: 1rem; bottom: 10rem; width: auto; }
   .modal { padding: 0; }
   .modal-panel { grid-template-columns: 1fr; max-height: 100svh; height: 100svh; width: 100%; }
   .modal-media { min-height: 30svh; }

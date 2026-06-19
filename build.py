@@ -182,9 +182,16 @@ def modal():
   </div>"""
 
 
-def page(title, desc, body, title_text, active, with_modal=False, page_header=None):
-    ph = page_header if page_header is not None else ""
-    return (head(title, desc) + intro() + cursor() + cookies() + ph + header(title_text) +
+def page_header_bar(label, variant):
+    cls = "page-header" + ("" if variant == "white" else " is-dark")
+    return (f'<section class="{cls}"><a class="logo" href="{BASE}">'
+            f'<span class="mark"></span>Fluid&nbsp;Glass</a><h1>{label}</h1>'
+            f'<a class="base-button is-alpha" href="contact/">Get a quote</a></section>')
+
+
+def page(title, desc, body, title_text, active, with_modal=False, ph="dark", label=None):
+    bar = page_header_bar(label or title_text, ph)
+    return (head(title, desc) + intro() + cursor() + cookies() + bar + header(title_text) +
             menu(active) + body + (modal() if with_modal else "") + footer() + scripts())
 
 
@@ -236,7 +243,7 @@ def product_cards():
 # ===================== HOME =====================
 home_body = f"""
   <main>
-    <section class="home-header" data-name="Home">
+    <section class="home-header" data-name="Fluid Glass">
       <div class="background"><img class="lazy-image" src="assets/images/hero-bg.jpg" alt="Black-clad rural house with full-height structural glazing over a meadow" /></div>
       <div class="container">
         <div class="row">
@@ -317,11 +324,9 @@ home_body = f"""
       </div>
     </section>
   </main>"""
-HOME_PH = f'<section class="page-header"><a class="logo" href="{BASE}"><span class="mark"></span>Fluid Glass</a><h1>Fluid Glass</h1><a class="base-button is-alpha" href="contact/">Get a quote</a></section>'
-
 write("index.html", page("Fluid Glass - Structural & Architectural Glazing Specialists",
       "Leading UK specialists in architectural and structural glazing, delivering cutting-edge glass solutions for iconic projects.",
-      home_body, "Fluid Glass", "", with_modal=True, page_header=HOME_PH))
+      home_body, "Fluid Glass", "", with_modal=True, ph="white", label="Fluid Glass"))
 
 
 # ===================== generic sub-page hero =====================
