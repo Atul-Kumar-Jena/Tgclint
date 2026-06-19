@@ -90,6 +90,28 @@
     onScroll();
   }
 
+  /* ---- scrollspy: highlight the nav link of the section in view ------- */
+  function initScrollSpy() {
+    const links = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+    const map = new Map();
+    links.forEach((l) => {
+      const id = l.getAttribute('href').slice(1);
+      const sec = document.getElementById(id);
+      if (sec) map.set(sec, l);
+    });
+    if (!map.size || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          links.forEach((l) => l.classList.remove('is-active'));
+          const link = map.get(en.target);
+          if (link) link.classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    map.forEach((_, sec) => io.observe(sec));
+  }
+
   /* ---- year ----------------------------------------------------------- */
   function initYear() {
     document.querySelectorAll('[data-year]').forEach((el) => {
@@ -101,6 +123,7 @@
     initLazyImages();
     initReveal();
     initNav();
+    initScrollSpy();
     initYear();
     initLenis();
   }

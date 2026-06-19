@@ -30,6 +30,12 @@ h1, h2, h3, h4, p { margin: 0; }
   outline-offset: 3px;
 }
 
+/* Native smooth-scroll fallback when Lenis isn't loaded; Lenis overrides this
+   to its own engine. Anchored sections clear the fixed header. */
+html { scroll-behavior: smooth; }
+section[id], main[id] { scroll-margin-top: 9rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 /* ---- Shared layout primitives ---------------------------------------- */
 
 .section { padding-top: 12rem; padding-bottom: 12rem; }
@@ -125,13 +131,19 @@ h1, h2, h3, h4, p { margin: 0; }
   letter-spacing: .1em;
   text-transform: uppercase;
 }
+/* active section indicator (scrollspy adds .is-active) */
+.nav-links a.is-active::after { transform: scaleX(1); transform-origin: left center; }
 
 .nav-toggle {
   display: none;
   position: relative;
   z-index: 60;          /* stay above the open mobile menu overlay */
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: .5rem;
+  min-width: 44px;       /* comfortable tap target */
+  min-height: 44px;
   background: none;
   border: 0;
   cursor: pointer;
@@ -315,6 +327,11 @@ h1, h2, h3, h4, p { margin: 0; }
   align-items: flex-end;
 }
 .product-card.tall { aspect-ratio: 4 / 5; }
+.product-card { cursor: pointer; transition: transform .6s var(--ease-out-quart); }
+.product-card:hover { transform: translateY(-.4rem); }
+/* whole-card stretched link */
+.card-link { position: absolute; inset: 0; z-index: 3; }
+.card-link:focus-visible { outline: 2px solid var(--color-white); outline-offset: -4px; }
 .product-card .media { position: absolute; inset: 0; z-index: 0; }
 .product-card .media img {
   width: 100%; height: 100%; object-fit: cover;
@@ -469,8 +486,8 @@ h1, h2, h3, h4, p { margin: 0; }
   text-transform: uppercase; margin-bottom: 2rem;
   color: color-mix(in srgb, var(--color-cream) 55%, transparent);
 }
-.footer-col ul { display: grid; gap: 1.2rem; }
-.footer-col a { font-size: 1.6rem; }
+.footer-col ul { display: grid; gap: .6rem; }
+.footer-col a { font-size: 1.6rem; display: inline-block; padding: .6rem 0; }
 .footer-bottom {
   display: flex; align-items: center; justify-content: space-between; gap: 2rem;
   flex-wrap: wrap;
@@ -532,7 +549,9 @@ h1, h2, h3, h4, p { margin: 0; }
   .duo-figure.span { grid-row: auto; }
   .showroom-inner, .hero-inner, .cta-inner { padding-left: 2rem; padding-right: 2rem; }
   .cta-inner { padding-top: 10rem; padding-bottom: 10rem; }
-  .footer-top { grid-template-columns: 1fr; padding: 6rem 2rem 4rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; padding: 6rem 2rem 4rem; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-col a { padding: 1rem 0; }
   .footer-bottom { padding: 2.4rem 2rem; flex-direction: column; align-items: flex-start; }
 }
 
