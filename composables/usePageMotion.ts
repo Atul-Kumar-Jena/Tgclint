@@ -283,13 +283,18 @@ export function usePageMotion() {
           }
         }
         layout(); paint(0)
-        // No pin (it fights the stacked-sheet scroll-deck) — instead scrub the rotation
-        // as the section travels through the viewport: ~1.25 turns top→bottom, so the
-        // spiral visibly winds as you pass it (and every card gets a front moment).
+        // A living, continuously-rotating spiral: a slow infinite spin is always
+        // turning the ring, and scroll adds momentum on top — so it reads as a
+        // perpetual "rotational" object, not something that only moves on scroll.
+        const rot = { auto: 0, scroll: 0 }
+        gsap.to(rot, {
+          auto: '+=360', duration: 30, ease: 'none', repeat: -1,
+          onUpdate: () => paint(rot.auto + rot.scroll)
+        })
         ST.create({
-          trigger: sp, start: 'top bottom', end: 'bottom top', scrub: 0.5,
+          trigger: sp, start: 'top bottom', end: 'bottom top', scrub: 0.6,
           invalidateOnRefresh: true, onRefresh: layout,
-          onUpdate: (self: any) => paint(-self.progress * 450)
+          onUpdate: (self: any) => { rot.scroll = -self.progress * 300 }
         })
       })
     })
