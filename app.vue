@@ -90,8 +90,8 @@ const pageTransition = {
     if (enterTl) enterTl.progress(1) // settle any in-flight enter first
     // old page recedes — transform + opacity only (no blur/shadow) so it stays buttery
     leaveTween = gsap.to(el, {
-      opacity: 0.5, scale: 0.93, y: '3vh',
-      transformOrigin: '50% 0%', duration: 0.62, ease: 'power3.inOut', onComplete: done
+      opacity: 0.45, scale: 0.9, y: '6vh',
+      transformOrigin: '50% 0%', duration: 0.9, ease: 'power2.inOut', onComplete: done
     })
   },
   onEnter: (el: Element, done: () => void) => {
@@ -103,7 +103,7 @@ const pageTransition = {
     gsap.set(el, {
       position: 'fixed', top: 0, left: 0, width: '100%', height: vh, overflow: 'hidden',
       zIndex: 6, y: vh, transformOrigin: '50% 0%', willChange: 'transform',
-      borderRadius: '26px 26px 0 0', boxShadow: '0 -30px 80px rgba(6,10,7,.5)'
+      borderRadius: '40px 40px 0 0', boxShadow: '0 -40px 110px rgba(6,10,7,.6)'
     })
     enterTl = gsap.timeline({
       onComplete: () => {
@@ -115,13 +115,13 @@ const pageTransition = {
         done()
       }
     })
-      .to(el, { y: 0, duration: 0.66, ease: 'expo.out' }, 0)
-      .to(el, { borderRadius: '0px', duration: 0.28, ease: 'power2.out' }, 0.42)
+      .to(el, { y: 0, duration: 0.98, ease: 'expo.out' }, 0)
+      .to(el, { borderRadius: '0px', duration: 0.36, ease: 'power2.out' }, 0.68)
       // release the page reveals while the card is still rising, so the new page
       // arrives already composing in (rich, fluid.glass-style) instead of sliding up
       // blank and only filling after it lands. The motion safety-net re-asserts any
       // above-the-fold beat once the card settles.
-      .call(() => { hold.value = false }, [], 0.4)
+      .call(() => { hold.value = false }, [], 0.56)
   },
   onAfterEnter: () => {
     const l = nuxtApp.$lenis
