@@ -74,6 +74,7 @@
   }
   function closeNav() {
     if (nav) nav.classList.remove('open');
+    if (header) header.classList.remove('menu-open');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
   }
 
@@ -81,6 +82,7 @@
     if (toggle && nav) {
       toggle.addEventListener('click', () => {
         const open = nav.classList.toggle('open');
+        if (header) header.classList.toggle('menu-open', open);
         toggle.setAttribute('aria-expanded', String(open));
       });
     }
