@@ -6,7 +6,7 @@
 .btn {
   position: relative; display: inline-flex; align-items: center; gap: .7em;
   padding: .8rem 1.4rem; border-radius: var(--radius-pill);
-  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 400;
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 500;
   overflow: hidden; isolation: isolate; white-space: nowrap;
   border: 1px solid transparent;
   transition: color .5s var(--ease), border-color .5s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);

@@ -34,7 +34,7 @@
   --warn: #e8704a;
 
   /* frosted glass — fluid.glass backdrop-filter: blur(2rem) */
-  --glass-dark: rgba(18,20,21,.55);
+  --glass-dark: color-mix(in srgb, var(--color-black) 80%, transparent);
   --glass-tint: rgba(255,255,255,.05);
   --glass-edge: rgba(243,240,236,.12);
   --glass-blur: 2rem;

@@ -21,9 +21,9 @@ ul { list-style: none; padding: 0; }
 .skip:focus { transform: none; }
 
 /* ============================================================== typography */
-h1, h2, h3, h4 { font-weight: 500; line-height: var(--lh-snug); letter-spacing: var(--track-tight); }
+h1, h2, h3, h4 { font-weight: 400; line-height: var(--lh-snug); letter-spacing: var(--track-tight); }
 h1, h2, h3, h4, .display, .h1, .h2, .h3, .about-stat__num, .loader__brand span, .footer__line {
-  font-family: var(--font-display); font-weight: 580; letter-spacing: -.02em;
+  font-family: var(--font-display); font-weight: 400; letter-spacing: -.02em;
 }
 strong { font-weight: 600; }
 /* micro-labels use the mono face — fluid.glass's Aeonik Mono register */
