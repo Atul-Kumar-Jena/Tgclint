@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@fontsource-variable/archivo": "^5.2.8",
+    "@fontsource-variable/geist-mono": "^5.2.8",
     "@fontsource-variable/schibsted-grotesk": "^5.2.8",
     "gsap": "3.13.0",
     "lenis": "1.1.20"

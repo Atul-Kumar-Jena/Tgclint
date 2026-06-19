@@ -1,10 +1,10 @@
 /* ==================================================================== reset */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; background: #070707; }
+html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; background: var(--charcoal); }
 body {
   font-family: var(--font); font-size: var(--fs-body); line-height: var(--lh-body); font-weight: 400;
-  color: var(--ink); background: #0a0a0a;
+  color: var(--ink); background: var(--charcoal);
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden;
 }
 img, svg, video, canvas { display: block; max-width: 100%; }
@@ -23,12 +23,18 @@ ul { list-style: none; padding: 0; }
 /* ============================================================== typography */
 h1, h2, h3, h4 { font-weight: 500; line-height: var(--lh-snug); letter-spacing: var(--track-tight); }
 h1, h2, h3, h4, .display, .h1, .h2, .h3, .about-stat__num, .loader__brand span, .footer__line {
-  font-family: var(--font-display); font-weight: 640; letter-spacing: -.02em;
+  font-family: var(--font-display); font-weight: 580; letter-spacing: -.02em;
 }
 strong { font-weight: 600; }
-.eyebrow { display: inline-flex; align-items: center; gap: .65em; font-size: var(--fs-eyebrow); font-weight: 500; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--local-muted, var(--muted)); }
-.eyebrow::before { content: ""; width: .5em; height: .5em; background: currentColor; transform: rotate(45deg); opacity: .85; flex: none; }
+/* micro-labels use the mono face — fluid.glass's Aeonik Mono register */
+.eyebrow { display: inline-flex; align-items: center; gap: .65em; font-family: var(--font-mono); font-size: var(--fs-eyebrow); font-weight: 400; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--local-muted, var(--muted)); }
+.eyebrow::before { content: ""; width: .42em; height: .42em; background: currentColor; transform: rotate(45deg); opacity: .7; flex: none; }
 .eyebrow--plain::before { display: none; }
+/* all small uppercase labels share the mono face (fluid.glass register) */
+.dock__eyebrow, .dock__label, .footer__label, .news-item__cat, .news-item__more,
+.fact dt, .card__index, .review__role, .hero__scroll, .btn--mini, .chip {
+  font-family: var(--font-mono); font-weight: 400;
+}
 .display { font-size: var(--fs-display); line-height: var(--lh-tight); font-weight: 500; letter-spacing: -.03em; }
 .h1 { font-size: var(--fs-h1); line-height: var(--lh-tight); }
 .h2 { font-size: var(--fs-h2); line-height: var(--lh-snug); }
@@ -51,11 +57,11 @@ strong { font-weight: 600; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
-.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #141414, #040404 78%); }
+.stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(135% 110% at 50% -15%, #2a2c2e, #141618 78%); }
 
 /* the page surface sits above the stage; sections are opaque so the stage only shows in transitions.
    NOTE: no will-change/transform here — a transformed ancestor would break GSAP pinning. */
-.page-shell { position: relative; z-index: 1; background: #0a0a0a; }
+.page-shell { position: relative; z-index: 1; background: var(--charcoal); }
 main.shell { display: block; }
 
 /* ============================================================ scroll deck

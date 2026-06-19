@@ -91,7 +91,7 @@ export function usePageMotion() {
       sheets.forEach((sec, i) => {
         const next = sheets[i + 1]
         if (!next) return
-        if (sec.matches('.hero, .page-hero, .project-hero, [data-hscroll], .stories, .cta')) return
+        if (sec.matches('.hero, .page-hero, .project-hero, [data-hscroll], .stories, .cta, .spiral')) return
         const inner = sec.querySelector(':scope > .container')
         if (inner) {
           gsap.fromTo(inner, { y: 0 }, { y: -56, ease: 'none',
@@ -254,6 +254,43 @@ export function usePageMotion() {
             }, { passive: true })
           }
         }
+      })
+      // [data-spiral] — rotating 3D spiral showcase of the work (pacome-style
+      // "spiral" view, rebuilt in CSS 3D + GSAP so it pins, scrubs and prerenders).
+      gsap.utils.toArray('[data-spiral]').forEach((sp: any) => {
+        const ring = sp.querySelector('.spiral__ring') as HTMLElement | null
+        const items = Array.from(sp.querySelectorAll('.spiral__item')) as HTMLElement[]
+        if (!ring || items.length < 2) return
+        const N = items.length
+        const stepDeg = 360 / N
+        let R = 0
+        const layout = () => {
+          R = Math.min(window.innerWidth, 1500) * (window.innerWidth < 760 ? 0.7 : 0.36)
+          items.forEach((it, i) => { it.style.transform = `rotateY(${i * stepDeg}deg) translateZ(${R}px)` })
+        }
+        const paint = (deg: number) => {
+          // pull the ring back by R so whichever item rotates to the front sits at z≈0 (camera plane)
+          ring.style.transform = `translateZ(${-R}px) rotateX(-9deg) rotateY(${deg}deg)`
+          for (let i = 0; i < N; i++) {
+            let a = (((i * stepDeg + deg) % 360) + 360) % 360
+            if (a > 180) a -= 360
+            const front = Math.max(0, 1 - Math.abs(a) / 100)   // 1 at front → 0 at the back
+            const it = items[i]
+            it.style.opacity = (0.16 + front * 0.84).toFixed(3)
+            it.style.filter = `blur(${((1 - front) * 4).toFixed(1)}px)`
+            it.style.zIndex = String(Math.round(front * 100))
+            it.classList.toggle('is-front', Math.abs(a) < stepDeg / 2)
+          }
+        }
+        layout(); paint(0)
+        // No pin (it fights the stacked-sheet scroll-deck) — instead scrub the rotation
+        // as the section travels through the viewport: ~1.25 turns top→bottom, so the
+        // spiral visibly winds as you pass it (and every card gets a front moment).
+        ST.create({
+          trigger: sp, start: 'top bottom', end: 'bottom top', scrub: 0.5,
+          invalidateOnRefresh: true, onRefresh: layout,
+          onUpdate: (self: any) => paint(-self.progress * 450)
+        })
       })
     })
 

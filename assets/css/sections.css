@@ -444,3 +444,63 @@ body.is-loaded .hero__scroll { opacity: 1; }
   .proj-list__row { grid-template-columns: 2rem 1fr 2rem; gap: .8rem; }
   .proj-list__loc, .proj-list__tags { display: none; }
 }
+
+/* ===== assets-duo — fluid.glass paired media showcase (two portrait blocks) */
+.assets-duo .container { }
+.assets-duo__grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); align-items: start;
+}
+.assets-duo__item {
+  position: relative; overflow: hidden; border-radius: var(--radius-lg);
+  aspect-ratio: 3 / 4; box-shadow: var(--shadow-card); background: var(--bg-warm);
+}
+.assets-duo__item--tall { margin-top: clamp(2rem, 8vw, 8rem); }
+.assets-duo__item .scene { width: 100%; height: 100%; }
+@media (max-width: 760px) {
+  .assets-duo__grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  .assets-duo__item--tall { margin-top: 0; }
+}
+
+/* ===== spiral showcase — rotating 3D spiral of the work (innovative motif) */
+.spiral { overflow: hidden; }
+.spiral__head { text-align: center; margin-bottom: clamp(2rem, 5vw, 4rem); display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.spiral__stage { position: relative; height: 80vh; min-height: 540px; perspective: 1600px; perspective-origin: 50% 42%; }
+.spiral__ring { position: absolute; left: 50%; top: 44%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
+.spiral__item {
+  position: absolute; left: 0; top: 0;
+  width: clamp(220px, 22vw, 340px); height: clamp(300px, 30vw, 460px);
+  margin-left: calc(clamp(220px, 22vw, 340px) / -2);
+  margin-top: calc(clamp(300px, 30vw, 460px) / -2);
+  transform-style: preserve-3d; backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+.spiral__card { display: block; width: 100%; height: 100%; border-radius: var(--radius-lg); overflow: hidden; position: relative; box-shadow: var(--shadow-card); background: var(--bg-warm); }
+.spiral__media { position: absolute; inset: 0; }
+.spiral__media .scene { width: 100%; height: 100%; }
+.spiral__card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,10,12,.82), rgba(8,10,12,0) 56%); }
+.spiral__meta { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.2rem 1.3rem; z-index: 2; display: flex; flex-direction: column; gap: .2rem; color: #fff; }
+.spiral__idx { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .2em; opacity: .85; }
+.spiral__name { font-size: clamp(1.1rem, 1.4vw, 1.55rem); font-weight: 560; letter-spacing: -.01em; line-height: 1.05; }
+.spiral__loc { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; opacity: .72; text-transform: uppercase; }
+.spiral__item.is-front .spiral__card { box-shadow: 0 44px 110px rgba(0,0,0,.55); outline: 1px solid var(--glass-edge); outline-offset: 0; }
+.spiral__hint { position: absolute; left: 50%; bottom: 2rem; transform: translateX(-50%); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--local-muted, var(--muted)); z-index: 40; }
+@media (max-width: 760px) { .spiral__stage { height: 70vh; perspective: 1100px; } }
+
+/* ===== news marquee — never-ending animated blog rail (fluid.glass register) */
+.newsrail { overflow: hidden; }
+.newsrail__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+.newsrail__head-text { display: flex; flex-direction: column; gap: 1rem; }
+.newsrail__all { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-soft, var(--ink-soft)); white-space: nowrap; transition: color .3s var(--ease); }
+.newsrail__all:hover { color: var(--fg, var(--ink)); }
+.newsrail__viewport { width: 100%; overflow: hidden; -webkit-mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.newsrail__track { display: flex; gap: clamp(1rem, 2vw, 2rem); width: max-content; animation: newsscroll 64s linear infinite; will-change: transform; }
+.newsrail__viewport:hover .newsrail__track { animation-play-state: paused; }
+.newsrail__card { flex: 0 0 auto; width: clamp(280px, 28vw, 420px); }
+.newsrail__media { position: relative; aspect-ratio: 16 / 11; border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-warm); }
+.newsrail__media .fgimg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.newsrail__card:hover .newsrail__media .fgimg__el { transform: scale(1.05); }
+.newsrail__body { padding: 1.1rem .2rem 0; }
+.newsrail__cat { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--local-muted, var(--muted)); }
+.newsrail__title { margin-top: .5rem; font-size: clamp(1.05rem, 1.3vw, 1.35rem); font-weight: 560; line-height: 1.2; letter-spacing: -.01em; max-width: 30ch; }
+@keyframes newsscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .newsrail__track { animation: none; flex-wrap: wrap; } }

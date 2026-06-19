@@ -33,7 +33,7 @@ export default defineNuxtConfig({
   },
   css: [
     '@fontsource-variable/schibsted-grotesk/index.css',
-    '@fontsource-variable/archivo/index.css',
+    '@fontsource-variable/geist-mono/index.css',
     '~/assets/css/index.css'
   ],
   nitro: {
