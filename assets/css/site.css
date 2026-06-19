@@ -33,7 +33,7 @@ h1, h2, h3, h4, p { margin: 0; }
 /* Native smooth-scroll fallback when Lenis isn't loaded; Lenis overrides this
    to its own engine. Anchored sections clear the fixed header. */
 html { scroll-behavior: smooth; }
-section[id], main[id] { scroll-margin-top: 9rem; }
+section[id], main[id] { scroll-margin-top: 2rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* ---- Shared layout primitives ---------------------------------------- */
@@ -80,29 +80,41 @@ section[id], main[id] { scroll-margin-top: 9rem; }
    Header / navigation
    ========================================================================= */
 
+:root { --nav-h: 9.4rem; }   /* reserved bottom space for the floating bar */
+
+/* Floating, centred "liquid glass" navigation pill (fluid.glass pattern). */
 .site-header {
   position: fixed;
-  inset: 0 0 auto 0;
+  left: 50%;
+  bottom: 2.4rem;
+  transform: translateX(-50%);
   z-index: 50;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 2.4rem 4rem;
-  transition: background .6s var(--ease-out-cubic),
-              padding .6s var(--ease-out-cubic),
-              color .6s var(--ease-out-cubic);
-  color: var(--color-white);
-  mix-blend-mode: normal;
-}
-.site-header.scrolled {
-  background: color-mix(in srgb, var(--color-cream) 88%, transparent);
-  backdrop-filter: blur(1.6rem);
-  -webkit-backdrop-filter: blur(1.6rem);
-  padding-top: 1.6rem;
-  padding-bottom: 1.6rem;
+  gap: 2.4rem;
+  padding: .9rem .9rem .9rem 2.4rem;
+  max-width: calc(100vw - 4rem);
   color: var(--color-grey);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-grey) 12%, transparent);
+  border-radius: 6rem;
+  background: color-mix(in srgb, var(--color-white) 42%, transparent);
+  backdrop-filter: blur(2.4rem) saturate(1.8);
+  -webkit-backdrop-filter: blur(2.4rem) saturate(1.8);
+  border: 1px solid color-mix(in srgb, var(--color-white) 55%, transparent);
+  box-shadow:
+    0 2.4rem 5rem -1rem rgba(11,16,18,.28),
+    0 .4rem 1.2rem rgba(11,16,18,.12),
+    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+  transition: transform .6s var(--ease-out-cubic), color .4s var(--ease-out-cubic),
+              opacity .5s var(--ease-out-cubic);
 }
+.site-header .nav { gap: 2.4rem; }
+.site-header .nav-links { gap: 2.6rem; }
+/* compact pill CTA inside the bar */
+.site-header .base-button.is-black { border-radius: 5rem; padding: 1.2rem 2rem; white-space: nowrap; }
+.site-header .nav-links a { white-space: nowrap; }
+/* slim divider between brand and links */
+.site-header .brand { padding-right: 2.4rem; border-right: 1px solid color-mix(in srgb, var(--color-grey) 18%, transparent); }
 
 .brand {
   position: relative;
@@ -195,7 +207,7 @@ section[id], main[id] { scroll-margin-top: 9rem; }
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 0 4rem 6rem;
+  padding: 0 4rem calc(5rem + var(--nav-h));   /* clear the bottom nav bar */
   display: grid;
   gap: 3.2rem;
 }
@@ -371,6 +383,68 @@ section[id], main[id] { scroll-margin-top: 9rem; }
 .product-card:hover .product-more .arrow { transform: translateX(.5rem); }
 
 /* =========================================================================
+   Product detail modal
+   ========================================================================= */
+
+.modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 4rem; }
+.modal[hidden] { display: none; }
+.modal-backdrop {
+  position: absolute; inset: 0;
+  background: color-mix(in srgb, var(--color-black) 55%, transparent);
+  backdrop-filter: blur(.6rem); -webkit-backdrop-filter: blur(.6rem);
+  opacity: 0; transition: opacity .4s var(--ease-out-quad);
+}
+.modal-panel {
+  position: relative;
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  width: min(110rem, 100%); max-height: calc(100svh - 8rem);
+  background: var(--color-cream);
+  box-shadow: 0 4rem 8rem rgba(11,16,18,.4);
+  overflow: hidden;
+  transform: translateY(2rem) scale(.98); opacity: 0;
+  transition: transform .5s var(--ease-out-quart), opacity .5s var(--ease-out-quart);
+}
+.modal.open .modal-backdrop { opacity: 1; }
+.modal.open .modal-panel { transform: none; opacity: 1; }
+.modal-media { position: relative; background: var(--color-taupe); min-height: 32rem; }
+.modal-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.modal-body { padding: 4.4rem; display: flex; flex-direction: column; gap: 1.6rem; overflow-y: auto; }
+.modal-body .idx {
+  font-family: var(--font-f-aeonik-mono); font-size: 1.2rem; letter-spacing: .14em;
+  color: color-mix(in srgb, var(--color-grey) 60%, transparent);
+}
+.modal-body h3 {
+  font-family: var(--font-f-aeonik-pro); font-weight: 400;
+  font-size: clamp(2.8rem, 3.4vw, 4rem); line-height: 1.05; letter-spacing: -.025em;
+  color: var(--color-black);
+}
+.modal-body p { font-size: 1.6rem; line-height: 1.6; color: color-mix(in srgb, var(--color-grey) 85%, transparent); }
+.modal-specs { display: grid; gap: 0; margin: .8rem 0 1.6rem; }
+.modal-specs li {
+  display: flex; align-items: baseline; gap: 1.2rem;
+  padding: 1.4rem 0; font-size: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-grey) 16%, transparent);
+}
+.modal-specs li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--color-grey) 16%, transparent); }
+.modal-specs li::before { content: ""; width: .6rem; height: .6rem; background: var(--color-grey); transform: rotate(45deg); flex-shrink: 0; }
+.modal-body .base-button { margin-top: auto; align-self: flex-start; }
+.modal-close {
+  position: absolute; top: 1.6rem; right: 1.6rem; z-index: 2;
+  width: 4.4rem; height: 4.4rem; display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-cream); color: var(--color-black);
+  border: 1px solid color-mix(in srgb, var(--color-grey) 18%, transparent);
+  cursor: pointer; transition: background .3s, color .3s;
+}
+.modal-close:hover { background: var(--color-black); color: var(--color-white); }
+
+@media (max-width: 860px) {
+  .modal { padding: 0; }
+  .modal-panel { grid-template-columns: 1fr; max-height: 100svh; height: 100svh; width: 100%; }
+  .modal-media { min-height: 30svh; }
+  .modal-body { padding: 3rem 2rem calc(3rem + var(--nav-h)); }
+}
+
+/* =========================================================================
    Duo / craft section
    ========================================================================= */
 
@@ -473,7 +547,7 @@ section[id], main[id] { scroll-margin-top: 9rem; }
   font-size: clamp(3.6rem, 6vw, 8rem); line-height: 1; letter-spacing: -.03em; max-width: 16ch;
 }
 
-.site-footer { background: var(--color-black); color: var(--color-cream); }
+.site-footer { background: var(--color-black); color: var(--color-cream); padding-bottom: var(--nav-h); }
 .footer-top {
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem;
   padding: 8rem 4rem 6rem;
@@ -521,24 +595,25 @@ section[id], main[id] { scroll-margin-top: 9rem; }
 }
 
 @media (max-width: 860px) {
-  .site-header { padding: 1.8rem 2rem; }
-  .site-header.scrolled { padding: 1.4rem 2rem; }
+  .site-header { padding: .8rem .8rem .8rem 1.8rem; gap: 1.4rem; bottom: 1.6rem; }
+  .site-header .brand { border-right: 0; padding-right: 0; }
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
   .site-header > .nav > .base-button { display: none; } /* CTA lives in menu/page on mobile */
 
   .nav.open .nav-links {
     display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     position: fixed; inset: 0;
     background: var(--color-cream);
     color: var(--color-grey);
-    padding: 10rem 2rem 2rem;
-    gap: 2.4rem;
+    padding: 2rem 2rem var(--nav-h);
+    gap: 2.8rem;
     z-index: 40;
   }
-  .nav.open .nav-links a { font-size: 2.4rem; }
+  .nav.open .nav-links a { font-size: 2.6rem; }
 
-  .hero-inner { padding: 0 2rem 4rem; }
+  .hero-inner { padding: 0 2rem calc(3rem + var(--nav-h)); }
   .hero-meta { flex-direction: column; align-items: flex-start; }
   .section { padding-top: 8rem; padding-bottom: 8rem; }
   .intro { grid-template-columns: 1fr; gap: 4rem; }

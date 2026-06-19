@@ -2,7 +2,9 @@
    - Lenis smooth scroll (progressive enhancement; falls back to native)
    - lazy-image fade-in via IntersectionObserver
    - reveal-on-scroll
-   - sticky header state + mobile nav
+   - bottom nav bar + mobile menu
+   - scrollspy active link
+   - product detail modal
    - dynamic year
 */
 (function () {
@@ -14,18 +16,19 @@
   function initLenis() {
     if (reduceMotion || typeof window.Lenis !== 'function') return;
     const lenis = new window.Lenis({ duration: 1.1, smoothWheel: true });
+    window.__lenis = lenis;
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    // anchor links route through Lenis
-    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    // anchor links route through Lenis (modal triggers handle their own clicks)
+    document.querySelectorAll('a[href^="#"]:not([data-modal])').forEach((a) => {
       a.addEventListener('click', (e) => {
         const id = a.getAttribute('href');
         if (id.length < 2) return;
         const target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
-        lenis.scrollTo(target, { offset: -80 });
+        lenis.scrollTo(target, { offset: 0 });
         closeNav();
       });
     });
@@ -68,10 +71,6 @@
   const nav = document.querySelector('.nav');
   const toggle = document.querySelector('.nav-toggle');
 
-  function onScroll() {
-    if (!header) return;
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  }
   function closeNav() {
     if (nav) nav.classList.remove('open');
     if (header) header.classList.remove('menu-open');
@@ -86,8 +85,62 @@
         toggle.setAttribute('aria-expanded', String(open));
       });
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  }
+
+  /* ---- product detail modal ------------------------------------------- */
+  function initModal() {
+    const modal = document.getElementById('product-modal');
+    if (!modal) return;
+    const imgEl = modal.querySelector('#modal-img');
+    const idxEl = modal.querySelector('#modal-index');
+    const titleEl = modal.querySelector('#modal-title');
+    const descEl = modal.querySelector('#modal-desc');
+    const specsEl = modal.querySelector('#modal-specs');
+    let lastFocused = null;
+
+    function openModal(t) {
+      lastFocused = t;
+      imgEl.src = t.dataset.img || '';
+      imgEl.alt = t.dataset.title || '';
+      idxEl.textContent = t.dataset.index || '';
+      titleEl.textContent = t.dataset.title || '';
+      descEl.textContent = t.dataset.desc || '';
+      specsEl.innerHTML = '';
+      (t.dataset.specs || '').split('|').forEach((s) => {
+        if (!s.trim()) return;
+        const li = document.createElement('li');
+        li.textContent = s.trim();
+        specsEl.appendChild(li);
+      });
+      modal.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      if (window.__lenis) window.__lenis.stop();
+      requestAnimationFrame(() => modal.classList.add('open'));
+      const cb = modal.querySelector('.modal-close');
+      if (cb) cb.focus();
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      if (window.__lenis) window.__lenis.start();
+      window.setTimeout(() => { modal.hidden = true; }, 450);
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    }
+
+    document.querySelectorAll('[data-modal]').forEach((t) => {
+      t.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        openModal(t);
+      });
+    });
+    // close on backdrop, X, or the CTA (CTA still navigates to #contact)
+    modal.querySelectorAll('[data-modal-close]').forEach((el) => {
+      el.addEventListener('click', () => closeModal());
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
   }
 
   /* ---- scrollspy: highlight the nav link of the section in view ------- */
@@ -124,6 +177,7 @@
     initReveal();
     initNav();
     initScrollSpy();
+    initModal();
     initYear();
     initLenis();
   }
