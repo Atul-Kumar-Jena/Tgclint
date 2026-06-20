@@ -3,8 +3,10 @@
 shell (capsule header + menu overlay + intro + cursor + cookie + footer). Zero
 runtime build; outputs plain HTML. Matte-luxury construction-company design."""
 import os
+import time
 
 BASE = "/Tgclint/"          # GitHub Pages project path; change to "/" for a root domain
+ASSET_VER = str(int(time.time()))   # cache-bust css/js on every build so updates show immediately
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WA = "https://wa.me/919178711798"
 TEL = "tel:+919178711798"
@@ -49,8 +51,8 @@ def head(title, desc, body_class=""):
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=jetbrains-mono@500,600&display=swap" rel="stylesheet" />
   <title>{title}</title>
-  <link rel="stylesheet" href="assets/css/design-system.css" />
-  <link rel="stylesheet" href="assets/css/site.css" />
+  <link rel="stylesheet" href="assets/css/design-system.css?v={ASSET_VER}" />
+  <link rel="stylesheet" href="assets/css/site.css?v={ASSET_VER}" />
 </head>
 <body class="{body_class}">"""
 
@@ -152,9 +154,9 @@ def footer():
 
 
 def scripts():
-    return """
+    return f"""
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v={ASSET_VER}"></script>
 </body>
 </html>"""
 
