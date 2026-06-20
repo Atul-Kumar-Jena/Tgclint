@@ -27,7 +27,7 @@ SUB_NAV = [("Blog", "blog/"), ("Careers", "contact/"),
            ("+91 91787 11798", TEL), ("info@saansud.com", EMAIL)]
 
 
-def head(title, desc):
+def head(title, desc, body_class=""):
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
@@ -52,7 +52,7 @@ def head(title, desc):
   <link rel="stylesheet" href="assets/css/design-system.css" />
   <link rel="stylesheet" href="assets/css/site.css" />
 </head>
-<body>"""
+<body class="{body_class}">"""
 
 
 def intro():
@@ -166,9 +166,9 @@ def page_header_bar(label, variant):
             f'<a class="base-button is-bronze" href="contact/">Get a free estimate</a></section>')
 
 
-def page(title, desc, body, title_text, active, ph="dark", label=None):
+def page(title, desc, body, title_text, active, ph="dark", label=None, body_class=""):
     bar = page_header_bar(label or title_text, ph)
-    return (head(title, desc) + intro() + cursor() + transition() + cookies() + bar + header(title_text) +
+    return (head(title, desc, body_class) + intro() + cursor() + transition() + cookies() + bar + header(title_text) +
             menu(active) + body + footer() + scripts())
 
 
@@ -726,7 +726,7 @@ for _i, _d in enumerate(BLOG):
     </div></section>
   </main>"""
     write(f"blog/{_d['slug']}/index.html",
-          page(f"{_d['title']} — Saansud Infra", _d['lede'][:155], _story, _d['cat'], "blog/"))
+          page(f"{_d['title']} — Saansud Infra", _d['lede'][:155], _story, _d['cat'], "blog/", body_class="is-story"))
 
 
 # ===================== CONTACT =====================

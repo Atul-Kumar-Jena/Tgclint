@@ -951,9 +951,16 @@ body.ready .home-header .container > *:nth-child(4) { animation-delay: .7s; }
    Blog story as horizontal side-scroll panels (desktop) / stacked (mobile)
    ========================================================================= */
 .story-hscroll .track { gap: 0; }
-.story-panel { flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; gap: 1.6rem; }
+/* Story pages drop the global top brand bar: it collided with the hscroll-ui
+   (category + progress) and the intro tag. The capsule nav carries brand + home,
+   and the hscroll-ui carries context — one clean top chrome, no overlap. */
+body.is-story .page-header { display: none; }
+/* `safe center` keeps tall panels (long headline + lede) from overflowing UP
+   into the top chrome — when content exceeds the panel it aligns to the top
+   (below the padding) instead of bleeding past it. */
+.story-panel { flex-shrink: 0; display: flex; flex-direction: column; justify-content: safe center; gap: 1.6rem; }
 .hscroll.is-hscroll .story-panel { width: 52rem; height: 100%; padding: 12rem 4rem 8rem; }
-.story-panel .story-tag { align-self: flex-start; background: var(--color-accent); color: #fff; padding: .5rem 1rem;
+.story-panel .story-tag { position: static; align-self: flex-start; background: var(--color-accent); color: #fff; padding: .5rem 1rem;
   font-family: var(--font-f-aeonik-mono); font-size: 1.05rem; letter-spacing: .06em; text-transform: uppercase; }
 .story-panel h1 { font-family: var(--font-f-aeonik-pro); font-weight: 400; font-size: clamp(3rem, 4.4vw, 5rem);
   line-height: 1.04; letter-spacing: -.025em; color: var(--color-black); max-width: 18ch; }
@@ -968,7 +975,7 @@ body.ready .home-header .container > *:nth-child(4) { animation-delay: .7s; }
 
 /* mobile / fallback: stack vertically, full width, readable */
 @media (max-width: 1024px) {
-  .story-hscroll .sticky { padding-top: 11rem; }
+  .story-hscroll .sticky { padding-top: 5rem; }   /* brand bar hidden on story pages */
   .story-panel { width: 100%; padding: 3rem 0; gap: 1.4rem; }
   .story-panel--intro { padding-top: 0; }
   .story-panel--media img { height: auto; aspect-ratio: 16/10; }
