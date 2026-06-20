@@ -477,10 +477,44 @@ def stories_section():
     </div>"""
 
 
+PROJECT_EXTRA = {
+    "Saansud Laxmi Narayan Vihar": ("A sprawling developed-land society planned for modern family living, delivering homes that balance contemporary aspiration with timeless value.",
+                                    ["End-to-end execution", "10-year warranty", "Transparent pricing"]),
+    "Mahaveer Enclave": ("A premium residential enclave with contemporary planning, generous plots and a community-first layout near the city's growth corridor.",
+                         ["Premium finishes", "Community design", "Modern layout"]),
+    "Mahaveer Nagar": ("A thoughtfully planned society in Paradeep bringing together quality, affordability and genuine community living.",
+                       ["Value for money", "Community living", "Strategic location"]),
+    "IIT Bhubaneswar Project": ("A premium development near IIT Bhubaneswar, pairing academic prestige with residential excellence and strong appreciation potential.",
+                                ["Premium location", "Near IIT", "High appreciation"]),
+}
+SPEC_LABELS = ["Area", "Units", "Avg size"]
+
+
+def project_panels():
+    out = ('<div class="lead-panel"><span class="base-title">Featured projects</span>'
+           '<h2>Transforming land into landmarks.</h2>'
+           '<span class="scroll-hint">Scroll to explore &rarr;</span></div>')
+    for n, (name, loc, specs, price, img) in enumerate(PROJECTS, 1):
+        vals = specs.split("|")
+        sp = "".join(f'<div class="s"><span>{SPEC_LABELS[i]}</span><b>{v}</b></div>' for i, v in enumerate(vals))
+        desc, tags = PROJECT_EXTRA[name]
+        tag_html = "".join(f"<span>{t}</span>" for t in tags)
+        out += (f'<a class="hpanel" href="contact/">'
+                f'<div class="hpanel-media"><span class="num">{str(n).zfill(2)}</span><img class="lazy-image" src="assets/images/{img}.jpg" alt="{name}"/></div>'
+                f'<div class="hpanel-body"><h3>{name}</h3><p class="loc">{loc}</p>'
+                f'<div class="hspecs">{sp}</div><p class="hdesc">{desc}</p>'
+                f'<div class="htags">{tag_html}<span>{price}</span></div>'
+                f'<span class="hcta">Get details {ARROW}</span></div></a>')
+    return out
+
+
 home_body = f"""
   <main>
     <section class="home-header" data-name="Saansud Infra">
-      <div class="background"><img class="lazy-image" src="assets/images/hero-bg.jpg" alt="A completed Saansud home at dusk" /></div>
+      <div class="background" data-parallax>
+        <img class="lazy-image" src="assets/images/hero-bg.jpg" alt="A completed Saansud home at dusk" />
+        <video class="hero-video" muted loop playsinline data-hero-video data-src="" aria-hidden="true"></video>
+      </div>
       <div class="container">
         <div class="row">
           <p class="base-heading">Build right.<br/>Live smart.</p>
@@ -522,14 +556,9 @@ home_body = f"""
 
     {stories_section()}
 
-    <section class="section container" data-name="Projects">
-      <div class="section-head reveal">
-        <div><span class="base-title" style="margin-bottom:2rem">Featured projects</span><h2>Land into landmarks.</h2></div>
-        <p class="muted lead" style="max-width:40ch">Developed-land societies across Bhubaneswar, Paradeep and Jagatsinghpur.</p>
-      </div>
-      <div class="projects-grid reveal">{project_cards(limit=2)}</div>
-      <div class="btn-row reveal" style="margin-top:4rem"><a class="base-button is-alpha" href="projects/">View all projects</a></div>
-    </section>
+    <section class="hscroll" data-name="Projects" data-count="{len(PROJECTS)}"><div class="sticky">
+      <div class="hscroll-ui"><span class="t">Featured projects</span><div class="hbar"><i></i></div><span class="hcount">01 / 0{len(PROJECTS)}</span></div>
+      <div class="track">{project_panels()}</div></div></section>
 
     <section class="section container" data-name="Craft">
       <div class="assets-duo reveal">
@@ -631,37 +660,6 @@ write("construction/index.html", page("Construction & packages — Saansud Infra
 
 
 # ===================== PROJECTS =====================
-PROJECT_EXTRA = {
-    "Saansud Laxmi Narayan Vihar": ("A sprawling developed-land society planned for modern family living, delivering homes that balance contemporary aspiration with timeless value.",
-                                    ["End-to-end execution", "10-year warranty", "Transparent pricing"]),
-    "Mahaveer Enclave": ("A premium residential enclave with contemporary planning, generous plots and a community-first layout near the city's growth corridor.",
-                         ["Premium finishes", "Community design", "Modern layout"]),
-    "Mahaveer Nagar": ("A thoughtfully planned society in Paradeep bringing together quality, affordability and genuine community living.",
-                       ["Value for money", "Community living", "Strategic location"]),
-    "IIT Bhubaneswar Project": ("A premium development near IIT Bhubaneswar, pairing academic prestige with residential excellence and strong appreciation potential.",
-                                ["Premium location", "Near IIT", "High appreciation"]),
-}
-SPEC_LABELS = ["Area", "Units", "Avg size"]
-
-
-def project_panels():
-    out = ('<div class="lead-panel"><span class="base-title">Featured projects</span>'
-           '<h2>Transforming land into landmarks.</h2>'
-           '<span class="scroll-hint">Scroll to explore &rarr;</span></div>')
-    for n, (name, loc, specs, price, img) in enumerate(PROJECTS, 1):
-        vals = specs.split("|")
-        sp = "".join(f'<div class="s"><span>{SPEC_LABELS[i]}</span><b>{v}</b></div>' for i, v in enumerate(vals))
-        desc, tags = PROJECT_EXTRA[name]
-        tag_html = "".join(f"<span>{t}</span>" for t in tags)
-        out += (f'<a class="hpanel" href="contact/">'
-                f'<div class="hpanel-media"><span class="num">{str(n).zfill(2)}</span><img class="lazy-image" src="assets/images/{img}.jpg" alt="{name}"/></div>'
-                f'<div class="hpanel-body"><h3>{name}</h3><p class="loc">{loc}</p>'
-                f'<div class="hspecs">{sp}</div><p class="hdesc">{desc}</p>'
-                f'<div class="htags">{tag_html}<span>{price}</span></div>'
-                f'<span class="hcta">Get details {ARROW}</span></div></a>')
-    return out
-
-
 projects_body = page_hero("Projects", "Land into landmarks.", "Developed-land societies across Bhubaneswar, Paradeep and Jagatsinghpur. Scroll sideways to explore each one.") + f"""
     <section class="hscroll" data-count="{len(PROJECTS)}"><div class="sticky">
       <div class="hscroll-ui"><span class="t">Featured projects</span><div class="hbar"><i></i></div><span class="hcount">01 / 0{len(PROJECTS)}</span></div>

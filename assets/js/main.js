@@ -348,6 +348,45 @@
     browse.addEventListener('pointermove', function (e) { if (down) browse.scrollLeft = startScroll - (e.clientX - startX); });
   }
 
+  /* ---- hero video support (poster shows until a real .mp4 is provided) - */
+  function initVideo() {
+    document.querySelectorAll('[data-hero-video]').forEach(function (v) {
+      var src = v.getAttribute('data-src');
+      if (!src) return;                       // no real video yet → keep poster image
+      var s = document.createElement('source');
+      s.src = src; s.type = 'video/mp4';
+      v.appendChild(s);
+      v.load();
+      v.addEventListener('canplay', function () { v.classList.add('ready'); v.play().catch(function () {}); }, { once: true });
+      v.addEventListener('error', function () {}, { once: true });   // poster remains
+    });
+  }
+
+  /* ---- subtle scroll parallax on media ------------------------------- */
+  function initParallax() {
+    if (reduceMotion) return;
+    var els = [].slice.call(document.querySelectorAll('[data-parallax], .banner .media, .assets-duo .figure'));
+    if (!els.length) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      els.forEach(function (el) {
+        var media = el.querySelector('img, video');
+        if (!media) return;
+        var r = el.getBoundingClientRect();
+        if (r.bottom < -50 || r.top > vh + 50) return;
+        var prog = (r.top + r.height / 2 - vh / 2) / vh;   // -1 … 1 across viewport
+        media.style.transform = 'translate3d(0,' + (prog * -5).toFixed(2) + '%,0)';
+      });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    if (window.__lenis && window.__lenis.on) window.__lenis.on('scroll', onScroll);
+    update();
+  }
+
   function initScrollProgress() {
     var bar = document.querySelector('[data-scroll-progress]');
     if (!bar) return;
@@ -366,7 +405,7 @@
   function init() {
     initIntro(); initCursor(); initCookies(); initMenu(); initHeaderTitle();
     initLazyImages(); initReveal(); initModal(); initServices(); initStories();
-    initPageTransition(); initScrollProgress(); initYear(); initLenis(); initHScroll();
+    initVideo(); initPageTransition(); initScrollProgress(); initYear(); initLenis(); initHScroll(); initParallax();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
