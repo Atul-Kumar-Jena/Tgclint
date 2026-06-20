@@ -59,8 +59,6 @@ def intro():
     return f"""
   <div class="intro" role="presentation">
     <div class="intro-grid"></div>
-    <div class="intro-foundation"></div>
-    <div class="bricks"><span></span><span></span><span></span><span></span></div>
     <div class="logo">
       <span class="intro-mark">{MARK}</span>
       <div class="wordmark"><span class="wm">Saansud</span><span class="tag">Building Landmarks</span></div>
@@ -73,7 +71,8 @@ def cursor():
 
 
 def transition():
-    return f'\n  <div class="pt" aria-hidden="true"><div class="mk">{MARK}</div></div>'
+    return (f'\n  <div class="scroll-progress" data-scroll-progress></div>'
+            f'\n  <div class="pt" aria-hidden="true"><div class="mk">{MARK}</div></div>')
 
 
 def cookies():

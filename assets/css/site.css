@@ -879,3 +879,29 @@ body.ready .home-header .container > *:nth-child(4) { animation-delay: .7s; }
   .reveal-line { opacity: 1; transform: none; }
   .stories-drag-hint .ar { animation: none; }
 }
+
+/* =========================================================================
+   Mobile polish + global scroll progress (fixes: big top button, clutter)
+   ========================================================================= */
+/* slim global scroll-progress bar at the very top */
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 60;
+  background: var(--color-accent); pointer-events: none; transition: width .1s linear; }
+
+@media (max-width: 768px) {
+  /* page-header: keep only the wordmark, drop the oversized CTA */
+  .page-header { padding: 1.6rem 2rem; }
+  .page-header .base-button { display: none; }
+  .page-header .logo { font-size: 1.4rem; }
+  .scroll-progress { height: 2px; }
+
+  /* tighten vertical rhythm so the home reads less cluttered */
+  .section { padding-top: 7rem; padding-bottom: 7rem; }
+  .section-head { margin-bottom: 4rem; }
+  .text-cta { gap: 2.4rem; }
+  .services-layout { gap: 2rem; }
+  .services-stage { height: 36vh; }
+  .service-row__head { padding: 2rem 0; gap: 1.2rem; }
+  .assets-duo { gap: 1.6rem; }
+  .stories-track { padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .scroll-progress { transition: none; } }

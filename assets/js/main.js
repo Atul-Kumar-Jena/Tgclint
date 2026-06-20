@@ -348,12 +348,25 @@
     browse.addEventListener('pointermove', function (e) { if (down) browse.scrollLeft = startScroll - (e.clientX - startX); });
   }
 
+  function initScrollProgress() {
+    var bar = document.querySelector('[data-scroll-progress]');
+    if (!bar) return;
+    function update() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    if (window.__lenis && window.__lenis.on) window.__lenis.on('scroll', update);
+    update();
+  }
+
   function initYear() { document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = String(new Date().getFullYear()); }); }
 
   function init() {
     initIntro(); initCursor(); initCookies(); initMenu(); initHeaderTitle();
     initLazyImages(); initReveal(); initModal(); initServices(); initStories();
-    initPageTransition(); initYear(); initLenis(); initHScroll();
+    initPageTransition(); initScrollProgress(); initYear(); initLenis(); initHScroll();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
