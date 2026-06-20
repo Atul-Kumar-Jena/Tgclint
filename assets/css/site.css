@@ -26,6 +26,9 @@
   --color-accent: #8b7355;       /* matte construction bronze */
   --color-accent-light: #a0896b;
   --color-accent-dark: #6d5844;
+  /* floating capsule nav footprint: bottom-offset (4rem) + height (5rem).
+     Footer reserves this much bottom space so the capsule never collides. */
+  --nav-h: 9rem;
 }
 body { font-family: var(--font-f-aeonik-pro); }
 /* bronze section markers */
@@ -83,13 +86,17 @@ section[id], main[id] { scroll-margin-top: 2rem; }
 }
 .header .logo svg { width: 2.4rem; height: 2.4rem; color: var(--color-accent); }
 .header .title {
-  width: auto; min-width: 12rem; max-width: 44rem; height: 5rem; text-align: center; overflow: visible;
+  width: auto; min-width: 12rem; max-width: 44rem; height: 5rem; text-align: center; overflow: hidden;
   font-family: var(--font-f-aeonik-mono); font-size: 1.2rem; font-weight: 500;
   letter-spacing: .08em; text-transform: uppercase; padding: 0 1.2rem;
   display: flex; align-items: center; justify-content: center;
 }
-.header .title-inner { display: inline-flex; align-items: center; height: 5rem;
-  white-space: nowrap; transition: opacity .4s var(--ease-out-cubic); }
+/* title grows the capsule to fit normal section names; if the capsule hits its
+   width cap (narrow screens + a very long name) the text ellipsizes inside the
+   centre zone instead of sliding under the logo / burger. */
+.header .title-inner { display: block; max-width: 100%; height: 5rem; line-height: 5rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: opacity .4s var(--ease-out-cubic); }
 .header .burger, .header .close {
   position: absolute; right: 0; width: 5rem; height: 5rem;
   display: flex; align-items: center; justify-content: center; color: inherit;
@@ -462,7 +469,8 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
 @media (max-width: 600px) {
   .container { padding-left: 2rem; padding-right: 2rem; }
   .section { padding-top: 8rem; padding-bottom: 8rem; }
-  .header { bottom: 3rem; }
+  .header { bottom: 3rem; }            /* capsule lifts to 3rem on mobile */
+  :root { --nav-h: 8rem; }             /* 3rem offset + 5rem height */
   .page-header { padding: 2rem; }
   .home-header .container { padding-bottom: 12rem; }
   .home-header .row { flex-direction: column; align-items: flex-start; }
