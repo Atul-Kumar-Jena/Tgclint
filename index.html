@@ -81,52 +81,56 @@
       </div>
     </section>
 
-    <section class="section container" data-name="What we do">
+    
+    <section class="section container" id="services" data-name="What we do">
       <div class="section-head reveal">
         <div><span class="base-title" style="margin-bottom:2rem">What we do</span><h2>One team,<br/>from plot to keys.</h2></div>
-        <p class="muted lead" style="max-width:40ch">Architecture, engineering, construction and interiors &mdash; handled, so you never have to chase a single soul.</p>
+        <p class="muted lead" style="max-width:40ch">Architecture, engineering, construction and interiors &mdash; handled, so you never chase a single soul.</p>
       </div>
-      <div class="product-grid reveal">
-          <article class="product-card tall">
-            <a class="card-link" href="construction/" aria-label="Building construction"></a>
-            <div class="media"><img class="lazy-image" src="assets/images/product-structural.jpg" alt="Building construction" /></div>
-            <div class="product-body">
-              <span class="idx">01 — Construction</span>
-              <h3>Building construction</h3>
-              <p>From 2D plans to final handover — structural drawings, working drawings and full execution by one accountable team.</p>
-              <span class="product-more">Discover <span class="arrow">&rarr;</span></span>
-            </div>
-          </article>
-          <article class="product-card tall">
-            <a class="card-link" href="interior/" aria-label="Interior designing"></a>
-            <div class="media"><img class="lazy-image" src="assets/images/showroom.jpg" alt="Interior designing" /></div>
-            <div class="product-body">
-              <span class="idx">02 — Interiors</span>
-              <h3>Interior designing</h3>
-              <p>Kitchens, wardrobes, lighting and finishes, delivered with flat, transparent design fees for any budget.</p>
-              <span class="product-more">Discover <span class="arrow">&rarr;</span></span>
-            </div>
-          </article>
-          <article class="product-card">
-            <a class="card-link" href="construction/" aria-label="Renovation &amp; remodel"></a>
-            <div class="media"><img class="lazy-image" src="assets/images/product-additional.jpg" alt="Renovation &amp; remodel" /></div>
-            <div class="product-body">
-              <span class="idx">03 — Renovation</span>
-              <h3>Renovation &amp; remodel</h3>
-              <p>Reflooring, painting, kitchen and bathroom upgrades and complete remodelling, planned around your life.</p>
-              <span class="product-more">Discover <span class="arrow">&rarr;</span></span>
-            </div>
-          </article>
-          <article class="product-card">
-            <a class="card-link" href="construction/" aria-label="Architecture &amp; approvals"></a>
-            <div class="media"><img class="lazy-image" src="assets/images/product-windows.jpg" alt="Architecture &amp; approvals" /></div>
-            <div class="product-body">
-              <span class="idx">04 — Architecture</span>
-              <h3>Architecture &amp; approvals</h3>
-              <p>Site-specific design plus government sanction, electricity, water and sewage liaison — handled for you.</p>
-              <span class="product-more">Discover <span class="arrow">&rarr;</span></span>
-            </div>
-          </article></div>
+      <div class="services-layout reveal">
+        <div class="services-stage"><div class="img active" data-stage="construction"><img class="lazy-image" src="assets/images/product-structural.jpg" alt="Building construction"/></div><div class="img" data-stage="interiors"><img class="lazy-image" src="assets/images/showroom.jpg" alt="Interior designing"/></div><div class="img" data-stage="renovation"><img class="lazy-image" src="assets/images/product-additional.jpg" alt="Renovation &amp; remodel"/></div><div class="img" data-stage="architecture"><img class="lazy-image" src="assets/images/product-windows.jpg" alt="Architecture &amp; approvals"/></div></div>
+        <div class="services-list">
+        <div class="service-row active" data-service="construction">
+          <div class="service-row__head"><span class="service-row__num">01</span><h3>Building construction</h3>
+            <svg class="service-row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="service-row__body">
+            <p class="service-row__desc">From the first 2D floor plan to the day you get the keys, one accountable team carries the build &mdash; structural drawings, working drawings, site execution and every approval in between.</p>
+            <ul class="service-row__inc"><li>2D floor plans &amp; 3D elevations</li><li>Structural &amp; working drawings for execution</li><li>Plumbing, electrical &amp; furniture layouts</li><li>Fe500/550 steel · RMC M20/M25 concrete</li><li>Soil testing before design begins</li><li>10-year structural warranty</li></ul>
+            <div class="service-proc"><h4>How it runs</h4><ol><li><b>Design &amp; budgeting</b> &mdash; plans, materials and costing fixed before ground is broken</li><li><b>Execution</b> &mdash; milestone-based construction with our own supervisors on site</li><li><b>Finishing</b> &mdash; full quality review and snag resolution before handover</li><li><b>Handover</b> &mdash; documented warranty and post-handover support</li></ol></div>
+            <a class="base-button is-alpha" href="contact/">Get an estimate</a>
+          </div>
+        </div>
+        <div class="service-row" data-service="interiors">
+          <div class="service-row__head"><span class="service-row__num">02</span><h3>Interior designing</h3>
+            <svg class="service-row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="service-row__body">
+            <p class="service-row__desc">Kitchens, wardrobes, lighting and finishes &mdash; designed and delivered with the same transparency as our construction, at a flat design fee regardless of budget or scale.</p>
+            <ul class="service-row__inc"><li>Space planning and 3D visualisation</li><li>Modular kitchen and wardrobe design</li><li>Lighting design and electrical co-ordination</li><li>Flat design fee &mdash; no percentage mark-ups</li></ul>
+            <div class="service-proc"><h4>How it runs</h4><ol><li><b>Consultation</b> &mdash; lifestyle, budget and style preferences mapped out</li><li><b>Design</b> &mdash; full 3D layout and material palette presented for approval</li><li><b>Execution</b> &mdash; modular fit-out by our own execution team</li><li><b>Handover</b> &mdash; final walkthrough and finishing touches</li></ol></div>
+            <a class="base-button is-alpha" href="contact/">Get an estimate</a>
+          </div>
+        </div>
+        <div class="service-row" data-service="renovation">
+          <div class="service-row__head"><span class="service-row__num">03</span><h3>Renovation &amp; remodel</h3>
+            <svg class="service-row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="service-row__body">
+            <p class="service-row__desc">Reflooring, painting, kitchen and bathroom upgrades and full remodelling &mdash; planned around your life, with minimal disruption and a clear material plan from day one.</p>
+            <ul class="service-row__inc"><li>Structural assessment before any work begins</li><li>Kitchen and bathroom upgrades</li><li>Reflooring and wall treatments</li><li>Phased work plans to limit household disruption</li></ul>
+            <div class="service-proc"><h4>How it runs</h4><ol><li><b>Assessment</b> &mdash; site survey and scope agreed in writing</li><li><b>Planning</b> &mdash; material selection and a phased schedule</li><li><b>Execution</b> &mdash; work carried out in agreed phases</li><li><b>Sign-off</b> &mdash; final inspection and clean handover</li></ol></div>
+            <a class="base-button is-alpha" href="contact/">Get an estimate</a>
+          </div>
+        </div>
+        <div class="service-row" data-service="architecture">
+          <div class="service-row__head"><span class="service-row__num">04</span><h3>Architecture &amp; approvals</h3>
+            <svg class="service-row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="service-row__body">
+            <p class="service-row__desc">Site-specific design paired with full government liaison &mdash; sanctioned plans, electricity, water and sewage connections handled so you never have to navigate any of it yourself.</p>
+            <ul class="service-row__inc"><li>Site-specific architectural design</li><li>Construction plan sanction (BDA/CDA/Panchayat/Tahasil)</li><li>Temporary &amp; permanent electricity connection</li><li>Water and sewage connection assistance</li></ul>
+            <div class="service-proc"><h4>How it runs</h4><ol><li><b>Site study</b> &mdash; orientation, soil and local regulation review</li><li><b>Design</b> &mdash; layout drawn for the site, not a generic template</li><li><b>Sanction</b> &mdash; drawings filed and approved with local authorities</li><li><b>Connections</b> &mdash; utility connections arranged ahead of handover</li></ol></div>
+            <a class="base-button is-alpha" href="contact/">Get an estimate</a>
+          </div>
+        </div></div>
+      </div>
     </section>
 
     <section class="scale-sec" data-name="Craft">
@@ -145,6 +149,24 @@
         <div class="btn-row"><a class="base-button is-white" href="interior/">Explore interiors <svg class="arrow-svg" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M8.5 1 13 5.5 8.5 10M13 5.5H1" stroke="currentColor" stroke-width="1.4"/></svg></a></div>
       </div>
     </section>
+
+    
+    <section class="section container" id="stories" data-name="Stories" style="padding-bottom:8rem">
+      <div class="section-head reveal" style="margin-bottom:4rem">
+        <div><span class="base-title" style="margin-bottom:2rem">Stories</span><h2>Worth your time.</h2></div>
+        <p class="muted lead" style="max-width:40ch">What we've learned building homes across Odisha &mdash; tap a card to read.</p>
+      </div>
+    </section>
+    <div class="stories-browse reveal" data-stories-browse tabindex="0">
+      <div class="stories-track"><article class="story-card" data-story="sasta-ru-hinasta" tabindex="0" role="button" aria-label="Read: The "Sasta ru Hinasta" trap: why self-building your home is a costly illusion"><div class="story-card__image"><span class="story-tag">Construction economics</span><img class="lazy-image" src="assets/images/product-structural.jpg" alt="The "Sasta ru Hinasta" trap: why self-building your home is a costly illusion"/></div><div class="story-card__meta"><span class="story-read-time">8 min read</span><h3 class="story-card__title">The "Sasta ru Hinasta" trap: why self-building your home is a costly illusion</h3><p class="story-card__excerpt">Self-managing labour looks cheaper on day one.</p></div><template class="story-src"><header class="story-reader__header"><span class="story-tag">Construction economics</span><h1>The "Sasta ru Hinasta" trap: why self-building your home is a costly illusion</h1><span class="story-read-time">8 min read</span></header><div class="story-reader__hero"><img src="assets/images/product-structural.jpg" alt=""/></div><div class="story-reader__body"><p class="reveal-line">Self-managing labour looks cheaper on day one. By handover, hidden leakages in materials, time and stress have pushed most homeowners far past what a professional build would have cost.</p><blockquote class="pull-quote reveal-line">&ldquo;Smart homeowners don't ask how cheap &mdash; they ask how right.&rdquo;</blockquote><h2 class="reveal-line">The illusion of the daily-wage saving</h2><p class="reveal-line">In Odia we say <em>sasta ru hinasta</em> — what looks cheap turns out to be the most expensive thing of all. Nowhere is this truer than in home construction. Hiring a mason on a daily wage and buying your own cement feels like you are cutting out the middleman and pocketing his margin.</p><p class="reveal-line">But a contractor's margin is not a tax on your project. It is the price of someone whose full-time job is to stop your money leaking away — and on an unmanaged site, it leaks in a dozen quiet ways.</p><h2 class="reveal-line">Where the money actually goes</h2><p class="reveal-line">Material waste and pilferage are the first leak. Steel cut wrong, cement left to harden in the rain, tiles over-ordered or quietly walking off site — without a professional counting every bag and bar, 5–15% of your material budget simply evaporates.</p><p class="reveal-line">Rework is the second. An amateur-supervised slab poured a centimetre out of level, a damp-proof course missed, a conduit laid in the wrong wall — each mistake is paid for twice, once to build and once to break and rebuild.</p><h2 class="reveal-line">The cost of your own time</h2><p class="reveal-line">Then there is your time. Self-managing a build is a second full-time job: chasing suppliers, settling disputes between trades, standing at the site gate at 7am. Most homeowners take months of effective leave from their real careers — a cost that never appears on the estimate but is very real.</p><h2 class="reveal-line">What professional management actually buys</h2><p class="reveal-line">A managed build replaces all of that with a fixed scope, a fixed price and a single point of accountability. Materials are scheduled and inspected, trades are sequenced so nobody waits, and quality is checked at every stage rather than discovered at the end.</p><p class="reveal-line">The honest comparison is rarely "professional vs. cheap". It is "a predictable price now" vs. "an unpredictable, usually higher price later" — plus your weekends back.</p><footer class="story-reader__footer"><a class="base-button is-bronze" href="contact/">Talk to us about your build <svg class="arrow-svg" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M8.5 1 13 5.5 8.5 10M13 5.5H1" stroke="currentColor" stroke-width="1.4"/></svg></a></footer></div></template></article><article class="story-card" data-story="hidden-health-cost" tabindex="0" role="button" aria-label="Read: The hidden health cost of building a house: why your peace of mind is worth more than a discount"><div class="story-card__image"><span class="story-tag">Homeowner wellness</span><img class="lazy-image" src="assets/images/duo-2.jpg" alt="The hidden health cost of building a house: why your peace of mind is worth more than a discount"/></div><div class="story-card__meta"><span class="story-read-time">7 min read</span><h3 class="story-card__title">The hidden health cost of building a house: why your peace of mind is worth more than a discount</h3><p class="story-card__excerpt">The real cost of a self-managed build is not just money.</p></div><template class="story-src"><header class="story-reader__header"><span class="story-tag">Homeowner wellness</span><h1>The hidden health cost of building a house: why your peace of mind is worth more than a discount</h1><span class="story-read-time">7 min read</span></header><div class="story-reader__hero"><img src="assets/images/duo-2.jpg" alt=""/></div><div class="story-reader__body"><p class="reveal-line">The real cost of a self-managed build is not just money. It is decision fatigue, disrupted work and months of low-grade stress — a tax you pay with your wellbeing.</p><blockquote class="pull-quote reveal-line">&ldquo;The true cost of a home is measured in time, energy and peace of mind &mdash; not just money.&rdquo;</blockquote><h2 class="reveal-line">A thousand small decisions</h2><p class="reveal-line">Building a house is not one big decision; it is a thousand small ones, every single day. Which brand of putty? Is this the right shade of grey? Why is the plumber arguing with the electrician? Each is minor on its own. Together, over many months, they produce a very real condition psychologists call decision fatigue.</p><h2 class="reveal-line">Disruption to your real life</h2><p class="reveal-line">Site problems do not wait for the weekend. They arrive by phone at the worst possible moment — mid-meeting, mid-dinner, mid-holiday. Slowly the project colonises your calendar, your conversations and your sleep.</p><h2 class="reveal-line">The toll you can't put on a spreadsheet</h2><p class="reveal-line">Ask anyone who has self-managed a build and they will tell you about the months of poor sleep, the short temper, the strain on the family. None of it shows up on the cost sheet, but all of it is paid in full.</p><h2 class="reveal-line">Peace of mind is a measurable asset</h2><p class="reveal-line">Outsourcing your build to a professional project-management team is not a luxury — it is buying back your evenings, your focus and your health. The discount you might win by doing it yourself is almost never worth what it quietly takes out of you.</p><p class="reveal-line">A home should be the calmest thing you ever build, not the most stressful. That is the standard we hold ourselves to.</p><footer class="story-reader__footer"><a class="base-button is-bronze" href="contact/">Talk to us about your build <svg class="arrow-svg" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M8.5 1 13 5.5 8.5 10M13 5.5H1" stroke="currentColor" stroke-width="1.4"/></svg></a></footer></div></template></article><article class="story-card" data-story="land-to-landmark" tabindex="0" role="button" aria-label="Read: Transforming land into a landmark: the foundation of trust at Saansud Infra"><div class="story-card__image"><span class="story-tag">Quality assurance</span><img class="lazy-image" src="assets/images/duo-1.jpg" alt="Transforming land into a landmark: the foundation of trust at Saansud Infra"/></div><div class="story-card__meta"><span class="story-read-time">10 min read</span><h3 class="story-card__title">Transforming land into a landmark: the foundation of trust at Saansud Infra</h3><p class="story-card__excerpt">A plot is potential.</p></div><template class="story-src"><header class="story-reader__header"><span class="story-tag">Quality assurance</span><h1>Transforming land into a landmark: the foundation of trust at Saansud Infra</h1><span class="story-read-time">10 min read</span></header><div class="story-reader__hero"><img src="assets/images/duo-1.jpg" alt=""/></div><div class="story-reader__body"><p class="reveal-line">A plot is potential. A landmark is potential made permanent — through a real structural warranty, verifiable quality and design rooted in how families actually live.</p><blockquote class="pull-quote reveal-line">&ldquo;A home isn't judged on completion day. It's judged years later.&rdquo;</blockquote><h2 class="reveal-line">A home is a fifty-year decision</h2><p class="reveal-line">Most purchases you make are for a season. A home is for generations. That changes everything about how it should be built — the question is never just "will it look good at handover?" but "will it still be standing strong, and feeling like home, when your grandchildren inherit it?"</p><h2 class="reveal-line">A warranty that actually means something</h2><p class="reveal-line">We back every home with a 10-year structural warranty. A warranty is only as good as the build behind it, which is why we put our name on the structure itself — branded steel, graded cement, M20–M25 concrete and waterproofing detailed to last.</p><h2 class="reveal-line">Quality you can verify, not just trust</h2><p class="reveal-line">Trust should be earned with evidence, not asked for on faith. Soil is tested before design. Materials are inspected on delivery. Every stage — foundation, slab, brickwork, finishes — is checked by our own quality controllers before the next begins, and documented so you can see it.</p><h2 class="reveal-line">Designed for how Odisha actually lives</h2><p class="reveal-line">A landmark home respects its place. We design for the climate, the light and the way families here gather — from the pooja room to the courtyard to the parking — so the house feels rooted, not imported.</p><h2 class="reveal-line">From plot to legacy</h2><p class="reveal-line">That is what it means to turn land into a landmark: not just a structure on a survey number, but a long-term family legacy you can hand down with pride. It is the foundation of trust everything else at Saansud is built on.</p><footer class="story-reader__footer"><a class="base-button is-bronze" href="contact/">Talk to us about your build <svg class="arrow-svg" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M8.5 1 13 5.5 8.5 10M13 5.5H1" stroke="currentColor" stroke-width="1.4"/></svg></a></footer></div></template></article></div>
+    </div>
+    <div class="stories-drag-hint container" data-drag-hint><span>Drag to browse</span>
+      <svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="story-reader" data-story-reader aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="story-reader__progress"></div>
+      <button class="story-reader__close" type="button" aria-label="Close story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="story-reader__content"></div>
+    </div>
 
     <section class="section container" data-name="Projects">
       <div class="section-head reveal">

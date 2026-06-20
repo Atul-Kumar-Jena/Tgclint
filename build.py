@@ -361,6 +361,123 @@ def service_cards():
     return out
 
 
+STORY_QUOTES = {
+    "sasta-ru-hinasta": "Smart homeowners don't ask how cheap &mdash; they ask how right.",
+    "hidden-health-cost": "The true cost of a home is measured in time, energy and peace of mind &mdash; not just money.",
+    "land-to-landmark": "A home isn't judged on completion day. It's judged years later.",
+}
+
+SERVICES_FULL = [
+    ("construction", "01", "Building construction", "product-structural",
+     "From the first 2D floor plan to the day you get the keys, one accountable team carries the build &mdash; structural drawings, working drawings, site execution and every approval in between.",
+     ["2D floor plans &amp; 3D elevations", "Structural &amp; working drawings for execution",
+      "Plumbing, electrical &amp; furniture layouts", "Fe500/550 steel · RMC M20/M25 concrete",
+      "Soil testing before design begins", "10-year structural warranty"],
+     [("Design &amp; budgeting", "plans, materials and costing fixed before ground is broken"),
+      ("Execution", "milestone-based construction with our own supervisors on site"),
+      ("Finishing", "full quality review and snag resolution before handover"),
+      ("Handover", "documented warranty and post-handover support")]),
+    ("interiors", "02", "Interior designing", "showroom",
+     "Kitchens, wardrobes, lighting and finishes &mdash; designed and delivered with the same transparency as our construction, at a flat design fee regardless of budget or scale.",
+     ["Space planning and 3D visualisation", "Modular kitchen and wardrobe design",
+      "Lighting design and electrical co-ordination", "Flat design fee &mdash; no percentage mark-ups"],
+     [("Consultation", "lifestyle, budget and style preferences mapped out"),
+      ("Design", "full 3D layout and material palette presented for approval"),
+      ("Execution", "modular fit-out by our own execution team"),
+      ("Handover", "final walkthrough and finishing touches")]),
+    ("renovation", "03", "Renovation &amp; remodel", "product-additional",
+     "Reflooring, painting, kitchen and bathroom upgrades and full remodelling &mdash; planned around your life, with minimal disruption and a clear material plan from day one.",
+     ["Structural assessment before any work begins", "Kitchen and bathroom upgrades",
+      "Reflooring and wall treatments", "Phased work plans to limit household disruption"],
+     [("Assessment", "site survey and scope agreed in writing"),
+      ("Planning", "material selection and a phased schedule"),
+      ("Execution", "work carried out in agreed phases"),
+      ("Sign-off", "final inspection and clean handover")]),
+    ("architecture", "04", "Architecture &amp; approvals", "product-windows",
+     "Site-specific design paired with full government liaison &mdash; sanctioned plans, electricity, water and sewage connections handled so you never have to navigate any of it yourself.",
+     ["Site-specific architectural design", "Construction plan sanction (BDA/CDA/Panchayat/Tahasil)",
+      "Temporary &amp; permanent electricity connection", "Water and sewage connection assistance"],
+     [("Site study", "orientation, soil and local regulation review"),
+      ("Design", "layout drawn for the site, not a generic template"),
+      ("Sanction", "drawings filed and approved with local authorities"),
+      ("Connections", "utility connections arranged ahead of handover")]),
+]
+
+
+def services_showcase():
+    stage = ""
+    rows = ""
+    for i, (key, num, title, img, desc, inc, proc) in enumerate(SERVICES_FULL):
+        stage += f'<div class="img{" active" if i == 0 else ""}" data-stage="{key}"><img class="lazy-image" src="assets/images/{img}.jpg" alt="{title}"/></div>'
+        inc_html = "".join(f"<li>{x}</li>" for x in inc)
+        proc_html = "".join(f"<li><b>{a}</b> &mdash; {b}</li>" for a, b in proc)
+        rows += f"""
+        <div class="service-row{' active' if i == 0 else ''}" data-service="{key}">
+          <div class="service-row__head"><span class="service-row__num">{num}</span><h3>{title}</h3>
+            <svg class="service-row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="service-row__body">
+            <p class="service-row__desc">{desc}</p>
+            <ul class="service-row__inc">{inc_html}</ul>
+            <div class="service-proc"><h4>How it runs</h4><ol>{proc_html}</ol></div>
+            <a class="base-button is-alpha" href="contact/">Get an estimate</a>
+          </div>
+        </div>"""
+    return f"""
+    <section class="section container" id="services" data-name="What we do">
+      <div class="section-head reveal">
+        <div><span class="base-title" style="margin-bottom:2rem">What we do</span><h2>One team,<br/>from plot to keys.</h2></div>
+        <p class="muted lead" style="max-width:40ch">Architecture, engineering, construction and interiors &mdash; handled, so you never chase a single soul.</p>
+      </div>
+      <div class="services-layout reveal">
+        <div class="services-stage">{stage}</div>
+        <div class="services-list">{rows}</div>
+      </div>
+    </section>"""
+
+
+def story_reader_template(d):
+    quote = STORY_QUOTES[d["slug"]]
+    body = f'<p class="reveal-line">{d["lede"]}</p><blockquote class="pull-quote reveal-line">&ldquo;{quote}&rdquo;</blockquote>'
+    for sub, paras in d["body"]:
+        body += f'<h2 class="reveal-line">{sub}</h2>' + "".join(f'<p class="reveal-line">{p}</p>' for p in paras)
+    return (f'<template class="story-src">'
+            f'<header class="story-reader__header"><span class="story-tag">{d["cat"]}</span>'
+            f'<h1>{d["title"]}</h1><span class="story-read-time">{d["read"]}</span></header>'
+            f'<div class="story-reader__hero"><img src="assets/images/{d["img"]}.jpg" alt=""/></div>'
+            f'<div class="story-reader__body">{body}'
+            f'<footer class="story-reader__footer"><a class="base-button is-bronze" href="contact/">Talk to us about your build {ARROW}</a></footer>'
+            f'</div></template>')
+
+
+def stories_section():
+    cards = ""
+    for d in BLOG:
+        excerpt = d["lede"].split(".")[0] + "."
+        cards += (f'<article class="story-card" data-story="{d["slug"]}" tabindex="0" role="button" aria-label="Read: {d["title"]}">'
+                  f'<div class="story-card__image"><span class="story-tag">{d["cat"]}</span>'
+                  f'<img class="lazy-image" src="assets/images/{d["img"]}.jpg" alt="{d["title"]}"/></div>'
+                  f'<div class="story-card__meta"><span class="story-read-time">{d["read"]}</span>'
+                  f'<h3 class="story-card__title">{d["title"]}</h3><p class="story-card__excerpt">{excerpt}</p></div>'
+                  f'{story_reader_template(d)}</article>')
+    return f"""
+    <section class="section container" id="stories" data-name="Stories" style="padding-bottom:8rem">
+      <div class="section-head reveal" style="margin-bottom:4rem">
+        <div><span class="base-title" style="margin-bottom:2rem">Stories</span><h2>Worth your time.</h2></div>
+        <p class="muted lead" style="max-width:40ch">What we've learned building homes across Odisha &mdash; tap a card to read.</p>
+      </div>
+    </section>
+    <div class="stories-browse reveal" data-stories-browse tabindex="0">
+      <div class="stories-track">{cards}</div>
+    </div>
+    <div class="stories-drag-hint container" data-drag-hint><span>Drag to browse</span>
+      <svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="story-reader" data-story-reader aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="story-reader__progress"></div>
+      <button class="story-reader__close" type="button" aria-label="Close story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="story-reader__content"></div>
+    </div>"""
+
+
 home_body = f"""
   <main>
     <section class="home-header" data-name="Saansud Infra">
@@ -385,13 +502,7 @@ home_body = f"""
       </div>
     </section>
 
-    <section class="section container" data-name="What we do">
-      <div class="section-head reveal">
-        <div><span class="base-title" style="margin-bottom:2rem">What we do</span><h2>One team,<br/>from plot to keys.</h2></div>
-        <p class="muted lead" style="max-width:40ch">Architecture, engineering, construction and interiors &mdash; handled, so you never have to chase a single soul.</p>
-      </div>
-      <div class="product-grid reveal">{service_cards()}</div>
-    </section>
+    {services_showcase()}
 
     <section class="scale-sec" data-name="Craft">
       <div class="frame">
@@ -409,6 +520,8 @@ home_body = f"""
         <div class="btn-row"><a class="base-button is-white" href="interior/">Explore interiors {ARROW}</a></div>
       </div>
     </section>
+
+    {stories_section()}
 
     <section class="section container" data-name="Projects">
       <div class="section-head reveal">
