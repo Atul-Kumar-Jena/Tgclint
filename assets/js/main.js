@@ -243,6 +243,18 @@
         var dist = sec._dist || 0;
         var x = Math.min(Math.max(y, 0), dist);
         track.style.transform = 'translate3d(' + (-x) + 'px,0,0)';
+        // fullscreen image unveil: ramp --rv to 1 as each media panel centres
+        var media = sec.querySelectorAll('.story-panel--media');
+        if (media.length) {
+          var vw = window.innerWidth, vc = vw / 2;
+          media.forEach(function (m) {
+            var r = m.getBoundingClientRect();
+            var d = Math.abs((r.left + r.width / 2) - vc) / vw;   // 0 centred → ~1 a viewport away
+            var rv = Math.max(0, 1 - d * 1.5);
+            rv = rv * rv * (3 - 2 * rv);                          // smoothstep
+            m.style.setProperty('--rv', rv.toFixed(3));
+          });
+        }
         // progress UI
         var n = parseInt(sec.getAttribute('data-count') || '0', 10);
         if (n) {

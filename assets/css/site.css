@@ -970,7 +970,16 @@ body.is-story .page-header { display: none; }
 .story-panel p { font-size: 1.8rem; line-height: 1.65; color: var(--color-grey); max-width: 42ch; }
 .story-panel--media { padding-left: 0; padding-right: 0; justify-content: center; }
 .story-panel--media img { width: 100%; height: 64vh; object-fit: cover; }
-.hscroll.is-hscroll .story-panel--media { width: 60rem; padding-left: 0; padding-right: 4rem; }
+/* Fullscreen cinematic image moment: the media panel spans the whole viewport
+   and the picture "unveils" — letterbox opens + zoom settles — as it reaches
+   centre. --rv (0 off-centre → 1 centred) is driven per-frame by initHScroll;
+   the fallback 1 keeps it fully open on mobile / reduced-motion. */
+.hscroll.is-hscroll .story-panel--media { width: 100vw; height: 100%; padding: 0; overflow: hidden; }
+.hscroll.is-hscroll .story-panel--media img {
+  width: 100vw; height: 100vh; object-fit: cover; will-change: transform, clip-path;
+  transform: scale(calc(1.16 - .16 * var(--rv, 1)));
+  clip-path: inset(calc((1 - var(--rv, 1)) * 15%) 0 round 0);
+}
 .story-panel--quote .pull-quote { margin: 0; }
 
 /* mobile / fallback: stack vertically, full width, readable */
