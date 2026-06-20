@@ -73,7 +73,12 @@ section[id], main[id] { scroll-margin-top: 2rem; }
   padding: 0 5rem; height: 5rem; z-index: 30;
   display: flex; align-items: center; justify-content: center;
   overflow: visible; color: var(--color-white); user-select: none;
+  transition: transform .5s var(--ease-out-cubic), opacity .4s var(--ease-out-cubic);
 }
+/* tuck the capsule away while scrolling down so it never sits on a CTA;
+   it slides back up on the slightest scroll up (driven by initHeaderHide) */
+.header.is-hidden { transform: translate3d(-50%, calc(100% + 4rem), 0) !important; opacity: 0; pointer-events: none; }
+.header.is-menu.is-hidden { transform: translate3d(-50%, 0, 0) !important; opacity: 1; pointer-events: auto; }
 .header .background {
   position: absolute; inset: 0; z-index: -1;
   backdrop-filter: blur(2rem); -webkit-backdrop-filter: blur(2rem);
