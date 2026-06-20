@@ -7,18 +7,28 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canHover = window.matchMedia('(hover: hover)').matches;
 
-  /* ---- intro splash (once per session) ------------------------------- */
+  /* ---- splash screen + cinematic entry (once per session) ------------ */
   function initIntro() {
     var intro = document.querySelector('.intro');
-    if (!intro) return;
+    if (!intro) { document.body.classList.add('ready'); return; }
     var seen = false;
     try { seen = sessionStorage.getItem('fg_intro') === '1'; } catch (e) {}
-    if (seen || reduceMotion) { intro.classList.add('is-hidden'); intro.setAttribute('aria-hidden', 'true'); return; }
-    window.setTimeout(function () {
-      intro.classList.add('is-hidden');
-      intro.setAttribute('aria-hidden', 'true');
+    if (seen || reduceMotion) {
+      intro.classList.add('is-hidden'); intro.setAttribute('aria-hidden', 'true');
+      document.body.classList.add('ready');
+      return;
+    }
+    document.body.classList.add('has-splash');     // arm the entry animations
+    var done = false;
+    function finish() {
+      if (done) return; done = true;
+      intro.classList.add('is-hidden'); intro.setAttribute('aria-hidden', 'true');
+      document.body.classList.add('ready');        // play capsule + hero entry
       try { sessionStorage.setItem('fg_intro', '1'); } catch (e) {}
-    }, 2300);
+    }
+    window.setTimeout(finish, 2400);
+    intro.addEventListener('click', finish);       // skip on click
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') finish(); });
   }
 
   /* ---- custom cursor -------------------------------------------------- */
@@ -230,8 +240,21 @@
       secs.forEach(function (sec) {
         var track = sec.querySelector('.track');
         var y = -sec.getBoundingClientRect().top;
-        var x = Math.min(Math.max(y, 0), sec._dist || 0);
+        var dist = sec._dist || 0;
+        var x = Math.min(Math.max(y, 0), dist);
         track.style.transform = 'translate3d(' + (-x) + 'px,0,0)';
+        // progress UI
+        var n = parseInt(sec.getAttribute('data-count') || '0', 10);
+        if (n) {
+          var prog = dist ? x / dist : 0;
+          var bar = sec.querySelector('.hbar i');
+          if (bar) bar.style.width = (Math.max(prog, 0.02) * 100).toFixed(1) + '%';
+          var cnt = sec.querySelector('.hcount');
+          if (cnt) {
+            var idx = Math.min(n, Math.floor(prog * n) + 1);
+            cnt.textContent = ('0' + idx).slice(-2) + ' / ' + ('0' + n).slice(-2);
+          }
+        }
       });
     }
     setup(); onScroll();

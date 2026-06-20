@@ -10,9 +10,12 @@ WA = "https://wa.me/919178711798"
 TEL = "tel:+919178711798"
 EMAIL = "mailto:info@saansud.com"
 
-MARK = ('<svg viewBox="0 0 42 42" fill="none" aria-hidden="true">'
-        '<path d="M42 15.1935V10.5L21 0L0 10.5V31.5L21 42L42 31.5V19.95L25.2 11.55V23.2995L37.2435 29.1795L21 37.3065L4.2 28.9065V13.0935L21 4.6935L42 15.1935Z" fill="currentColor"/>'
-        '<path d="M21 13.902V9.45L8.4 15.75V20.4435L21 13.902Z" fill="currentColor"/></svg>')
+S_PATH = ("M74 32C74 21 63 16 50 16C35 16 29 25 29 35C29 47 43 50 52 52"
+          "C66 56 74 60 74 70C74 83 62 88 49 88C35 88 28 81 28 71")
+# Saansud "S" monogram (placeholder for the real brand logo)
+MARK = (f'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+        f'<path pathLength="100" d="{S_PATH}" stroke="currentColor" stroke-width="11" stroke-linecap="round"/></svg>')
+MARK_MINI = f'<span class="brandmark-mini">{MARK}</span>'
 ARROW = ('<svg class="arrow-svg" viewBox="0 0 14 11" fill="none" aria-hidden="true">'
          '<path d="M8.5 1 13 5.5 8.5 10M13 5.5H1" stroke="currentColor" stroke-width="1.4"/></svg>')
 BURGER = '<svg viewBox="0 0 20 11" fill="none" aria-hidden="true"><path d="M0 1h20M0 10h20" stroke="currentColor" stroke-width="1.4"/></svg>'
@@ -55,16 +58,12 @@ def head(title, desc):
 def intro():
     return f"""
   <div class="intro" role="presentation">
+    <div class="intro-grid"></div>
+    <div class="intro-foundation"></div>
+    <div class="bricks"><span></span><span></span><span></span><span></span></div>
     <div class="logo">
-      <div class="brandmark" style="color:var(--color-accent)">
-        {MARK}
-        <div class="cube"><div class="shape">
-          <div class="face face-front"></div><div class="face face-back"></div>
-          <div class="face face-right"></div><div class="face face-left"></div>
-          <div class="face face-top"></div><div class="face face-bottom"></div>
-        </div></div>
-      </div>
-      <div class="wordmark"><span style="font-family:var(--font-f-aeonik-mono);font-weight:600;font-size:2rem;letter-spacing:.16em;text-transform:uppercase;color:var(--color-grey)">Saansud</span></div>
+      <span class="intro-mark">{MARK}</span>
+      <div class="wordmark"><span class="wm">Saansud</span><span class="tag">Building Landmarks</span></div>
     </div>
   </div>"""
 
@@ -140,7 +139,7 @@ def footer():
     <div class="inner">
       <div class="top">
         <div>
-          <span class="brand" style="color:var(--color-accent)"><span class="mark"></span>Saansud&nbsp;Infra</span>
+          <span class="brand" style="color:var(--color-accent)">{MARK_MINI}Saansud&nbsp;Infra</span>
           <p class="lede">Transforming land into landmarks across Odisha and Bangalore — transparent costing, assured timelines and a 10-year structural warranty on every home.</p>
         </div>
         {col_html}
@@ -163,8 +162,8 @@ def scripts():
 
 def page_header_bar(label, variant):
     cls = "page-header" + ("" if variant == "white" else " is-dark")
-    return (f'<section class="{cls}"><a class="logo" href="{BASE}" style="--mk:var(--color-accent)">'
-            f'<span class="mark" style="background:var(--color-accent)"></span>Saansud&nbsp;Infra</a><h1>{label}</h1>'
+    return (f'<section class="{cls}"><a class="logo" href="{BASE}">'
+            f'{MARK_MINI}Saansud&nbsp;Infra</a><h1>{label}</h1>'
             f'<a class="base-button is-bronze" href="contact/">Get a free estimate</a></section>')
 
 
@@ -336,6 +335,32 @@ def blog_cards(limit=None):
 
 
 # ===================== HOME =====================
+SERVICE_CARDS = [
+    ("01 — Construction", "Building construction", "From 2D plans to final handover — structural drawings, working drawings and full execution by one accountable team.", "product-structural", "construction/", True),
+    ("02 — Interiors", "Interior designing", "Kitchens, wardrobes, lighting and finishes, delivered with flat, transparent design fees for any budget.", "showroom", "interior/", True),
+    ("03 — Renovation", "Renovation &amp; remodel", "Reflooring, painting, kitchen and bathroom upgrades and complete remodelling, planned around your life.", "product-additional", "construction/", False),
+    ("04 — Architecture", "Architecture &amp; approvals", "Site-specific design plus government sanction, electricity, water and sewage liaison — handled for you.", "product-windows", "construction/", False),
+]
+
+
+def service_cards():
+    out = ""
+    for idx, title, desc, img, href, tall in SERVICE_CARDS:
+        t = " tall" if tall else ""
+        out += f"""
+          <article class="product-card{t}">
+            <a class="card-link" href="{href}" aria-label="{title}"></a>
+            <div class="media"><img class="lazy-image" src="assets/images/{img}.jpg" alt="{title}" /></div>
+            <div class="product-body">
+              <span class="idx">{idx}</span>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+              <span class="product-more">Discover <span class="arrow">&rarr;</span></span>
+            </div>
+          </article>"""
+    return out
+
+
 home_body = f"""
   <main>
     <section class="home-header" data-name="Saansud Infra">
@@ -345,63 +370,73 @@ home_body = f"""
           <p class="base-heading">Build right.<br/>Live smart.</p>
           <div class="indicator" aria-hidden="true">Scroll to explore</div>
         </div>
-        <p class="text">Transform your land into a landmark home — with transparent costing, assured quality and end-to-end execution across Odisha and Bangalore.</p>
-        <div class="hero-cta">
-          <a class="base-button is-bronze" href="contact/">Get a free estimate {ARROW}</a>
-          <a class="base-button is-white" href="projects/">Explore projects {ARROW}</a>
+        <div class="row">
+          <h2 class="base-title">Home builders &mdash; Odisha</h2>
+          <p class="text">We turn land into homes a family keeps for generations &mdash; designed, costed and built by one team you can trust, from the first drawing to the day you get the keys.</p>
         </div>
-        {trust_bar()}
       </div>
     </section>
 
     <section class="section container" data-name="About">
       <div class="text-cta reveal">
-        <span class="base-title">About Saansud Infra</span>
-        <p class="base-heading">We turn plots into <em>generational homes</em> — engineered with transparency, built with care and backed by a 10-year warranty.</p>
-        <div class="btn-row"><a class="base-button is-black" href="about/">Who we are {ARROW}</a></div>
+        <span class="base-title">About Saansud</span>
+        <p class="base-heading">A home is the most important thing a family ever builds. <em>We treat it that way.</em></p>
+        <div class="btn-row"><a class="base-button is-black" href="about/">Our story {ARROW}</a></div>
       </div>
+    </section>
+
+    <section class="section container" data-name="What we do">
+      <div class="section-head reveal">
+        <div><span class="base-title" style="margin-bottom:2rem">What we do</span><h2>One team,<br/>from plot to keys.</h2></div>
+        <p class="muted lead" style="max-width:40ch">Architecture, engineering, construction and interiors &mdash; handled, so you never have to chase a single soul.</p>
+      </div>
+      <div class="product-grid reveal">{service_cards()}</div>
     </section>
 
     <section class="scale-sec" data-name="Craft">
       <div class="frame">
-        <img class="lazy-image" src="assets/images/duo-1.jpg" alt="A Saansud home coming to life" />
-        <div class="cap"><span class="eyebrow">Land into landmarks</span><h2>Watch your plot become a home you'll never want to leave.</h2></div>
+        <img class="lazy-image" src="assets/images/duo-1.jpg" alt="A Saansud home taking shape" />
+        <div class="cap"><span class="eyebrow">Land into landmarks</span><h2>Watch a plot become a home you never want to leave.</h2></div>
       </div>
     </section>
 
-    {why_section()}
-
-    <section class="section container packages" data-name="Packages">
-      <div class="section-head reveal"><div><span class="base-title" style="margin-bottom:2rem">Construction packages</span><h2>Three tiers,<br/>one standard of care.</h2></div>
-        <p class="lead" style="max-width:40ch;color:color-mix(in srgb,var(--color-cream) 70%, transparent)">Pick the specification that fits your budget — every package is fixed-cost and fully transparent.</p></div>
-      <div class="packages-grid">{package_cards()}</div>
-    </section>
-
-    <section class="section container" data-name="Projects">
-      <div class="section-head reveal"><div><span class="base-title" style="margin-bottom:2rem">Featured projects</span><h2>Transforming land<br/>into landmarks.</h2></div>
-        <p class="muted lead" style="max-width:40ch">Developed-land societies across Bhubaneswar, Paradeep and Jagatsinghpur.</p></div>
-      <div class="projects-grid">{project_cards(limit=4)}</div>
-    </section>
-
-    <section class="banner is-left" data-name="Interior">
+    <section class="banner is-left" data-name="Interiors">
       <div class="media"><img class="lazy-image" src="assets/images/showroom.jpg" alt="A Saansud interior fit-out"/></div>
       <div class="inner reveal">
         <span class="eyebrow">Interior designing</span>
-        <h2>From bare shell to a home you'll love living in.</h2>
-        <p>Kitchens, wardrobes, lighting and finishes designed and delivered with the same transparency as our construction — flat design fees, any budget.</p>
+        <h2>From a bare shell to a home you never want to leave.</h2>
+        <p>Kitchens, wardrobes, lighting and finishes, designed and delivered with the same transparency as our construction.</p>
         <div class="btn-row"><a class="base-button is-white" href="interior/">Explore interiors {ARROW}</a></div>
       </div>
     </section>
 
-    <section class="section container testimonials" data-name="Reviews">
-      <div class="section-head reveal"><div><span class="base-title" style="margin-bottom:2rem">Testimonials</span><h2>Trusted by 1000+<br/>families.</h2></div></div>
-      <div class="testi-grid">{testi_cards(limit=3)}</div>
+    <section class="section container" data-name="Projects">
+      <div class="section-head reveal">
+        <div><span class="base-title" style="margin-bottom:2rem">Featured projects</span><h2>Land into landmarks.</h2></div>
+        <p class="muted lead" style="max-width:40ch">Developed-land societies across Bhubaneswar, Paradeep and Jagatsinghpur.</p>
+      </div>
+      <div class="projects-grid reveal">{project_cards(limit=2)}</div>
+      <div class="btn-row reveal" style="margin-top:4rem"><a class="base-button is-alpha" href="projects/">View all projects</a></div>
     </section>
 
-    <section class="section container" data-name="Blog">
-      <div class="section-head reveal"><div><span class="base-title" style="margin-bottom:2rem">Insights</span><h2>Build with confidence.</h2></div>
-        <p class="muted lead" style="max-width:40ch">Practical, no-nonsense guidance for homeowners who want to avoid costly mistakes.</p></div>
-      <div class="blog-grid">{blog_cards(limit=3)}</div>
+    <section class="section container" data-name="Craft">
+      <div class="assets-duo reveal">
+        <div class="figure tall"><img class="lazy-image" src="assets/images/duo-1.jpg" alt="A Saansud home taking shape"/></div>
+        <div class="copy">
+          <span class="base-title">The craft</span>
+          <h2>Trust is poured into the foundation, not promised in a brochure.</h2>
+          <p class="lead">Branded steel and graded cement. Soil tested before design. Every stage checked by our own quality controllers &mdash; and signed off with a ten-year structural warranty.</p>
+          <div class="btn-row"><a class="base-button is-alpha" href="construction/">How we build</a></div>
+        </div>
+        <div class="figure"><img class="lazy-image" src="assets/images/duo-2.jpg" alt="A finished Saansud residence"/></div>
+      </div>
+    </section>
+
+    <section class="section container" data-name="Reviews">
+      <div class="reviews reveal">
+        <blockquote>&ldquo;They turned my dream palace into reality.&rdquo;</blockquote>
+        <div class="cite"><img class="lazy-image" src="assets/images/client-avatar.jpg" alt="Prangyamayee Panda"/><span class="who">Prangyamayee Panda<span>Mancheswar, Bhubaneswar</span></span></div>
+      </div>
     </section>
 
     <section class="banner is-center" id="contact" data-name="Contact">
@@ -409,8 +444,7 @@ home_body = f"""
       <div class="inner reveal">
         <span class="eyebrow">Start your project</span>
         <h2>Let's build your landmark home.</h2>
-        <div class="btn-row"><a class="base-button is-bronze" href="contact/">Get a free estimate {ARROW}</a>
-        <a class="base-button is-white" href="{WA}" target="_blank" rel="noopener noreferrer">WhatsApp us {ARROW}</a></div>
+        <div class="btn-row"><a class="base-button is-bronze" href="contact/">Get a free estimate {ARROW}</a></div>
       </div>
     </section>
   </main>"""
@@ -431,11 +465,10 @@ about_body = page_hero("About", "A studio built on trust.", "Saansud Infra Pvt. 
         <div class="reveal"><img class="lazy-image" src="assets/images/duo-2.jpg" alt="A completed Saansud residence" style="width:100%;aspect-ratio:3/4;object-fit:cover"/></div>
       </div>
     </section>
-    <section class="section container">
-      <div class="stats reveal">
-        <div class="stat"><div class="num">20+</div><div class="lbl">Years of excellence</div></div>
-        <div class="stat"><div class="num">17.45M+</div><div class="lbl">Sq.ft delivered</div></div>
-        <div class="stat"><div class="num">9+</div><div class="lbl">Projects completed</div></div>
+    <section class="scale-sec">
+      <div class="frame">
+        <img class="lazy-image" src="assets/images/showroom.jpg" alt="A Saansud project under way" />
+        <div class="cap"><span class="eyebrow">Two decades of building</span><h2>Quietly turning Odisha's plots into landmarks &mdash; one trusted home at a time.</h2></div>
       </div>
     </section>
     {why_section()}
@@ -486,23 +519,43 @@ write("construction/index.html", page("Construction & packages — Saansud Infra
 
 
 # ===================== PROJECTS =====================
+PROJECT_EXTRA = {
+    "Saansud Laxmi Narayan Vihar": ("A sprawling developed-land society planned for modern family living, delivering homes that balance contemporary aspiration with timeless value.",
+                                    ["End-to-end execution", "10-year warranty", "Transparent pricing"]),
+    "Mahaveer Enclave": ("A premium residential enclave with contemporary planning, generous plots and a community-first layout near the city's growth corridor.",
+                         ["Premium finishes", "Community design", "Modern layout"]),
+    "Mahaveer Nagar": ("A thoughtfully planned society in Paradeep bringing together quality, affordability and genuine community living.",
+                       ["Value for money", "Community living", "Strategic location"]),
+    "IIT Bhubaneswar Project": ("A premium development near IIT Bhubaneswar, pairing academic prestige with residential excellence and strong appreciation potential.",
+                                ["Premium location", "Near IIT", "High appreciation"]),
+}
+SPEC_LABELS = ["Area", "Units", "Avg size"]
+
+
 def project_panels():
     out = ('<div class="lead-panel"><span class="base-title">Featured projects</span>'
            '<h2>Transforming land into landmarks.</h2>'
            '<span class="scroll-hint">Scroll to explore &rarr;</span></div>')
-    for name, loc, specs, price, img in PROJECTS:
-        sp = "".join(f"<span>{s}</span>" for s in specs.split("|"))
-        out += (f'<a class="panel" href="contact/"><div class="media"><img class="lazy-image" src="assets/images/{img}.jpg" alt="{name}"/></div>'
-                f'<div class="specs">{sp}</div>'
-                f'<div class="meta"><h3>{name}</h3><span class="loc">{loc}</span></div>'
-                f'<div class="meta"><span class="price">{price}</span><span class="loc">Developed land</span></div></a>')
+    for n, (name, loc, specs, price, img) in enumerate(PROJECTS, 1):
+        vals = specs.split("|")
+        sp = "".join(f'<div class="s"><span>{SPEC_LABELS[i]}</span><b>{v}</b></div>' for i, v in enumerate(vals))
+        desc, tags = PROJECT_EXTRA[name]
+        tag_html = "".join(f"<span>{t}</span>" for t in tags)
+        out += (f'<a class="hpanel" href="contact/">'
+                f'<div class="hpanel-media"><span class="num">{str(n).zfill(2)}</span><img class="lazy-image" src="assets/images/{img}.jpg" alt="{name}"/></div>'
+                f'<div class="hpanel-body"><h3>{name}</h3><p class="loc">{loc}</p>'
+                f'<div class="hspecs">{sp}</div><p class="hdesc">{desc}</p>'
+                f'<div class="htags">{tag_html}<span>{price}</span></div>'
+                f'<span class="hcta">Get details {ARROW}</span></div></a>')
     return out
 
 
-projects_body = page_hero("Projects", "Land into landmarks.", "Developed-land societies and homes across Bhubaneswar, Paradeep and Jagatsinghpur. Scroll sideways to explore each one.") + f"""
-    <section class="hscroll"><div class="sticky"><div class="track">{project_panels()}</div></div></section>
+projects_body = page_hero("Projects", "Land into landmarks.", "Developed-land societies across Bhubaneswar, Paradeep and Jagatsinghpur. Scroll sideways to explore each one.") + f"""
+    <section class="hscroll" data-count="{len(PROJECTS)}"><div class="sticky">
+      <div class="hscroll-ui"><span class="t">Featured projects</span><div class="hbar"><i></i></div><span class="hcount">01 / 0{len(PROJECTS)}</span></div>
+      <div class="track">{project_panels()}</div></div></section>
     <section class="banner is-center"><div class="media"><img class="lazy-image" src="assets/images/footer-bg.jpg" alt=""/></div>
-      <div class="inner reveal"><span class="eyebrow">Find your plot</span><h2>Plots, finance and construction — one partner.</h2>
+      <div class="inner reveal"><span class="eyebrow">Find your plot</span><h2>Plots, finance and construction &mdash; one partner.</h2>
       <div class="btn-row"><a class="base-button is-bronze" href="{WA}" target="_blank" rel="noopener noreferrer">WhatsApp +91 91787 11798 {ARROW}</a></div></div></section>
   </main>"""
 write("projects/index.html", page("Projects — Saansud Infra", "Saansud developed-land societies: Laxmi Narayan Vihar, Mahaveer Enclave, Mahaveer Nagar and the IIT Bhubaneswar project.", projects_body, "Projects", "projects/"))
