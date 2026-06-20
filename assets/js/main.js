@@ -113,35 +113,29 @@
     sections.forEach(function (s) { io.observe(s); });
   }
 
-  /* ---- keep the capsule from ever resting on page content ------------
-     Visible at the very top and while you're actively scrolling (so it's
-     always reachable); it tucks away when you scroll down, and also a moment
-     after you STOP scrolling anywhere in the page — so a stationary read never
-     has the capsule sitting on a button. Pointer-hover and an open menu pin it
-     visible. */
+  /* ---- capsule: slide out of the way when scrolling down, slide back
+     when scrolling up (familiar, predictable; never vanishes while you sit
+     still). Pinned visible at the very top, at the very bottom (where it rests
+     in the footer's reserved space), and while the menu is open. */
   function initHeaderHide() {
     if (!header) return;
-    var last = window.scrollY, ticking = false, idle = null, hovering = false;
-    function show() { header.classList.remove('is-hidden'); }
-    function hide() {
-      if (hovering || document.body.classList.contains('is-menu')) return;
-      if (window.scrollY < 120) return;          // pinned at the very top
-      header.classList.add('is-hidden');
-    }
-    function scheduleHide() { window.clearTimeout(idle); idle = window.setTimeout(hide, 1400); }
+    var last = window.scrollY, ticking = false;
     function update() {
       ticking = false;
       var y = window.scrollY;
-      if (document.body.classList.contains('is-menu') || y < 120) { window.clearTimeout(idle); show(); last = y; return; }
-      if (y > last + 4) { window.clearTimeout(idle); header.classList.add('is-hidden'); }  // scroll down → tuck away now
-      else if (y < last - 4) { show(); scheduleHide(); }                                    // scroll up → show, then settle away
+      var maxY = document.documentElement.scrollHeight - window.innerHeight;
+      if (document.body.classList.contains('is-menu') || y < 120 || y >= maxY - 4) {
+        header.classList.remove('is-hidden');
+      } else if (y > last + 5) {
+        header.classList.add('is-hidden');       // scrolling down
+      } else if (y < last - 5) {
+        header.classList.remove('is-hidden');     // scrolling up
+      }
       last = y;
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener('scroll', onScroll, { passive: true });
     if (window.__lenis && window.__lenis.on) window.__lenis.on('scroll', onScroll);
-    header.addEventListener('mouseenter', function () { hovering = true; window.clearTimeout(idle); show(); });
-    header.addEventListener('mouseleave', function () { hovering = false; scheduleHide(); });
   }
 
   /* ---- Lenis smooth scroll ------------------------------------------- */
