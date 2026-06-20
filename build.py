@@ -452,12 +452,11 @@ def stories_section():
     cards = ""
     for d in BLOG:
         excerpt = d["lede"].split(".")[0] + "."
-        cards += (f'<article class="story-card" data-story="{d["slug"]}" tabindex="0" role="button" aria-label="Read: {d["title"]}">'
+        cards += (f'<a class="story-card" href="blog/{d["slug"]}/" aria-label="Read: {d["title"]}">'
                   f'<div class="story-card__image"><span class="story-tag">{d["cat"]}</span>'
                   f'<img class="lazy-image" src="assets/images/{d["img"]}.jpg" alt="{d["title"]}"/></div>'
                   f'<div class="story-card__meta"><span class="story-read-time">{d["read"]}</span>'
-                  f'<h3 class="story-card__title">{d["title"]}</h3><p class="story-card__excerpt">{excerpt}</p></div>'
-                  f'{story_reader_template(d)}</article>')
+                  f'<h3 class="story-card__title">{d["title"]}</h3><p class="story-card__excerpt">{excerpt}</p></div></a>')
     return f"""
     <section class="section container" id="stories" data-name="Stories" style="padding-bottom:8rem">
       <div class="section-head reveal" style="margin-bottom:4rem">
@@ -469,12 +468,7 @@ def stories_section():
       <div class="stories-track">{cards}</div>
     </div>
     <div class="stories-drag-hint container" data-drag-hint><span>Drag to browse</span>
-      <svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-    <div class="story-reader" data-story-reader aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="story-reader__progress"></div>
-      <button class="story-reader__close" type="button" aria-label="Close story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-      <div class="story-reader__content"></div>
-    </div>"""
+      <svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>"""
 
 
 PROJECT_EXTRA = {
@@ -709,29 +703,27 @@ def story_card(d):
 
 
 for _i, _d in enumerate(BLOG):
-    _secs = ""
+    # each story reads as a horizontal side-scroll of panels on desktop,
+    # and stacks vertically on mobile / reduced-motion (hscroll fallback).
+    _panels = (f'<div class="story-panel story-panel--intro"><span class="story-tag">{_d["cat"]}</span>'
+               f'<h1>{_d["title"]}</h1><p class="story-lede">{_d["lede"]}</p>'
+               f'<span class="story-read-time">{_d["read"]}</span></div>'
+               f'<div class="story-panel story-panel--media"><img class="lazy-image" src="assets/images/{_d["img"]}.jpg" alt="{_d["title"]}"/></div>')
     for _sub, _paras in _d["body"]:
-        _secs += f'<h2 class="story-h">{_sub}</h2>' + "".join(f"<p>{_p}</p>" for _p in _paras)
-    _next = BLOG[(_i + 1) % len(BLOG)]
+        _panels += (f'<div class="story-panel"><h2 class="story-h">{_sub}</h2>'
+                    + "".join(f'<p>{_p}</p>' for _p in _paras) + '</div>')
+    _panels += (f'<div class="story-panel story-panel--quote"><blockquote class="pull-quote">&ldquo;{STORY_QUOTES[_d["slug"]]}&rdquo;</blockquote></div>'
+                f'<div class="story-panel story-panel--cta"><span class="eyebrow">Build with us</span>'
+                f'<h2 class="story-h">Talk to us about your build.</h2>'
+                f'<div class="btn-row" style="margin-top:1rem"><a class="base-button is-bronze" href="contact/">Get a free estimate {ARROW}</a>'
+                f'<a class="base-button is-alpha" href="blog/">All stories</a></div></div>')
+    _count = 2 + len(_d["body"]) + 2
     _story = f"""
   <main>
-    <article class="story">
-      <div class="story-hero">
-        <span class="eyebrow">{_d['cat']} · {_d['read']}</span>
-        <h1>{_d['title']}</h1>
-        <p class="story-lede">{_d['lede']}</p>
-      </div>
-      <div class="story-media reveal"><img class="lazy-image" src="assets/images/{_d['img']}.jpg" alt="{_d['title']}"/></div>
-      <div class="story-body">
-        {_secs}
-        <div class="btn-row" style="margin-top:3.2rem"><a class="base-button is-bronze" href="contact/">Get a free estimate {ARROW}</a></div>
-      </div>
-    </article>
-    <section class="section container">
-      <div class="section-head reveal"><div><span class="base-title" style="margin-bottom:2rem">Next story</span></div>
-        <a class="base-button is-alpha" href="blog/">All stories</a></div>
-      <div class="blog-grid reveal" style="grid-template-columns:1fr">{story_card(_next)}</div>
-    </section>
+    <section class="hscroll story-hscroll" data-name="{_d['cat']}" data-count="{_count}"><div class="sticky">
+      <div class="hscroll-ui"><span class="t">{_d['cat']} · {_d['read']}</span><div class="hbar"><i></i></div><span class="hcount">01 / {str(_count).zfill(2)}</span></div>
+      <div class="track">{_panels}</div>
+    </div></section>
   </main>"""
     write(f"blog/{_d['slug']}/index.html",
           page(f"{_d['title']} — Saansud Infra", _d['lede'][:155], _story, _d['cat'], "blog/"))

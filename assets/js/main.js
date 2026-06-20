@@ -281,71 +281,25 @@
     });
   }
 
-  /* ---- stories: browse row + immersive reader ------------------------ */
+  /* ---- stories: horizontal browse row (cards link to story pages) ----- */
   function initStories() {
     var browse = document.querySelector('[data-stories-browse]');
-    var reader = document.querySelector('[data-story-reader]');
-    if (!browse || !reader) return;
-    var content = reader.querySelector('.story-reader__content');
-    var progress = reader.querySelector('.story-reader__progress');
-    var closeBtn = reader.querySelector('.story-reader__close');
+    if (!browse) return;
     var hint = document.querySelector('[data-drag-hint]');
-    var lastFocus = null;
-
-    function openStory(card) {
-      var src = card.querySelector('template.story-src');
-      if (!src) return;
-      lastFocus = card;
-      content.innerHTML = '';
-      content.appendChild(src.content.cloneNode(true));
-      reader.classList.add('open');
-      reader.setAttribute('aria-hidden', 'false');
-      document.documentElement.style.overflow = 'hidden';
-      if (window.__lenis) window.__lenis.stop();
-      reader.scrollTop = 0;
-      if (progress) progress.style.width = '0%';
-      // reveal lines
-      var lines = content.querySelectorAll('.reveal-line');
-      if (reduceMotion || !('IntersectionObserver' in window)) {
-        lines.forEach(function (l) { l.classList.add('in-view'); });
-      } else {
-        var io = new IntersectionObserver(function (es) {
-          es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
-        }, { root: reader, threshold: 0.25 });
-        lines.forEach(function (l) { io.observe(l); });
-      }
-      if (closeBtn) closeBtn.focus();
-    }
-    function closeStory() {
-      reader.classList.remove('open');
-      reader.setAttribute('aria-hidden', 'true');
-      document.documentElement.style.overflow = '';
-      if (window.__lenis) window.__lenis.start();
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-
-    document.querySelectorAll('.story-card').forEach(function (card) {
-      card.addEventListener('click', function () { openStory(card); });
-      card.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openStory(card); }
-      });
-    });
-    if (closeBtn) closeBtn.addEventListener('click', closeStory);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && reader.classList.contains('open')) closeStory(); });
-    reader.addEventListener('scroll', function () {
-      if (!progress) return;
-      var h = reader.scrollHeight - reader.clientHeight;
-      progress.style.width = (h > 0 ? (reader.scrollTop / h) * 100 : 0) + '%';
-    }, { passive: true });
-    // drag-to-scroll + hint
     if (hint) {
       var dismissed = false;
       browse.addEventListener('scroll', function () { if (!dismissed) { hint.classList.add('hidden'); dismissed = true; } }, { passive: true });
     }
-    var down = false, startX = 0, startScroll = 0;
-    browse.addEventListener('pointerdown', function (e) { down = true; startX = e.clientX; startScroll = browse.scrollLeft; });
+    // drag-to-scroll (without breaking card link clicks)
+    var down = false, moved = false, startX = 0, startScroll = 0;
+    browse.addEventListener('pointerdown', function (e) { down = true; moved = false; startX = e.clientX; startScroll = browse.scrollLeft; });
     window.addEventListener('pointerup', function () { down = false; });
-    browse.addEventListener('pointermove', function (e) { if (down) browse.scrollLeft = startScroll - (e.clientX - startX); });
+    browse.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      if (Math.abs(e.clientX - startX) > 6) moved = true;
+      browse.scrollLeft = startScroll - (e.clientX - startX);
+    });
+    browse.addEventListener('click', function (e) { if (moved) { e.preventDefault(); } }, true);
   }
 
   /* ---- hero video support (poster shows until a real .mp4 is provided) - */
