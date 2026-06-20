@@ -175,11 +175,77 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
   }
 
+  /* ---- card-stacking page transition --------------------------------- */
+  function initPageTransition() {
+    var pt = document.querySelector('.pt');
+    if (!pt) return;
+    // entrance: only after an in-site navigation
+    try {
+      if (sessionStorage.getItem('pt') === '1') {
+        sessionStorage.removeItem('pt');
+        if (!reduceMotion) { pt.classList.add('enter'); document.body.classList.add('pt-in'); }
+      }
+    } catch (e) {}
+    if (reduceMotion) return;
+    document.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      var a = e.target.closest('a');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || a.target === '_blank' || a.hasAttribute('download')) return;
+      if (href.charAt(0) === '#' || /^(mailto:|tel:|https?:|\/\/)/.test(href)) return;
+      // same-origin internal navigation → animate, then go
+      e.preventDefault();
+      if (typeof setMenu === 'function') setMenu(false);
+      var url = a.href;
+      try { sessionStorage.setItem('pt', '1'); } catch (err) {}
+      pt.classList.add('leave');
+      window.setTimeout(function () { window.location.href = url; }, 560);
+    });
+  }
+
+  /* ---- horizontal side-scroll galleries ------------------------------ */
+  function initHScroll() {
+    var secs = [].slice.call(document.querySelectorAll('.hscroll'));
+    if (!secs.length || reduceMotion) return;
+    var mq = window.matchMedia('(min-width: 1025px)');
+
+    function setup() {
+      secs.forEach(function (sec) {
+        var track = sec.querySelector('.track');
+        if (mq.matches) {
+          sec.classList.add('is-hscroll');
+          var dist = Math.max(0, track.scrollWidth - window.innerWidth);
+          sec._dist = dist;
+          sec.style.height = (window.innerHeight + dist) + 'px';
+        } else {
+          sec.classList.remove('is-hscroll');
+          sec.style.height = '';
+          track.style.transform = '';
+        }
+      });
+    }
+    function onScroll() {
+      if (!mq.matches) return;
+      secs.forEach(function (sec) {
+        var track = sec.querySelector('.track');
+        var y = -sec.getBoundingClientRect().top;
+        var x = Math.min(Math.max(y, 0), sec._dist || 0);
+        track.style.transform = 'translate3d(' + (-x) + 'px,0,0)';
+      });
+    }
+    setup(); onScroll();
+    window.addEventListener('resize', function () { setup(); onScroll(); }, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (window.__lenis && window.__lenis.on) window.__lenis.on('scroll', onScroll);
+    window.addEventListener('load', function () { setup(); onScroll(); });
+  }
+
   function initYear() { document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = String(new Date().getFullYear()); }); }
 
   function init() {
     initIntro(); initCursor(); initCookies(); initMenu(); initHeaderTitle();
-    initLazyImages(); initReveal(); initModal(); initYear(); initLenis();
+    initLazyImages(); initReveal(); initModal(); initPageTransition(); initYear(); initLenis(); initHScroll();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
