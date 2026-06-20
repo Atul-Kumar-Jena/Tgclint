@@ -193,17 +193,26 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
 /* =========================================================================
    Custom cursor  (fluid.glass §2.6)
    ========================================================================= */
+/* Borderless bronze disc that spin-pops in with a directional arrow — no
+   frosted box, no outline. The outer .cursor only carries position (set by JS);
+   the inner .label is the visual that scales so it animates independently. */
 .cursor {
   position: fixed; top: 0; left: 0; z-index: 98; pointer-events: none;
-  width: 10rem; height: 4.4rem; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(180deg, #ffffff26, #ffffff33);
-  backdrop-filter: blur(2rem); -webkit-backdrop-filter: blur(2rem);
-  color: var(--color-white); opacity: 0; transition: opacity .25s linear;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); will-change: transform;
 }
-.cursor.is-visible { opacity: 1; }
-.cursor .label { font-family: var(--font-f-aeonik-mono); font-size: 1.2rem;
-  font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+.cursor .label {
+  position: absolute; top: 0; left: 0;
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  min-width: 6.8rem; height: 6.8rem; padding: 0 1.4rem; border-radius: 50%;
+  background: var(--color-accent); color: var(--color-cream);
+  font-family: var(--font-f-aeonik-mono); font-size: 1.1rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 1.2rem 3.2rem -1rem color-mix(in srgb, var(--color-accent) 70%, transparent);
+  opacity: 0; transform: translate(-50%, -50%) scale(.2) rotate(-14deg);
+  transition: transform .55s cubic-bezier(.34, 1.56, .64, 1), opacity .3s linear;
+}
+.cursor .label::after { content: "\2197"; font-size: 1.35rem; line-height: 1; transform: translateY(-.1rem); }
+.cursor.is-visible .label { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
 @media (hover: none), (max-width: 600px) { .cursor { display: none; } }
 
 /* =========================================================================
