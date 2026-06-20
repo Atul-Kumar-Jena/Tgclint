@@ -139,7 +139,7 @@ def footer():
       <div class="top">
         <div>
           <span class="brand" style="color:var(--color-accent)">{MARK_MINI}Saansud&nbsp;Infra</span>
-          <p class="lede">Transforming land into landmarks across Odisha and Bangalore — transparent costing, assured timelines and a 10-year structural warranty on every home.</p>
+          <p class="lede">We turn land into landmarks across Odisha &amp; Bangalore. <span class="hl">Fixed price, fixed timeline, 10-year warranty</span> &mdash; in writing.</p>
         </div>
         {col_html}
       </div>
@@ -192,21 +192,21 @@ def page_hero(eyebrow, title, sub):
 
 
 # ---- shared data ---------------------------------------------------------
-WHY = [("01", "Transparent dealings", "Open pricing, documented processes and no hidden charges — you always know where every rupee goes."),
-       ("02", "Assured quality", "Branded materials, multi-stage quality checks and a 10-year structural warranty on every build."),
-       ("03", "Ideal locations", "Developed-land societies near IIT Bhubaneswar, Paradeep and Jagatsinghpur with real appreciation potential."),
-       ("04", "Fair, fixed price", "Three clear packages and realistic payment plans, so your budget and timeline are protected from day one.")]
+WHY = [("01", "Every rupee, accounted for", "Open pricing, documented at every step. You always know where your money goes."),
+       ("02", "Branded materials. Real warranty.", "Graded steel and cement, multi-stage checks, and a 10-year structural warranty in writing."),
+       ("03", "Plots that appreciate", "Developed-land societies near IIT Bhubaneswar, Paradeep and Jagatsinghpur — bought right."),
+       ("04", "One price. No surprises.", "Three clear packages and realistic payment plans. Your budget is protected from day one.")]
 
 PACKAGES = [
-    dict(name="Standard", tier="Value with quality", feat=[
+    dict(name="Standard", tier="Solid, honest, built to last", feat=[
         "2D floor plans & 3D elevations", "Fe500/550 TMT steel · 53/43 grade cement",
         "Flooring up to ₹45/sq.ft · M20 RMC", "Teak main door up to ₹22,000",
         "2-track aluminium windows", "10-year structural warranty"], featured=False),
-    dict(name="Premium", tier="Enhanced quality", feat=[
+    dict(name="Premium", tier="More finish, more comfort", feat=[
         "Complete design package", "Indus / Prime Gold steel · ACC/Zuari cement",
         "Flooring up to ₹70/sq.ft", "UPVC windows with MS grill",
         "EV charging point · rainwater harvesting", "Premium teak door up to ₹30,000"], featured=True),
-    dict(name="Luxury", tier="Ultimate excellence", feat=[
+    dict(name="Luxury", tier="Nothing held back", feat=[
         "JSW / Tata steel · M25 concrete", "Flooring up to ₹120/sq.ft · 10.5ft ceilings",
         "3-track UPVC or Sal-wood frames", "Jaquar / Grohe / Toto fixtures",
         "Designer gate & SS railings", "Premium doors ₹35,000+"], featured=False),
@@ -368,7 +368,7 @@ STORY_QUOTES = {
 
 SERVICES_FULL = [
     ("construction", "01", "Building construction", "product-structural",
-     "From the first 2D floor plan to the day you get the keys, one accountable team carries the build &mdash; structural drawings, working drawings, site execution and every approval in between.",
+     "Bare plot to handover keys &mdash; one accountable team, one fixed price, a 10-year warranty in writing. No subcontractor blame-games. No budget surprises.",
      ["2D floor plans &amp; 3D elevations", "Structural &amp; working drawings for execution",
       "Plumbing, electrical &amp; furniture layouts", "Fe500/550 steel · RMC M20/M25 concrete",
       "Soil testing before design begins", "10-year structural warranty"],
@@ -377,7 +377,7 @@ SERVICES_FULL = [
       ("Finishing", "full quality review and snag resolution before handover"),
       ("Handover", "documented warranty and post-handover support")]),
     ("interiors", "02", "Interior designing", "showroom",
-     "Kitchens, wardrobes, lighting and finishes &mdash; designed and delivered with the same transparency as our construction, at a flat design fee regardless of budget or scale.",
+     "Showroom-grade interiors at a flat design fee. No percentage games, no markup surprises &mdash; just a home that feels finished.",
      ["Space planning and 3D visualisation", "Modular kitchen and wardrobe design",
       "Lighting design and electrical co-ordination", "Flat design fee &mdash; no percentage mark-ups"],
      [("Consultation", "lifestyle, budget and style preferences mapped out"),
@@ -385,7 +385,7 @@ SERVICES_FULL = [
       ("Execution", "modular fit-out by our own execution team"),
       ("Handover", "final walkthrough and finishing touches")]),
     ("renovation", "03", "Renovation &amp; remodel", "product-additional",
-     "Reflooring, painting, kitchen and bathroom upgrades and full remodelling &mdash; planned around your life, with minimal disruption and a clear material plan from day one.",
+     "Refresh, remodel or rebuild &mdash; planned around your life, costed to the rupee, with minimal disruption from day one.",
      ["Structural assessment before any work begins", "Kitchen and bathroom upgrades",
       "Reflooring and wall treatments", "Phased work plans to limit household disruption"],
      [("Assessment", "site survey and scope agreed in writing"),
@@ -393,7 +393,7 @@ SERVICES_FULL = [
       ("Execution", "work carried out in agreed phases"),
       ("Sign-off", "final inspection and clean handover")]),
     ("architecture", "04", "Architecture &amp; approvals", "product-windows",
-     "Site-specific design paired with full government liaison &mdash; sanctioned plans, electricity, water and sewage connections handled so you never have to navigate any of it yourself.",
+     "Designed for your site, sanctioned by us. You sign once &mdash; we handle the drawings, the approvals and every utility connection.",
      ["Site-specific architectural design", "Construction plan sanction (BDA/CDA/Panchayat/Tahasil)",
       "Temporary &amp; permanent electricity connection", "Water and sewage connection assistance"],
      [("Site study", "orientation, soil and local regulation review"),
@@ -424,8 +424,8 @@ def services_showcase():
     return f"""
     <section class="section container" id="services" data-name="What we do">
       <div class="section-head reveal">
-        <div><span class="base-title" style="margin-bottom:2rem">What we do</span><h2>One team,<br/>from plot to keys.</h2></div>
-        <p class="muted lead" style="max-width:40ch">Architecture, engineering, construction and interiors &mdash; handled, so you never chase a single soul.</p>
+        <div><span class="base-title" style="margin-bottom:2rem">What we do</span><h2>One team.<br/>One bill. Zero excuses.</h2></div>
+        <p class="muted lead" style="max-width:40ch">Architecture to interiors, under one roof. You relax &mdash; we build.</p>
       </div>
       <div class="services-layout reveal">
         <div class="services-stage">{stage}</div>
@@ -460,8 +460,8 @@ def stories_section():
     return f"""
     <section class="section container" id="stories" data-name="Stories" style="padding-bottom:8rem">
       <div class="section-head reveal" style="margin-bottom:4rem">
-        <div><span class="base-title" style="margin-bottom:2rem">Stories</span><h2>Worth your time.</h2></div>
-        <p class="muted lead" style="max-width:40ch">What we've learned building homes across Odisha &mdash; tap a card to read.</p>
+        <div><span class="base-title" style="margin-bottom:2rem">Stories</span><h2>Read before you<br/>break ground.</h2></div>
+        <p class="muted lead" style="max-width:40ch">Hard-won lessons from real Odisha builds. The mistakes you'll be glad you skipped.</p>
       </div>
     </section>
     <div class="stories-browse reveal" data-stories-browse tabindex="0">
@@ -515,8 +515,8 @@ home_body = f"""
           <div class="indicator" aria-hidden="true">Scroll to explore</div>
         </div>
         <div class="row">
-          <h2 class="base-title">Home builders &mdash; Odisha</h2>
-          <p class="text">We turn land into homes a family keeps for generations &mdash; designed, costed and built by one team you can trust, from the first drawing to the day you get the keys.</p>
+          <h2 class="base-title">Home builders · Odisha</h2>
+          <p class="text">Your land, built into a home worth a lifetime &mdash; <span class="hl">fixed price, fixed timeline, zero surprises.</span></p>
         </div>
       </div>
     </section>
@@ -524,7 +524,7 @@ home_body = f"""
     <section class="section container" data-name="About">
       <div class="text-cta reveal">
         <span class="base-title">About Saansud</span>
-        <p class="base-heading">A home is the most important thing a family ever builds. <em>We treat it that way.</em></p>
+        <p class="base-heading">It's the biggest thing you'll ever build. <em>We make sure it's the rightest.</em></p>
         <div class="btn-row"><a class="base-button is-black" href="about/">Our story {ARROW}</a></div>
       </div>
     </section>
@@ -542,8 +542,8 @@ home_body = f"""
       <div class="media"><img class="lazy-image" src="assets/images/showroom.jpg" alt="A Saansud interior fit-out"/></div>
       <div class="inner reveal">
         <span class="eyebrow">Interior designing</span>
-        <h2>From a bare shell to a home you never want to leave.</h2>
-        <p>Kitchens, wardrobes, lighting and finishes, designed and delivered with the same transparency as our construction.</p>
+        <h2>Bare shell to a home you never want to leave.</h2>
+        <p>Kitchens, wardrobes, lighting, finishes &mdash; handled with the same honesty as the build.</p>
         <div class="btn-row"><a class="base-button is-white" href="interior/">Explore interiors {ARROW}</a></div>
       </div>
     </section>
@@ -559,8 +559,8 @@ home_body = f"""
         <div class="figure tall"><img class="lazy-image" src="assets/images/duo-1.jpg" alt="A Saansud home taking shape"/></div>
         <div class="copy">
           <span class="base-title">The craft</span>
-          <h2>Trust is poured into the foundation, not promised in a brochure.</h2>
-          <p class="lead">Branded steel and graded cement. Soil tested before design. Every stage checked by our own quality controllers &mdash; and signed off with a ten-year structural warranty.</p>
+          <h2>Trust isn't promised in a brochure. It's poured into the foundation.</h2>
+          <p class="lead">Branded steel. Tested soil. Checked at every stage. <span class="hl">Signed with a 10-year warranty.</span></p>
           <div class="btn-row"><a class="base-button is-alpha" href="construction/">How we build</a></div>
         </div>
         <div class="figure"><img class="lazy-image" src="assets/images/duo-2.jpg" alt="A finished Saansud residence"/></div>
@@ -578,7 +578,7 @@ home_body = f"""
       <div class="media"><img class="lazy-image" src="assets/images/footer-bg.jpg" alt="A Saansud living space at golden hour"/></div>
       <div class="inner reveal">
         <span class="eyebrow">Start your project</span>
-        <h2>Let's build your landmark home.</h2>
+        <h2>Your plot is waiting. So is your home.</h2>
         <div class="btn-row"><a class="base-button is-bronze" href="contact/">Get a free estimate {ARROW}</a></div>
       </div>
     </section>
@@ -590,7 +590,7 @@ write("index.html", page("Saansud Infra — Build Right. Live Smart. | Home Cons
 
 
 # ===================== ABOUT =====================
-about_body = page_hero("About", "A studio built on trust.", "Saansud Infra Pvt. Ltd. turns land into landmarks across Odisha and Bangalore — with 100% ownership, transparent dealings and assured timelines.") + f"""
+about_body = page_hero("About", "Built on trust. Backed in writing.", "We turn land into landmarks across Odisha &mdash; one accountable team, transparent costing and timelines you can hold us to.") + f"""
     <section class="section container">
       <div class="two-col">
         <div class="prose reveal">
@@ -631,7 +631,7 @@ SERVICES = [("Building construction", "Residential homes from 2D plans and 3D el
             ("Renovation", "Reflooring, painting, kitchen and bathroom upgrades and complete remodelling, planned around your life."),
             ("Contracting", "Material sourcing, labour management and quality control with strict timeline and budget adherence.")]
 svc_html = "".join(f'<li><span class="fi">{str(i+1).zfill(2)}</span><span class="ft"><strong>{t}</strong><span>{d}</span></span></li>' for i, (t, d) in enumerate(SERVICES))
-construction_body = page_hero("Construction", "End-to-end home construction.", "From government sanction to final handover, a single accountable team delivers your home on time and on budget.") + f"""
+construction_body = page_hero("Construction", "Plot to keys. One team.", "Government sanction to final handover, delivered on time and on budget &mdash; with a 10-year warranty in writing.") + f"""
     <section class="section container">
       <div class="two-col">
         <div class="reveal"><img class="lazy-image" src="assets/images/product-structural.jpg" alt="Saansud construction in progress" style="width:100%;aspect-ratio:4/5;object-fit:cover"/></div>
@@ -689,7 +689,7 @@ write("interior/index.html", page("Interior designing — Saansud Infra", "Compl
 
 
 # ===================== BLOG =====================
-blog_body = page_hero("Blog", "Build with confidence.", "Practical, conversion-focused guidance for homeowners who want to avoid costly construction mistakes.") + f"""
+blog_body = page_hero("Blog", "Mistakes you'll be glad you skipped.", "Hard-won lessons from real Odisha builds &mdash; the stuff nobody tells you before you break ground.") + f"""
     <section class="section container"><div class="blog-grid reveal">{blog_cards()}</div></section>
   </main>"""
 write("blog/index.html", page("Blog — Saansud Infra", "Construction insights and homeowner guidance from Saansud Infra.", blog_body, "Blog", "blog/"))
@@ -730,7 +730,7 @@ for _i, _d in enumerate(BLOG):
 
 
 # ===================== CONTACT =====================
-contact_body = page_hero("Contact", "Get a free estimate.", "Tell us about your land and your plans. We reply to every enquiry within two working days.") + f"""
+contact_body = page_hero("Contact", "Get a free estimate.", "Tell us about your plot. We reply within two working days &mdash; with real numbers, not a sales pitch.") + f"""
     <section class="section container">
       <div class="contact-grid">
         <form class="reveal" onsubmit="return false">

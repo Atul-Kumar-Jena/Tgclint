@@ -957,3 +957,7 @@ body.ready .home-header .container > *:nth-child(4) { animation-delay: .7s; }
   .story-panel--media img { height: auto; aspect-ratio: 16/10; }
   .story-panel p, .story-panel .story-lede { max-width: none; }
 }
+
+/* marketing emphasis: highlight key words in bronze */
+.hl { color: var(--color-accent); }
+.text-cta .base-heading em, .story-panel .story-h em, .home-header .base-heading .hl { font-style: normal; }
