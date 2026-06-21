@@ -973,6 +973,11 @@ body.is-story .page-header { display: none; }
 .story-panel .story-read-time { font-family: var(--font-f-aeonik-mono); font-size: 1.2rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); }
 .story-panel .story-h { font-family: var(--font-f-aeonik-pro); font-weight: 400; font-size: clamp(2.4rem, 3vw, 3.4rem); letter-spacing: -.015em; color: var(--color-black); }
 .story-panel p { font-size: 1.8rem; line-height: 1.65; color: var(--color-grey); max-width: 42ch; }
+/* in-copy emphasis: bold draws the eye in near-black, italic adds a softer beat */
+.story-panel p strong, .reveal-line strong { font-weight: 700; color: var(--color-black); }
+.story-panel p em, .reveal-line em { font-style: italic; color: var(--color-accent); }
+/* lead-in paragraph of a story reads larger, like a stand-first */
+.story-panel--intro + .story-panel p:first-of-type { font-size: 1.95rem; }
 .story-panel--media { padding-left: 0; padding-right: 0; justify-content: center; }
 .story-panel--media img { width: 100%; height: 64vh; object-fit: cover; }
 /* Fullscreen cinematic image moment: the media panel spans the whole viewport

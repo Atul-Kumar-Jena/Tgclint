@@ -236,44 +236,44 @@ BLOG = [
          body=[
             ("The illusion of the daily-wage saving", [
                 "In Odia we say <em>sasta ru hinasta</em> — what looks cheap turns out to be the most expensive thing of all. Nowhere is this truer than in home construction. Hiring a mason on a daily wage and buying your own cement feels like you are cutting out the middleman and pocketing his margin.",
-                "But a contractor's margin is not a tax on your project. It is the price of someone whose full-time job is to stop your money leaking away — and on an unmanaged site, it leaks in a dozen quiet ways."]),
+                "But a contractor's margin is not a tax on your project. It is the price of someone whose full-time job is <strong>to stop your money leaking away</strong> — and on an unmanaged site, it leaks in a dozen quiet ways."]),
             ("Where the money actually goes", [
-                "Material waste and pilferage are the first leak. Steel cut wrong, cement left to harden in the rain, tiles over-ordered or quietly walking off site — without a professional counting every bag and bar, 5–15% of your material budget simply evaporates.",
-                "Rework is the second. An amateur-supervised slab poured a centimetre out of level, a damp-proof course missed, a conduit laid in the wrong wall — each mistake is paid for twice, once to build and once to break and rebuild."]),
+                "Material waste and pilferage are the first leak. Steel cut wrong, cement left to harden in the rain, tiles over-ordered or quietly walking off site — without a professional counting every bag and bar, <strong>5–15% of your material budget simply evaporates</strong>.",
+                "Rework is the second. An amateur-supervised slab poured a centimetre out of level, a damp-proof course missed, a conduit laid in the wrong wall — <strong>each mistake is paid for twice</strong>, once to build and once to break and rebuild."]),
             ("The cost of your own time", [
-                "Then there is your time. Self-managing a build is a second full-time job: chasing suppliers, settling disputes between trades, standing at the site gate at 7am. Most homeowners take months of effective leave from their real careers — a cost that never appears on the estimate but is very real."]),
+                "Then there is your time. Self-managing a build is <em>a second full-time job</em>: chasing suppliers, settling disputes between trades, standing at the site gate at 7am. Most homeowners take months of effective leave from their real careers — a cost that never appears on the estimate but is very real."]),
             ("What professional management actually buys", [
-                "A managed build replaces all of that with a fixed scope, a fixed price and a single point of accountability. Materials are scheduled and inspected, trades are sequenced so nobody waits, and quality is checked at every stage rather than discovered at the end.",
-                "The honest comparison is rarely \"professional vs. cheap\". It is \"a predictable price now\" vs. \"an unpredictable, usually higher price later\" — plus your weekends back."]),
+                "A managed build replaces all of that with <strong>a fixed scope, a fixed price and a single point of accountability</strong>. Materials are scheduled and inspected, trades are sequenced so nobody waits, and quality is checked at every stage rather than discovered at the end.",
+                "The honest comparison is rarely \"professional vs. cheap\". It is \"a predictable price now\" vs. \"an unpredictable, usually higher price later\" — <strong>plus your weekends back</strong>."]),
          ]),
     dict(slug="hidden-health-cost", cat="Homeowner wellness", read="7 min read", img="duo-2",
          title="The hidden health cost of building a house: why your peace of mind is worth more than a discount",
          lede="The real cost of a self-managed build is not just money. It is decision fatigue, disrupted work and months of low-grade stress — a tax you pay with your wellbeing.",
          body=[
             ("A thousand small decisions", [
-                "Building a house is not one big decision; it is a thousand small ones, every single day. Which brand of putty? Is this the right shade of grey? Why is the plumber arguing with the electrician? Each is minor on its own. Together, over many months, they produce a very real condition psychologists call decision fatigue."]),
+                "Building a house is not one big decision; it is a thousand small ones, every single day. Which brand of putty? Is this the right shade of grey? Why is the plumber arguing with the electrician? Each is minor on its own. Together, over many months, they produce a very real condition psychologists call <strong>decision fatigue</strong>."]),
             ("Disruption to your real life", [
-                "Site problems do not wait for the weekend. They arrive by phone at the worst possible moment — mid-meeting, mid-dinner, mid-holiday. Slowly the project colonises your calendar, your conversations and your sleep."]),
+                "<strong>Site problems do not wait for the weekend.</strong> They arrive by phone at the worst possible moment — mid-meeting, mid-dinner, mid-holiday. Slowly the project colonises your calendar, your conversations and your sleep."]),
             ("The toll you can't put on a spreadsheet", [
-                "Ask anyone who has self-managed a build and they will tell you about the months of poor sleep, the short temper, the strain on the family. None of it shows up on the cost sheet, but all of it is paid in full."]),
+                "Ask anyone who has self-managed a build and they will tell you about the months of poor sleep, the short temper, the strain on the family. None of it shows up on the cost sheet, but <strong>all of it is paid in full</strong>."]),
             ("Peace of mind is a measurable asset", [
-                "Outsourcing your build to a professional project-management team is not a luxury — it is buying back your evenings, your focus and your health. The discount you might win by doing it yourself is almost never worth what it quietly takes out of you.",
-                "A home should be the calmest thing you ever build, not the most stressful. That is the standard we hold ourselves to."]),
+                "Outsourcing your build to a professional project-management team is not a luxury — it is <strong>buying back your evenings, your focus and your health</strong>. The discount you might win by doing it yourself is almost never worth what it quietly takes out of you.",
+                "A home should be <em>the calmest thing you ever build</em>, not the most stressful. That is the standard we hold ourselves to."]),
          ]),
     dict(slug="land-to-landmark", cat="Quality assurance", read="10 min read", img="duo-1",
          title="Transforming land into a landmark: the foundation of trust at Saansud Infra",
          lede="A plot is potential. A landmark is potential made permanent — through a real structural warranty, verifiable quality and design rooted in how families actually live.",
          body=[
             ("A home is a fifty-year decision", [
-                "Most purchases you make are for a season. A home is for generations. That changes everything about how it should be built — the question is never just \"will it look good at handover?\" but \"will it still be standing strong, and feeling like home, when your grandchildren inherit it?\""]),
+                "Most purchases you make are for a season. <strong>A home is for generations.</strong> That changes everything about how it should be built — the question is never just \"will it look good at handover?\" but \"will it still be standing strong, and feeling like home, when your grandchildren inherit it?\""]),
             ("A warranty that actually means something", [
-                "We back every home with a 10-year structural warranty. A warranty is only as good as the build behind it, which is why we put our name on the structure itself — branded steel, graded cement, M20–M25 concrete and waterproofing detailed to last."]),
+                "We back every home with a <strong>10-year structural warranty</strong>. A warranty is only as good as the build behind it, which is why we put our name on the structure itself — branded steel, graded cement, M20–M25 concrete and waterproofing detailed to last."]),
             ("Quality you can verify, not just trust", [
-                "Trust should be earned with evidence, not asked for on faith. Soil is tested before design. Materials are inspected on delivery. Every stage — foundation, slab, brickwork, finishes — is checked by our own quality controllers before the next begins, and documented so you can see it."]),
+                "<strong>Trust should be earned with evidence, not asked for on faith.</strong> Soil is tested before design. Materials are inspected on delivery. Every stage — foundation, slab, brickwork, finishes — is checked by our own quality controllers before the next begins, and documented so you can see it."]),
             ("Designed for how Odisha actually lives", [
                 "A landmark home respects its place. We design for the climate, the light and the way families here gather — from the pooja room to the courtyard to the parking — so the house feels rooted, not imported."]),
             ("From plot to legacy", [
-                "That is what it means to turn land into a landmark: not just a structure on a survey number, but a long-term family legacy you can hand down with pride. It is the foundation of trust everything else at Saansud is built on."]),
+                "That is what it means to turn land into a landmark: not just a structure on a survey number, but <strong>a long-term family legacy you can hand down with pride</strong>. It is the foundation of trust everything else at Saansud is built on."]),
          ]),
 ]
 

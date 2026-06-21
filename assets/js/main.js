@@ -214,6 +214,18 @@
   function initPageTransition() {
     var pt = document.querySelector('.pt');
     if (!pt) return;
+    // When a page is restored from the back/forward cache it comes back exactly
+    // as it was left — which, after tapping a link, is mid-transition with the
+    // .pt overlay (the "S" card) covering everything. Clear that on restore so
+    // the Back button never lands on a blank "S" screen (common on mobile).
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted) return;
+      pt.classList.remove('leave', 'enter');
+      document.body.classList.remove('pt-in');
+      var intro = document.querySelector('.intro');
+      if (intro) { intro.classList.add('is-hidden'); intro.setAttribute('aria-hidden', 'true'); }
+      document.body.classList.add('ready');
+    });
     // entrance: only after an in-site navigation
     try {
       if (sessionStorage.getItem('pt') === '1') {
@@ -310,10 +322,29 @@
       row.querySelector('.service-row__head').addEventListener('click', function () {
         var key = row.getAttribute('data-service');
         var wasActive = row.classList.contains('active');
+        // measure where the row sits BEFORE the layout changes, and how much a
+        // currently-open row ABOVE it will shrink when it collapses — so we can
+        // scroll the clicked row to a consistent spot instead of it jumping.
+        var beforeTop = row.getBoundingClientRect().top;
+        var shift = 0;
+        var prev = document.querySelector('.service-row.active');
+        if (!wasActive && prev && prev !== row) {
+          var pr = prev.getBoundingClientRect();
+          if (pr.top < beforeTop) {
+            var pb = prev.querySelector('.service-row__body');
+            if (pb) shift = pb.scrollHeight;
+          }
+        }
         rows.forEach(function (r) { r.classList.remove('active'); });
         if (!wasActive) row.classList.add('active');
         imgs.forEach(function (im) { im.classList.toggle('active', im.getAttribute('data-stage') === key && !wasActive); });
         if (wasActive && imgs[0]) { imgs.forEach(function (im, i) { im.classList.toggle('active', i === 0); }); }
+        if (!wasActive) {
+          var offset = window.innerWidth <= 1024 ? 80 : 116;   // px clearance from top
+          var target = Math.max(0, window.scrollY + beforeTop - shift - offset);
+          if (window.__lenis) window.__lenis.scrollTo(target, { duration: 0.7 });
+          else window.scrollTo({ top: target, behavior: 'smooth' });
+        }
       });
     });
   }
