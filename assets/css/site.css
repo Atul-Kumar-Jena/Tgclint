@@ -281,7 +281,7 @@ body.is-menu .menu { opacity: 1; visibility: visible; pointer-events: auto; tran
 .text-cta { display: grid; gap: 3.2rem; max-width: 90rem; }
 .text-cta .base-heading { font-family: var(--font-f-aeonik-pro); font-weight: 400;
   font-size: clamp(2.8rem, 4.4vw, 5.2rem); line-height: 1.1; letter-spacing: -.02em; color: var(--color-black); }
-.text-cta .base-heading em { font-style: normal; color: color-mix(in srgb, var(--color-grey) 45%, transparent); }
+.text-cta .base-heading em { font-style: normal; color: var(--color-accent); }
 
 /* =========================================================================
    Product collection  (cards + modal)
@@ -848,6 +848,14 @@ body.ready .home-header .container > *:nth-child(4) { animation-delay: .7s; }
 .stories-browse::-webkit-scrollbar { display: none; }
 .stories-browse:active { cursor: grabbing; }
 .stories-track { display: flex; gap: 2.4rem; padding: 0 4rem 1rem; width: max-content; }
+/* desktop: only 3 stories, so fill the row as a balanced grid (no left-stuck
+   gap); the drag-scroll row is kept for tablet/mobile where cards overflow */
+@media (min-width: 1025px) {
+  .stories-browse { overflow: visible; cursor: default; }
+  .stories-track { display: grid; grid-template-columns: repeat(3, 1fr); width: auto; }
+  .stories-track .story-card { width: auto; }
+  .stories-drag-hint { display: none; }
+}
 .story-card { width: 40rem; flex-shrink: 0; scroll-snap-align: start; background: var(--color-white);
   border: 1px solid var(--color-taupe); overflow: hidden; cursor: pointer; text-align: left;
   transition: transform .5s var(--ease-out-cubic), border-color .5s, box-shadow .5s; display: flex; flex-direction: column; }
@@ -971,7 +979,8 @@ body.is-story .page-header { display: none; }
   line-height: 1.04; letter-spacing: -.025em; color: var(--color-black); max-width: 18ch; }
 .story-panel .story-lede { font-size: clamp(1.9rem, 2.3vw, 2.4rem); line-height: 1.45; color: var(--color-text-muted); max-width: 34ch; }
 .story-panel .story-read-time { font-family: var(--font-f-aeonik-mono); font-size: 1.2rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); }
-.story-panel .story-h { font-family: var(--font-f-aeonik-pro); font-weight: 400; font-size: clamp(2.4rem, 3vw, 3.4rem); letter-spacing: -.015em; color: var(--color-black); }
+.story-panel .story-h { font-family: var(--font-f-aeonik-pro); font-weight: 600; font-size: clamp(2.6rem, 3.1vw, 3.6rem); line-height: 1.12; letter-spacing: -.02em; color: var(--color-black); }
+.story-panel .story-h::before { content: ""; display: block; width: 3.4rem; height: 3px; background: var(--color-accent); margin-bottom: 1.8rem; }
 .story-panel p { font-size: 1.8rem; line-height: 1.65; color: var(--color-grey); max-width: 42ch; }
 /* in-copy emphasis: bold draws the eye in near-black, italic adds a softer beat */
 .story-panel p strong, .reveal-line strong { font-weight: 700; color: var(--color-black); }

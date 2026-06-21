@@ -220,11 +220,22 @@
     // the Back button never lands on a blank "S" screen (common on mobile).
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
-      pt.classList.remove('leave', 'enter');
-      document.body.classList.remove('pt-in');
       var intro = document.querySelector('.intro');
       if (intro) { intro.classList.add('is-hidden'); intro.setAttribute('aria-hidden', 'true'); }
       document.body.classList.add('ready');
+      // The page comes back with the .pt overlay still covering the screen.
+      // Play the same reveal sweep as a forward navigation so Back is animated,
+      // not a dead blank screen.
+      if (pt.classList.contains('leave') && !reduceMotion) {
+        pt.classList.remove('leave');
+        void pt.offsetWidth;                       // restart the animation
+        pt.classList.add('enter');
+        document.body.classList.remove('pt-in'); void document.body.offsetWidth;
+        document.body.classList.add('pt-in');
+      } else {
+        pt.classList.remove('leave', 'enter');
+        document.body.classList.remove('pt-in');
+      }
     });
     // entrance: only after an in-site navigation
     try {

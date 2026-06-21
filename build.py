@@ -17,6 +17,11 @@ S_PATH = ("M74 32C74 21 63 16 50 16C35 16 29 25 29 35C29 47 43 50 52 52"
 # Saansud "S" monogram (placeholder for the real brand logo)
 MARK = (f'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
         f'<path pathLength="100" d="{S_PATH}" stroke="currentColor" stroke-width="11" stroke-linecap="round"/></svg>')
+# intro variant carries the dash state as presentation attributes so the stroke
+# is hidden from the very first paint (no full-"S" flash before CSS kicks in)
+INTRO_MARK = (f'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+              f'<path pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" d="{S_PATH}" '
+              f'stroke="currentColor" stroke-width="11" stroke-linecap="round"/></svg>')
 MARK_MINI = f'<span class="brandmark-mini">{MARK}</span>'
 ARROW = ('<svg class="arrow-svg" viewBox="0 0 14 11" fill="none" aria-hidden="true">'
          '<path d="M8.5 1 13 5.5 8.5 10M13 5.5H1" stroke="currentColor" stroke-width="1.4"/></svg>')
@@ -62,7 +67,7 @@ def intro():
   <div class="intro" role="presentation">
     <div class="intro-grid"></div>
     <div class="logo">
-      <span class="intro-mark">{MARK}</span>
+      <span class="intro-mark">{INTRO_MARK}</span>
       <div class="wordmark"><span class="wm">Saansud</span><span class="tag">Building Landmarks</span></div>
     </div>
   </div>"""
